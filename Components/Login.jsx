@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import Logo from "./Utils/Logo";
+import { ImageBackground } from "react-native-web";
 
 export default class Login extends Component {
   constructor(props) {
@@ -41,7 +42,15 @@ export default class Login extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <Logo />
+
+        <ImageBackground
+          source={require("../assets/Images/BG3.jpg")}
+          style={styles.background}
+          blurRadius={7}
+        >
+
+          <View style={styles.Box}>
+
         <TextInput
           placeholder="Email"
           returnKeyType="next"
@@ -84,11 +93,12 @@ export default class Login extends Component {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.buttonContainer, { marginBottom: 30, width: "15%" }]}
           onPress={() => this.props.navigation.navigate("HomePage")}
         >
-          <Text style={styles.registerButtonText}>Go Back</Text>
+          <Text style={styles.forgotPassword}>Go Back</Text>
         </TouchableOpacity>
+        </View>
+        </ImageBackground>
       </KeyboardAvoidingView>
     );
   }
@@ -96,12 +106,17 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 18,
     flex: 1,
     width: "100%",
-    backgroundColor: "#1B2430",
     alignItems: "center",
     justifyContent: "center",
+  },
+  background: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
   input: {
     height: 60,
@@ -113,6 +128,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "40%",
   },
+  Box: {
+    width: "50%",
+    height: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    padding: 20,
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: "gold",
+  },
   forgotPassword: {
     color: "#FFF",
     fontSize: 11,
@@ -120,7 +146,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "red",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
