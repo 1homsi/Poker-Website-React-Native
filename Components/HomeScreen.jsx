@@ -39,77 +39,82 @@ export default class HomeScreen extends Component {
   SignedIn = () => {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.topRow}>
-          {this.AccountSettings()}
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ marginTop: 26 }}>
-              <Balance chips={this.props.userData.chips} />
+        <ImageBackground
+          source={require("../assets/Images/BG3.jpg")}
+          style={styles.backgroundImage}
+        >
+          <View style={styles.topRow}>
+            {this.AccountSettings()}
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ marginTop: 26 }}>
+                <Balance chips={this.props.userData.chips} />
+              </View>
+              <Notification userData={this.props.userData} />
             </View>
-            <Notification userData={this.props.userData} />
           </View>
-        </View>
-        <Logo />
+          <Logo />
 
-        <View style={styles.SignedView}>
-          {this.props.userData.in_game == "" ? (
-            <View
-              style={{
-                width: "100%",
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                style={styles.centerButtons}
-                onPress={() => {
-                  this.props.navigation.navigate("JoinGamePage");
+          <View style={styles.SignedView}>
+            {this.props.userData.in_game == "" ? (
+              <View
+                style={{
+                  width: "100%",
+                  alignItems: "center",
+                  alignContent: "center",
                 }}
               >
-                <Text style={styles.textStyle}>Join Game</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.centerButtons}
+                  onPress={() => {
+                    this.props.navigation.navigate("JoinGamePage");
+                  }}
+                >
+                  <Text style={styles.textStyle}>Join Game</Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity
+                  style={styles.centerButtons}
+                  onPress={() => {
+                    this.props.navigation.navigate("CreateGame");
+                  }}
+                >
+                  <Text style={styles.textStyle}>Create Game</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
               <TouchableOpacity
-                style={styles.centerButtons}
+                style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
                 onPress={() => {
-                  this.props.navigation.navigate("CreateGame");
+                  this.props.navigation.navigate("GameController"); ///// 'GameSetting'
                 }}
               >
-                <Text style={styles.textStyle}>Create Game</Text>
+                <Text style={styles.textStyle}>Continue Game</Text>
               </TouchableOpacity>
-            </View>
-          ) : (
+            )}
+
             <TouchableOpacity
-              style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
+              style={styles.centerButtons}
               onPress={() => {
-                this.props.navigation.navigate("GameController"); ///// 'GameSetting'
+                this.props.navigation.navigate("Leaderboard");
               }}
             >
-              <Text style={styles.textStyle}>Continue Game</Text>
+              <Text style={styles.textStyle}>Leaderboard</Text>
             </TouchableOpacity>
-          )}
 
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => {
-              this.props.navigation.navigate("Leaderboard");
-            }}
-          >
-            <Text style={styles.textStyle}>Leaderboard</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.centerButtons}
+              onPress={() => this.LogOut()}
+            >
+              <Text style={styles.textStyle}>Log Out</Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => this.LogOut()}
-          >
-            <Text style={styles.textStyle}>Log Out</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.bottomRow}>
+            {this.AccountStatistics()}
 
-        <View style={styles.bottomRow}>
-          {this.AccountStatistics()}
-
-          {this.FriendsButton()}
-        </View>
+            {this.FriendsButton()}
+          </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   };
@@ -205,15 +210,12 @@ const styles = StyleSheet.create({
   SignedOutImageContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     width: "100%",
     height: "100%",
   },
   container: {
     flex: 1,
     backgroundColor: "#1B2430",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   textStyle: {
     alignItems: "center",
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   centerButtons: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#880808 ",
     paddingVertical: 20,
     padding: 50,
     borderRadius: 15,
@@ -252,7 +254,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#880808 ",
   },
   SignedView: {
     width: "60%",
