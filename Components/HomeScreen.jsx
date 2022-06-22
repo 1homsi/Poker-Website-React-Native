@@ -118,12 +118,10 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/Images/BG1.jpg")}
+          source={require("../assets/Images/BG2.png")}
           resizeMode="cover"
           style={styles.SignedOutImageContainer}
         >
-          <Logo />
-
           <View style={[styles.SignedView, { flex: 0.33 }]}>
             <TouchableOpacity
               style={styles.centerButtons}
@@ -207,6 +205,9 @@ const styles = StyleSheet.create({
   SignedOutImageContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
   container: {
     flex: 1,
