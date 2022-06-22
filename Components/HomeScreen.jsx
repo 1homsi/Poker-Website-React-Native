@@ -39,88 +39,90 @@ export default class HomeScreen extends Component {
           source={require("../assets/Images/BG3.jpg")}
           style={styles.SignedOutImageContainer}
         >
-          <View style={styles.topRow}>
-            {this.AccountSettings()}
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ marginTop: 26 }}>
-                <Balance chips={this.props.userData.chips} />
+          <View style={styles.InnerContainer}>
+            <View style={styles.topRow}>
+              {this.AccountSettings()}
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ marginTop: 26 }}>
+                  <Balance chips={this.props.userData.chips} />
+                </View>
+                <Notification userData={this.props.userData} />
               </View>
-              <Notification userData={this.props.userData} />
             </View>
-          </View>
-          <Logo />
+            <Logo />
 
-          <View style={styles.SignedView}>
-            {this.props.userData.in_game == "" ? (
-              <View
-                style={{
-                  width: "100%",
-                  alignItems: "center",
-                  alignContent: "center",
+            <View style={styles.SignedView}>
+              {this.props.userData.in_game == "" ? (
+                <View
+                  style={{
+                    width: "100%",
+                    alignItems: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.centerButtons}
+                    onPress={() => {
+                      this.props.navigation.navigate("JoinGamePage");
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Join Game</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.centerButtons}
+                    onPress={() => {
+                      this.props.navigation.navigate("CreateGame");
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Create Game</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
+                  onPress={() => {
+                    this.props.navigation.navigate("GameController"); // 'GameSetting'
+                  }}
+                >
+                  <Text style={styles.textStyle}>Continue Game</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity
+                style={styles.centerButtons}
+                onPress={() => {
+                  this.props.navigation.navigate("Leaderboard");
                 }}
               >
-                <TouchableOpacity
-                  style={styles.centerButtons}
-                  onPress={() => {
-                    this.props.navigation.navigate("JoinGamePage");
-                  }}
-                >
-                  <Text style={styles.textStyle}>Join Game</Text>
-                </TouchableOpacity>
+                <Text style={styles.textStyle}>Leaderboard</Text>
+              </TouchableOpacity>
 
+              <TouchableOpacity
+                style={styles.centerButtons}
+                onPress={() => this.LogOut()}
+              >
+                <Text style={styles.textStyle}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.bottomRow}>
+              <View>
                 <TouchableOpacity
-                  style={styles.centerButtons}
-                  onPress={() => {
-                    this.props.navigation.navigate("CreateGame");
-                  }}
+                  style={styles.button}
+                  onPress={() => this.props.navigation.navigate("AccountStats")}
                 >
-                  <Text style={styles.textStyle}>Create Game</Text>
+                  <Text style={styles.textStyle}>Account Stats</Text>
                 </TouchableOpacity>
               </View>
-            ) : (
-              <TouchableOpacity
-                style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
-                onPress={() => {
-                  this.props.navigation.navigate("GameController"); // 'GameSetting'
-                }}
-              >
-                <Text style={styles.textStyle}>Continue Game</Text>
-              </TouchableOpacity>
-            )}
 
-            <TouchableOpacity
-              style={styles.centerButtons}
-              onPress={() => {
-                this.props.navigation.navigate("Leaderboard");
-              }}
-            >
-              <Text style={styles.textStyle}>Leaderboard</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.centerButtons}
-              onPress={() => this.LogOut()}
-            >
-              <Text style={styles.textStyle}>Log Out</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.bottomRow}>
-            <View>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => this.props.navigation.navigate("AccountStats")}
+                onPress={() => this.props.navigation.navigate("FriendsList")}
               >
-                <Text style={styles.textStyle}>Account Stats</Text>
+                <Text style={styles.textStyle}>Friends</Text>
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.props.navigation.navigate("FriendsList")}
-            >
-              <Text style={styles.textStyle}>Friends</Text>
-            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
@@ -195,6 +197,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     height: "100%",
+  },
+  InnerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
   textStyle: {
     alignItems: "center",

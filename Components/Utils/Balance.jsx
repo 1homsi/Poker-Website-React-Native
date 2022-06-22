@@ -1,17 +1,5 @@
 import React, { Component } from "react";
-import {
-  Image,
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Linking,
-} from "react-native";
-import firebase from "firebase";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default class Balance extends Component {
   render() {
