@@ -150,7 +150,7 @@ export default function Chat(matchInfo) {
           styles.button,
           {
             backgroundColor:
-              messages.length - newMessages == 0 ? "#53BF9D" : "#c80c0d",
+              messages.length - newMessages == 0 ? "#D70040" : "#c80c0d",
           },
         ]}
         onPress={() => {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonOpen: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
   },
   buttonClose: {
     backgroundColor: "#2196F3",

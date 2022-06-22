@@ -128,7 +128,7 @@ export default class CreateGame extends Component {
         <Slider
           style={{ width: 350, height: 30, marginBottom: 20 }}
           minimumValue={50}
-          maximumValue={500}
+          maximumValue={this.props.userData.chips}
           step={50}
           onValueChange={(buyIn) => {
             this.setState({ buyIn });
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,

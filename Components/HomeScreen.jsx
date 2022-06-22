@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableOpacity,
   Alert,
   Dimensions,
@@ -22,14 +21,11 @@ export default class HomeScreen extends Component {
       firebase
         .auth()
         .signOut()
-        .then(() => {
-          console.log("Signed Out");
-        })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      Alert.alert(
+      alert(
         "Cannot Logout",
         "You are currently in a game! Please leave this game, to Logout."
       );
@@ -38,79 +34,98 @@ export default class HomeScreen extends Component {
 
   SignedIn = () => {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.topRow}>
-          {this.AccountSettings()}
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ marginTop: 26 }}>
-              <Balance chips={this.props.userData.chips} />
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/Images/BG3.jpg")}
+          style={styles.SignedOutImageContainer}
+        >
+          <View style={styles.InnerContainer}>
+            <View style={styles.topRow}>
+              {this.AccountSettings()}
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ marginTop: 26 }}>
+                  <Balance chips={this.props.userData.chips} />
+                </View>
+                <Notification userData={this.props.userData} />
+              </View>
             </View>
-            <Notification userData={this.props.userData} />
+            <Logo />
+
+            <View style={styles.SignedView}>
+              {this.props.userData.in_game == "" ? (
+                <View
+                  style={{
+                    width: "100%",
+                    alignItems: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.centerButtons}
+                    onPress={() => {
+                      this.props.navigation.navigate("JoinGamePage");
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Join Game</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.centerButtons}
+                    onPress={() => {
+                      this.props.navigation.navigate("CreateGame");
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Create Game</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
+                  onPress={() => {
+                    this.props.navigation.navigate("GameController"); // 'GameSetting'
+                  }}
+                >
+                  <Text style={styles.textStyle}>Continue Game</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity
+                style={styles.centerButtons}
+                onPress={() => {
+                  this.props.navigation.navigate("Leaderboard");
+                }}
+              >
+                <Text style={styles.textStyle}>Leaderboard</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.centerButtons}
+                onPress={() => this.LogOut()}
+              >
+                <Text style={styles.textStyle}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.bottomRow}>
+              <View>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => this.props.navigation.navigate("AccountStats")}
+                >
+                  <Text style={styles.textStyle}>Account Stats</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.props.navigation.navigate("FriendsList")}
+              >
+                <Text style={styles.textStyle}>Friends</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <Logo />
-
-        <View style={styles.SignedView}>
-          {this.props.userData.in_game == "" ? (
-            <View
-              style={{
-                width: "100%",
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <TouchableOpacity
-                style={styles.centerButtons}
-                onPress={() => {
-                  this.props.navigation.navigate("JoinGamePage");
-                }}
-              >
-                <Text style={styles.textStyle}>Join Game</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.centerButtons}
-                onPress={() => {
-                  this.props.navigation.navigate("CreateGame");
-                }}
-              >
-                <Text style={styles.textStyle}>Create Game</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity
-              style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
-              onPress={() => {
-                this.props.navigation.navigate("GameController"); ///// 'GameSetting'
-              }}
-            >
-              <Text style={styles.textStyle}>Continue Game</Text>
-            </TouchableOpacity>
-          )}
-
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => {
-              this.props.navigation.navigate("Leaderboard");
-            }}
-          >
-            <Text style={styles.textStyle}>Leaderboard</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => this.LogOut()}
-          >
-            <Text style={styles.textStyle}>Log Out</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bottomRow}>
-          {this.AccountStatistics()}
-
-          {this.FriendsButton()}
-        </View>
-      </SafeAreaView>
+        </ImageBackground>
+      </View>
     );
   };
 
@@ -166,30 +181,6 @@ export default class HomeScreen extends Component {
     );
   };
 
-  AccountStatistics = () => {
-    return (
-      <View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate("AccountStats")}
-        >
-          <Text style={styles.textStyle}>Account Stats</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
-  FriendsButton = () => {
-    return (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => this.props.navigation.navigate("FriendsList")}
-      >
-        <Text style={styles.textStyle}>Friends</Text>
-      </TouchableOpacity>
-    );
-  };
-
   render() {
     if (this.props.LoggedIn) {
       return this.SignedIn();
@@ -199,21 +190,19 @@ export default class HomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
-  SignedOutcontainer: {
+  container: {
     flex: 1,
   },
   SignedOutImageContainer: {
-    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     width: "100%",
     height: "100%",
   },
-  container: {
+  InnerContainer: {
     flex: 1,
-    backgroundColor: "#1B2430",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
+    alignContent: "center",
   },
   textStyle: {
     alignItems: "center",
@@ -223,7 +212,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   centerButtons: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 50,
     borderRadius: 15,
@@ -252,7 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
   },
   SignedView: {
     width: "60%",

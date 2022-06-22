@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   bubble: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     padding: 20,
     borderRadius: 15,
     width: "80%",
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,

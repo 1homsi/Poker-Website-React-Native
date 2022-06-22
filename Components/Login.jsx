@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonContainer: {
-    backgroundColor: "red",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,

@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,

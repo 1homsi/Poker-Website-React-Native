@@ -1,17 +1,5 @@
 import React, { Component } from "react";
-import {
-  Image,
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Linking,
-} from "react-native";
-import firebase from "firebase";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default class Balance extends Component {
   render() {
@@ -37,10 +25,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#fff",
   },
   textStyle: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     textAlign: "center",
   },
