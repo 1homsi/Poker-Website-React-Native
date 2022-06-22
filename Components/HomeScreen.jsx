@@ -186,11 +186,11 @@ export default class HomeScreen extends Component {
   };
 
   render() {
-    // if (this.props.LoggedIn) {
-    return this.SignedIn();
-    // } else {
-    // return this.SignedOut();
-    // }
+    if (this.props.LoggedIn) {
+      return this.SignedIn();
+    } else {
+      return this.SignedOut();
+    }
   }
 }
 const styles = StyleSheet.create({
