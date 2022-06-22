@@ -26,6 +26,7 @@ import JoinGamePage from "./Components/JoinGamePage";
 import AccountStats from "./Components/AccountStats";
 import ChangeAvatar from "./Components/Account-Settings/ChangeAvatar";
 import Leaderboard from "./Components/Leaderboard";
+import IntroScreen from "./Components/IntroScreen";
 
 const Stack = createStackNavigator();
 
@@ -142,7 +143,7 @@ export default class App extends PureComponent {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}
-            initialRouteName={this.state.LoggedIn ? "HomePage" : "Login"}
+            initialRouteName={this.state.LoggedIn ? "HomePage" : "Intro"}
           >
             <Stack.Screen name="HomePage">
               {(props) => (
@@ -203,6 +204,7 @@ export default class App extends PureComponent {
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
             <Stack.Screen name="ChangeAvatar" component={ChangeAvatar} />
+            <Stack.Screen name="Intro" component={IntroScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       );
