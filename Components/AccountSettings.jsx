@@ -17,7 +17,7 @@ export default class AccountSettings extends Component {
         .auth()
         .signOut()
         .then(() => {
-          // this.props.navigation.navigate("HomePage");
+          this.props.navigation.navigate("HomePage");
         })
         .catch((error) => {
           console.log(error);
