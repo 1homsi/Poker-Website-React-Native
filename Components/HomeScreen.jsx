@@ -12,26 +12,11 @@ import firebase from "firebase";
 import Logo from "./Utils/Logo";
 import Balance from "./Utils/Balance";
 import Notification from "./Utils/Notification";
+import { Icon } from "react-native-elements";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default class HomeScreen extends Component {
-  LogOut = () => {
-    if (this.props.userData.in_game == "") {
-      firebase
-        .auth()
-        .signOut()
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert(
-        "Cannot Logout",
-        "You are currently in a game! Please leave this game, to Logout."
-      );
-    }
-  };
-
   SignedIn = () => {
     return (
       <View style={styles.container}>
@@ -47,6 +32,25 @@ export default class HomeScreen extends Component {
                   <Balance chips={this.props.userData.chips} />
                 </View>
                 <Notification userData={this.props.userData} />
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#D70040",
+                    padding: 10,
+                    borderRadius: 15,
+                    marginLeft: 5,
+                    marginTop: 26,
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate("Leaderboard");
+                  }}
+                >
+                  <Icon
+                    name="trophy"
+                    type="font-awesome"
+                    color="white"
+                    size={20}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
             <Logo />
@@ -66,7 +70,7 @@ export default class HomeScreen extends Component {
                       this.props.navigation.navigate("JoinGamePage");
                     }}
                   >
-                    <Text style={styles.textStyle}>Join Game</Text>
+                    <Text style={styles.textStyle}>Play Now</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -88,40 +92,6 @@ export default class HomeScreen extends Component {
                   <Text style={styles.textStyle}>Continue Game</Text>
                 </TouchableOpacity>
               )}
-
-              <TouchableOpacity
-                style={styles.centerButtons}
-                onPress={() => {
-                  this.props.navigation.navigate("Leaderboard");
-                }}
-              >
-                <Text style={styles.textStyle}>Leaderboard</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.centerButtons}
-                onPress={() => this.LogOut()}
-              >
-                <Text style={styles.textStyle}>Log Out</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.bottomRow}>
-              <View>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => this.props.navigation.navigate("AccountStats")}
-                >
-                  <Text style={styles.textStyle}>Account Stats</Text>
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.props.navigation.navigate("FriendsList")}
-              >
-                <Text style={styles.textStyle}>Friends</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>
@@ -169,13 +139,13 @@ export default class HomeScreen extends Component {
           onPress={() => {
             disabled
               ? this.props.navigation.navigate("AccountSettings")
-              : Alert.alert(
+              : alert(
                   "Disabled",
                   "Cannot change Account Settings while in a game."
                 );
           }}
         >
-          <Text style={styles.textStyle}>Account Settings</Text>
+          <Text style={styles.textStyle}>My Profile</Text>
         </TouchableOpacity>
       </View>
     );
@@ -208,13 +178,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: windowWidth < 400 ? 17 : 14,
+    fontSize: windowWidth < 400 ? 19 : 16,
     textAlign: "center",
   },
   centerButtons: {
     backgroundColor: "#D70040",
     paddingVertical: 20,
-    padding: 50,
+    padding: 80,
     borderRadius: 15,
     width: windowWidth < 400 ? 220 : 270,
     marginBottom: 20,
@@ -224,13 +194,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "90%",
     marginTop: 22,
-  },
-  bottomRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "90%",
-    marginVertical: 20,
-    marginBottom: 40,
   },
   AccountSettingsButtonView: {
     marginTop: 20,
@@ -247,5 +210,6 @@ const styles = StyleSheet.create({
     width: "60%",
     alignItems: "center",
     alignContent: "center",
+    marginBottom: 350,
   },
 });

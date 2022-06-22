@@ -5,14 +5,11 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Touchable,
   Keyboard,
   KeyboardAvoidingView,
-  Alert,
+  ImageBackground,
 } from "react-native";
 import firebase from "firebase";
-import Logo from "./Utils/Logo";
-import { ImageBackground } from "react-native-web";
 
 export default class Login extends Component {
   constructor(props) {
@@ -30,74 +27,71 @@ export default class Login extends Component {
         this.state.password.trim()
       )
       .then(() => {
-        this.props.navigation.navigate("HomePage");
+        this.props.navigation.navigate("Intro");
       })
       .catch((error) => {
-        var errorCode = error.code;
+        //TODO: add actual error messages
         var errorMessage = error.message;
-        Alert.alert("ERROR", errorMessage);
+        alert(errorMessage);
       });
   }
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-
         <ImageBackground
           source={require("../assets/Images/BG3.jpg")}
           style={styles.background}
           blurRadius={7}
         >
-
           <View style={styles.Box}>
+            <TextInput
+              placeholder="Email"
+              returnKeyType="next"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCompleteType="email"
+              autoCorrect={false}
+              style={styles.input}
+              onChangeText={(text) => this.setState({ email: text })}
+              value={this.state.email}
+            />
 
-        <TextInput
-          placeholder="Email"
-          returnKeyType="next"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCompleteType="email"
-          autoCorrect={false}
-          style={styles.input}
-          onChangeText={(text) => this.setState({ email: text })}
-          value={this.state.email}
-        />
+            <TextInput
+              placeholder="Password"
+              returnKeyType="go"
+              secureTextEntry
+              autoCorrect={false}
+              autoCompleteType="password"
+              style={styles.input}
+              onChangeText={(text) => this.setState({ password: text })}
+              value={this.state.password}
+            />
 
-        <TextInput
-          placeholder="Password"
-          returnKeyType="go"
-          secureTextEntry
-          autoCorrect={false}
-          autoCompleteType="password"
-          style={styles.input}
-          onChangeText={(text) => this.setState({ password: text })}
-          value={this.state.password}
-        />
+            <TouchableOpacity
+              onPress={() => {
+                Keyboard.dismiss();
+                setTimeout(() => {
+                  this.props.navigation.navigate("ForgotPassword");
+                }, 10);
+              }}
+            >
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Keyboard.dismiss();
-            setTimeout(() => {
-              this.props.navigation.navigate("ForgotPassword");
-            }, 10);
-          }}
-        >
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => this.Login()}
+            >
+              <Text style={styles.registerButtonText}>Login</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => this.Login()}
-        >
-          <Text style={styles.registerButtonText}>Login</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("HomePage")}
-        >
-          <Text style={styles.forgotPassword}>Go Back</Text>
-        </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("HomePage")}
+            >
+              <Text style={styles.forgotPassword}>Go Back</Text>
+            </TouchableOpacity>
+          </View>
         </ImageBackground>
       </KeyboardAvoidingView>
     );

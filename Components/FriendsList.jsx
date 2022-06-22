@@ -7,16 +7,13 @@ import {
   KeyboardAvoidingView,
   TextInput,
   SafeAreaView,
-  StatusBar,
   TouchableOpacity,
-  Touchable,
   Alert,
   ActivityIndicator,
   Modal,
   FlatList,
 } from "react-native";
 import firebase from "firebase";
-import AccountStats from "./AccountStats";
 import { joinGame } from "./Utils/JoinGame";
 
 export default class FriendsList extends Component {
@@ -408,10 +405,7 @@ export default class FriendsList extends Component {
     if (this.state.ready) {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#1B2430" }}>
-          <KeyboardAvoidingView
-            // behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-          >
+          <KeyboardAvoidingView style={styles.container}>
             {this.state.foundModalVisible && this.DisplayFoundUser()}
             {this.state.requestModalVisible && this.DisplayFriendRequest()}
             <TouchableOpacity
@@ -486,7 +480,9 @@ export default class FriendsList extends Component {
                 width: "100%",
               }}
             >
-              <Text style={styles.titleTextStyle}>Friends:</Text>
+              {this.props.userData.friends.length > 0 && (
+                <Text style={styles.titleTextStyle}>Friends:</Text>
+              )}
               <FlatList
                 horizontal={false}
                 numColumns={2}
@@ -547,7 +543,7 @@ export default class FriendsList extends Component {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => this.props.navigation.navigate("HomePage")}
+              onPress={() => this.props.navigation.navigate("AccountSettings")}
             >
               <Text style={styles.textStyle}>Go Back</Text>
             </TouchableOpacity>

@@ -198,8 +198,13 @@ export default class App extends PureComponent {
               )}
             </Stack.Screen>
 
+            <Stack.Screen name="AccountSettings">
+              {(props) => (
+                <AccountSettings {...props} userData={this.state.userData} />
+              )}
+            </Stack.Screen>
+
             <Stack.Screen name="Leaderboard" component={Leaderboard} />
-            <Stack.Screen name="AccountSettings" component={AccountSettings} />
             <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="DeleteAccount" component={DeleteAccount} />

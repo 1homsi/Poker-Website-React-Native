@@ -4,15 +4,32 @@ import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import Logo from "./Utils/Logo";
 
 import firebase from "firebase";
 
 export default class AccountSettings extends Component {
+  LogOut = () => {
+    if (this.props.userData.in_game == "") {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          // this.props.navigation.navigate("HomePage");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert(
+        "Cannot Logout",
+        "You are currently in a game! Please leave this game, to Logout."
+      );
+    }
+  };
+
   render() {
     var user = firebase.auth().currentUser;
     return (
@@ -69,6 +86,26 @@ export default class AccountSettings extends Component {
             onPress={() => this.props.navigation.navigate("DeleteAccount")}
           >
             <Text style={styles.textStyle}>Delete Account</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.buttonContainer]}
+            onPress={() => this.props.navigation.navigate("AccountStats")}
+          >
+            <Text style={styles.textStyle}>Account Stats</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => this.props.navigation.navigate("FriendsList")}
+          >
+            <Text style={styles.textStyle}>Friends</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => this.LogOut()}
+          >
+            <Text style={styles.textStyle}>LogOut</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
