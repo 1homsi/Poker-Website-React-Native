@@ -11,11 +11,11 @@ export default class Logo extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.logoContainer}>
-        <Image
+        {/* <Image
           style={styles.logo}
           source={require("../../assets/TempLogo.png")}
-        />
-        <Text style={styles.title}> GOPOKER </Text>
+        /> */}
+        <Text style={styles.title}>GOPOKER</Text>
       </KeyboardAvoidingView>
     );
   }

@@ -914,7 +914,7 @@ export default class GameSetting extends Component {
         style={[
           {
             opacity: this.state.fadeAnimation[num],
-            backgroundColor: "#53BF9D",
+            backgroundColor: "#D70040",
             padding: 2,
             borderRadius: 15,
           },
@@ -1118,7 +1118,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
   },
   timer: {
     flexDirection: "row",

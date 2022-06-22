@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   bubble: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 15,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,

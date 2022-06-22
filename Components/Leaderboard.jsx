@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gameDisplay: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     borderRadius: 15,
     width: "100%",
     padding: 20,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   buttonContainer: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   statButton: {
-    backgroundColor: "#53BF9D",
+    backgroundColor: "#D70040",
     padding: 10,
     borderRadius: 15,
     marginHorizontal: 5,

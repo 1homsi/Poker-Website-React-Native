@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableOpacity,
   Alert,
   Dimensions,
@@ -22,14 +21,11 @@ export default class HomeScreen extends Component {
       firebase
         .auth()
         .signOut()
-        .then(() => {
-          console.log("Signed Out");
-        })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      Alert.alert(
+      alert(
         "Cannot Logout",
         "You are currently in a game! Please leave this game, to Logout."
       );
@@ -38,10 +34,10 @@ export default class HomeScreen extends Component {
 
   SignedIn = () => {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <ImageBackground
           source={require("../assets/Images/BG3.jpg")}
-          style={styles.backgroundImage}
+          style={styles.SignedOutImageContainer}
         >
           <View style={styles.topRow}>
             {this.AccountSettings()}
@@ -85,7 +81,7 @@ export default class HomeScreen extends Component {
               <TouchableOpacity
                 style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
                 onPress={() => {
-                  this.props.navigation.navigate("GameController"); ///// 'GameSetting'
+                  this.props.navigation.navigate("GameController"); // 'GameSetting'
                 }}
               >
                 <Text style={styles.textStyle}>Continue Game</Text>
@@ -110,12 +106,24 @@ export default class HomeScreen extends Component {
           </View>
 
           <View style={styles.bottomRow}>
-            {this.AccountStatistics()}
+            <View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.props.navigation.navigate("AccountStats")}
+              >
+                <Text style={styles.textStyle}>Account Stats</Text>
+              </TouchableOpacity>
+            </View>
 
-            {this.FriendsButton()}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate("FriendsList")}
+            >
+              <Text style={styles.textStyle}>Friends</Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
-      </SafeAreaView>
+      </View>
     );
   };
 
@@ -171,30 +179,6 @@ export default class HomeScreen extends Component {
     );
   };
 
-  AccountStatistics = () => {
-    return (
-      <View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate("AccountStats")}
-        >
-          <Text style={styles.textStyle}>Account Stats</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
-  FriendsButton = () => {
-    return (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => this.props.navigation.navigate("FriendsList")}
-      >
-        <Text style={styles.textStyle}>Friends</Text>
-      </TouchableOpacity>
-    );
-  };
-
   render() {
     if (this.props.LoggedIn) {
       return this.SignedIn();
@@ -204,18 +188,13 @@ export default class HomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
-  SignedOutcontainer: {
+  container: {
     flex: 1,
   },
   SignedOutImageContainer: {
-    flex: 1,
     justifyContent: "center",
     width: "100%",
     height: "100%",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#1B2430",
   },
   textStyle: {
     alignItems: "center",
@@ -225,7 +204,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   centerButtons: {
-    backgroundColor: "#880808 ",
+    backgroundColor: "#D70040",
     paddingVertical: 20,
     padding: 50,
     borderRadius: 15,
@@ -254,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#880808 ",
+    backgroundColor: "#D70040",
   },
   SignedView: {
     width: "60%",
