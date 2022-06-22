@@ -142,7 +142,8 @@ export default class App extends Component {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}
-            initialRouteName={this.state.LoggedIn ? "HomePage" : "Login"}>
+          // initialRouteName={this.state.LoggedIn ? "HomePage" : "Login"}
+          >
             <Stack.Screen name="HomePage">
               {(props) => (
                 <HomeScreen
