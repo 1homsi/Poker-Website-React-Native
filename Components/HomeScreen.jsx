@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import firebase from "firebase";
 import Logo from "./Utils/Logo";
@@ -116,23 +117,29 @@ export default class HomeScreen extends Component {
   SignedOut = () => {
     return (
       <View style={styles.container}>
-        <Logo />
+        <ImageBackground
+          source={require("../assets/Images/BG1.jpg")}
+          resizeMode="cover"
+          style={styles.SignedOutImageContainer}
+        >
+          <Logo />
 
-        <View style={[styles.SignedView, { flex: 0.33 }]}>
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => this.props.navigation.navigate("Register")}
-          >
-            <Text style={styles.textStyle}>Sign Up</Text>
-          </TouchableOpacity>
+          <View style={[styles.SignedView, { flex: 0.33 }]}>
+            <TouchableOpacity
+              style={styles.centerButtons}
+              onPress={() => this.props.navigation.navigate("Register")}
+            >
+              <Text style={styles.textStyle}>Sign Up</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.centerButtons}
-            onPress={() => this.props.navigation.navigate("Login")}
-          >
-            <Text style={styles.textStyle}>Login</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={styles.centerButtons}
+              onPress={() => this.props.navigation.navigate("Login")}
+            >
+              <Text style={styles.textStyle}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </View>
     );
   };
@@ -194,6 +201,13 @@ export default class HomeScreen extends Component {
   }
 }
 const styles = StyleSheet.create({
+  SignedOutcontainer: {
+    flex: 1,
+  },
+  SignedOutImageContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#1B2430",

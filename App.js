@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {
   StyleSheet,
   View,
@@ -29,7 +29,7 @@ import Leaderboard from "./Components/Leaderboard";
 
 const Stack = createStackNavigator();
 
-export default class App extends Component {
+export default class App extends PureComponent {
   constructor(props) {
     super(props);
 
