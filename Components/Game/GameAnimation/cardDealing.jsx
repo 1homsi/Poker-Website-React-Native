@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backfaceVisibility: "hidden",
+    width: "100%",
   },
   flipCardBack: {
     position: "absolute",
