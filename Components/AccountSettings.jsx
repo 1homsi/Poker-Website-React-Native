@@ -60,12 +60,12 @@ export default class AccountSettings extends Component {
             <Text style={styles.textStyle}>Password Reset</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => this.props.navigation.navigate("ChangeUsername")}
           >
             <Text style={styles.textStyle}>Change Username</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.buttonContainer}

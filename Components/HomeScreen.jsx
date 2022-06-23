@@ -8,7 +8,6 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import firebase from "firebase";
 import Logo from "./Utils/Logo";
 import Balance from "./Utils/Balance";
 import Notification from "./Utils/Notification";
