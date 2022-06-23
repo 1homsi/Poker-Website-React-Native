@@ -563,7 +563,7 @@ export default class GameSetting extends Component {
                   }
                   //this.fadeIn(this.props.playerNum);
                 } else {
-                  Alert.alert(
+                  alert(
                     "Raise Value Invalid",
                     "Please Input Raise Value greater than 0"
                   );
