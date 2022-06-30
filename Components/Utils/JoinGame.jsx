@@ -17,7 +17,7 @@ export async function joinGame(matchName, chips, navigation){
     data.round.push(0)
     data.newPlayer +=1
     data.size += 1
-
+    
     chips -= data.buyIn
     
     var updates = {};

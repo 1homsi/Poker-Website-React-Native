@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   centerButtons: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 80,
     borderRadius: 15,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
   },
   SignedView: {
     width: "60%",

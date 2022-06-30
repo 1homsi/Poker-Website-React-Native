@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button2: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 50,
     borderRadius: 15,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
   },
   buttonClose: {
     backgroundColor: "#2196F3",
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#c80c0d",
+    backgroundColor: "#990f02",
   },
   NotificationButtonText: {
     color: "white",

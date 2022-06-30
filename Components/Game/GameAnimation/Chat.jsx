@@ -93,6 +93,7 @@ export default function Chat(matchInfo) {
             style={{ flex: 1 }}
             // behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
+            <View style={styles.head}>
             <TouchableWithoutFeedback
               style={{ maxHeight: 100, height: 100 }}
               onPress={() => {
@@ -111,6 +112,26 @@ export default function Chat(matchInfo) {
               </Text>
             </TouchableWithoutFeedback>
 
+            <Pressable
+              style={[
+                styles.button,
+                styles.buttonClose,
+                {
+                  // marginBottom: Platform.OS === "android" ? 20 : 5,
+                  width: "20%",
+                  marginLeft: "auto",
+                },
+              ]}
+              onPress={() => {
+                setModalVisible(false);
+
+                setNewMessages(messages.length);
+              }}
+            >
+              <Text style={styles.exitTextStyle}>EXIT</Text>
+            </Pressable>
+            </View>
+
             <GiftedChat
               messages={messages}
               renderUsernameOnMessage={true}
@@ -122,25 +143,7 @@ export default function Chat(matchInfo) {
               //bottomOffset={10}
             />
 
-            <Pressable
-              style={[
-                styles.button,
-                styles.buttonClose,
-                {
-                  // marginBottom: Platform.OS === "android" ? 20 : 5,
-                  width: "90%",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                },
-              ]}
-              onPress={() => {
-                setModalVisible(false);
-
-                setNewMessages(messages.length);
-              }}
-            >
-              <Text style={styles.exitTextStyle}>EXIT</Text>
-            </Pressable>
+            
           </KeyboardAvoidingView>
         </SafeAreaView>
       </Modal>
@@ -191,6 +194,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  head: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
   },
   button: {
     borderRadius: 15,

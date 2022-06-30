@@ -180,7 +180,6 @@ export default class JoinGamePage extends Component {
 
 const styles = StyleSheet.create({
   textStyle: {
-    marginBottom: 10,
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
@@ -192,8 +191,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gameDisplay: {
-    backgroundColor: "#D70040",
-    borderRadius: 20,
+    backgroundColor: "#990f02",
+    borderRadius: 15,
     width: "45%",
     padding: 15,
     margin: 10,
@@ -201,12 +200,14 @@ const styles = StyleSheet.create({
   joinButton: {
     backgroundColor: "#000000",
     borderRadius: 20,
-    width: "95%",
-    paddingTop: 5,
-    marginLeft: 5,
+    width: "30%",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    padding: 10,
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 20,
@@ -220,12 +221,15 @@ const styles = StyleSheet.create({
     alignContent: "center",
     width: "100%",
     marginBottom: 20,
+    backgroundColor: "#990f02",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    padding: 10,
+
   },
   sortButton: {
-    backgroundColor: "#D70040",
-    padding: 15,
-    borderRadius: 20,
-    width: "25%",
+    backgroundColor: "#990f02",
+
   },
   sortTextStyle: {
     color: "white",
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     padding: 10,
     borderRadius: 20,
   },

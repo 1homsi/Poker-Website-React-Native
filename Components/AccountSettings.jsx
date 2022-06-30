@@ -34,18 +34,14 @@ export default class AccountSettings extends Component {
     var user = firebase.auth().currentUser;
     return (
       <SafeAreaView style={styles.container}>
+        <View style={styles.head}>
         <Image
           source={{ uri: user.photoURL }}
-          style={{
-            width: 200,
-            height: 200,
-            marginBottom: 20,
-            marginTop: 30,
-            borderRadius: 100,
-          }}
+          style={styles.image}
         />
-        <Text style={styles.title}>Username: {user.displayName}</Text>
-
+        <Text style={styles.title}>{user.displayName}</Text>
+        </View>
+        
         <View
           style={{
             width: "100%",
@@ -109,7 +105,7 @@ export default class AccountSettings extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.buttonContainer, { marginBottom: 30, width: "40%" }]}
+            style={[styles.buttonContainer, {width: "20%", marginTop: "5%"}]}
             onPress={() => this.props.navigation.navigate("HomePage")}
           >
             <Text style={styles.textStyle}>Go Back</Text>
@@ -144,12 +140,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 20,
+    alignSelf: "center",
+  },
+  head: {
+    flexDirection: "column",
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
-    borderRadius: 15,
-    width: "50%",
+    borderRadius: 10,
+    width: "30%",
     marginBottom: 20,
     justifyContent: "center",
     alignContent: "center",
