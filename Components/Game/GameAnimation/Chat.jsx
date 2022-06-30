@@ -100,14 +100,7 @@ export default function Chat(matchInfo) {
                 Keyboard.dismiss();
               }}
             >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 30,
-                  marginBottom: 10,
-                  textAlign: "center",
-                }}
-              >
+              <Text style={styles.title}>
                 Chat room
               </Text>
             </TouchableWithoutFeedback>
@@ -137,7 +130,7 @@ export default function Chat(matchInfo) {
               renderUsernameOnMessage={true}
               user={userInChat}
               onSend={handleSend}
-              placeholder={"Type"}
+              placeholder={"Type..."}
               isKeyboardInternallyHandled={false}
               maxInputLength={100}
               //bottomOffset={10}
@@ -206,10 +199,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonOpen: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#2196F3",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#D70040",
     marginTop: 20,
   },
   modalText: {
@@ -230,5 +223,13 @@ const styles = StyleSheet.create({
   exitTextStyle: {
     color: "#FFFFFF",
     fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 30,
+    // marginBottom: 10,
+    textAlign: "center",
+    marginLeft: "2%"
   },
 });
