@@ -49,18 +49,20 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   button: {
-    backgroundColor: "red",
-    borderRadius: 10,
-    width: "30%",
-    height: "10%",
+    backgroundColor: "#990f02",
+    borderRadius: 15,
+    width: "25%",
+    height: "12%",
     alignItems: "center",
     justifyContent: "center",
     marginTop: "10%",
+    paddingBottom: "0.5%",
   },
   buttonText: {
     color: "white",
     fontSize: 50,
     fontWeight: "bold",
+    textTransform: "uppercase"
   },
   Box: {
     marginVertical: "10%",
