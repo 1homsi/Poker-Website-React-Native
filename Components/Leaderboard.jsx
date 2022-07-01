@@ -100,6 +100,12 @@ export default class Leaderboard extends Component {
               <Text style={styles.statButtonText}>Total Chips Lost</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => this.props.navigation.navigate("HomePage")}
+          >
+            <Text style={styles.registerButtonText}>Go Back</Text>
+          </TouchableOpacity>
           <View
             style={{
               flex: 1,
@@ -161,12 +167,6 @@ export default class Leaderboard extends Component {
             />
           </View>
 
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => this.props.navigation.navigate("HomePage")}
-          >
-            <Text style={styles.registerButtonText}>Go Back</Text>
-          </TouchableOpacity>
         </KeyboardAvoidingView>
       );
     } else {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "40%",
     marginBottom: 20,
   },
   registerButtonText: {
