@@ -1088,8 +1088,8 @@ const styles = StyleSheet.create({
   },
   timer: {
     position: "absolute",
-    top: "2%",
-    left: "50%",
+    top: "18%",
+    right: "25%",
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
