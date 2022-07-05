@@ -10,6 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class Leaderboard extends Component {
   constructor(props) {
@@ -74,6 +75,16 @@ export default class Leaderboard extends Component {
     if (this.state.ready) {
       return (
         <KeyboardAvoidingView style={styles.container}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.props.navigation.navigate("HomePage")}>
+            <Icon
+              name="arrow-back"
+              type="ionicons"
+              color="white"
+              size={30}
+            />
+          </TouchableOpacity>
           <View style={styles.statButtonsContainer}>
             <TouchableOpacity
               style={styles.statButton}
@@ -100,12 +111,6 @@ export default class Leaderboard extends Component {
               <Text style={styles.statButtonText}>Total Chips Lost</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => this.props.navigation.navigate("HomePage")}
-          >
-            <Text style={styles.registerButtonText}>Go Back</Text>
-          </TouchableOpacity>
           <View
             style={{
               flex: 1,
@@ -116,7 +121,7 @@ export default class Leaderboard extends Component {
             }}
           >
             <FlatList
-              style={{ width: "100%" }}
+              style={{ width: "70%"}}
               data={this.state.gameList}
               keyExtractor={(item) => item.key}
               renderItem={({ item }) => {
@@ -135,29 +140,17 @@ export default class Leaderboard extends Component {
                     </Text>
 
                     <View
-                      style={[
-                        {
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                        },
-                      ]}
-                    >
-                      <Text style={styles.textStyle}>Chips: {item.chips}</Text>
-                      <Text style={styles.textStyle}> Wins: {item.wins}</Text>
+                      style={[{ flexDirection: "row", justifyContent: "space-evenly", },]}>
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>Chips: {item.chips}</Text>
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>Wins: {item.wins}</Text>
                     </View>
 
                     <View
-                      style={[
-                        {
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                        },
-                      ]}
-                    >
-                      <Text style={styles.textStyle}>
+                      style={[{ flexDirection: "row", justifyContent: "space-evenly",},]}>
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
                         Chips Won: {item.chips_won}
                       </Text>
-                      <Text style={styles.textStyle}>
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
                         Chips Lost: {item.chips_lost}
                       </Text>
                     </View>
@@ -183,7 +176,7 @@ const styles = StyleSheet.create({
   textStyle: {
     marginBottom: 10,
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
   },
   container: {
@@ -200,10 +193,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gameDisplay: {
-    backgroundColor: "#D70040",
-    borderRadius: 15,
+    backgroundColor: "#990f02",
+    borderRadius: 40,
     width: "100%",
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom:20,
     marginBottom: 10,
   },
   joinButton: {
@@ -214,7 +208,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
@@ -229,15 +223,18 @@ const styles = StyleSheet.create({
   statButtonText: {
     color: "white",
     textAlign: "center",
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   statButton: {
-    backgroundColor: "#D70040",
-    padding: 10,
+    backgroundColor: "#990f02",
     borderRadius: 15,
     marginHorizontal: 5,
     marginBottom: 10,
-    width: "40%",
+    width: "10%",
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+    paddingRight: 5, 
   },
   input: {
     height: 40,
@@ -264,4 +261,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     justifyContent: "center",
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });
