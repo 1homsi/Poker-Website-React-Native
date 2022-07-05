@@ -142,7 +142,7 @@ export default class HelpButton extends Component {
               styles.NotificationButton,
               this.props.userData.newAlert
                 ? { backgroundColor: "#c80c0d" }
-                : { backgroundColor: "#D70040" },
+                : { backgroundColor: "#990f02" },
             ]}
             onPress={() => this.setModalVisible(!modalVisible)}
             disabled={this.props.userData.alerts == null}

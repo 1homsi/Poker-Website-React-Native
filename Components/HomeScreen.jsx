@@ -33,7 +33,7 @@ export default class HomeScreen extends Component {
                 <Notification userData={this.props.userData} />
                 <TouchableOpacity
                   style={{
-                    backgroundColor: "#D70040",
+                    backgroundColor: "#990f02",
                     padding: 10,
                     borderRadius: 15,
                     marginLeft: 5,
@@ -41,8 +41,7 @@ export default class HomeScreen extends Component {
                   }}
                   onPress={() => {
                     this.props.navigation.navigate("Leaderboard");
-                  }}
-                >
+                  }}>
                   <Icon
                     name="trophy"
                     type="font-awesome"
@@ -52,7 +51,7 @@ export default class HomeScreen extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Logo />
+            <Logo/>
 
             <View style={styles.SignedView}>
               {this.props.userData.in_game == "" ? (
@@ -64,31 +63,31 @@ export default class HomeScreen extends Component {
                   }}
                 >
                   <TouchableOpacity
-                    style={styles.centerButtons}
+                    style={styles.continueButton}
                     onPress={() => {
                       this.props.navigation.navigate("JoinGamePage");
                     }}
                   >
-                    <Text style={styles.textStyle}>Play Now</Text>
+                    <Text style={styles.continueText}>Play Now</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    style={styles.centerButtons}
+                    style={styles.continueButton}
                     onPress={() => {
                       this.props.navigation.navigate("CreateGame");
                     }}
                   >
-                    <Text style={styles.textStyle}>Create Game</Text>
+                    <Text style={styles.continueText}>Create Game</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
                 <TouchableOpacity
-                  style={[styles.centerButtons, { backgroundColor: "#c80c0d" }]}
+                  style={styles.continueButton}
                   onPress={() => {
                     this.props.navigation.navigate("GameController"); // 'GameSetting'
                   }}
                 >
-                  <Text style={styles.textStyle}>Continue Game</Text>
+                  <Text style={styles.continueText}>Continue Game</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -108,17 +107,17 @@ export default class HomeScreen extends Component {
         >
           <View style={[styles.SignedView, { flex: 0.33 }]}>
             <TouchableOpacity
-              style={styles.centerButtons}
+              style={styles.continueButton}
               onPress={() => this.props.navigation.navigate("Register")}
             >
-              <Text style={styles.textStyle}>Sign Up</Text>
+              <Text style={styles.continueText}>Sign Up</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.centerButtons}
+              style={styles.continueButton}
               onPress={() => this.props.navigation.navigate("Login")}
             >
-              <Text style={styles.textStyle}>Login</Text>
+              <Text style={styles.continueText}>Login</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -177,8 +176,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: windowWidth < 400 ? 19 : 16,
+    fontSize: windowWidth < 400 ? 17 : 14,
     textAlign: "center",
+  },
+  continueText: {
+    alignItems: "center",
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: windowWidth < 400 ? 23 : 20,
+    textAlign: "center",
+    textTransform: "uppercase",
   },
   centerButtons: {
     backgroundColor: "#990f02",
@@ -186,6 +193,14 @@ const styles = StyleSheet.create({
     padding: 80,
     borderRadius: 15,
     width: windowWidth < 400 ? 220 : 270,
+    marginBottom: 20,
+  },
+  continueButton: {
+    backgroundColor: "#990f02",
+    paddingVertical: 20,
+    padding: 40,
+    borderRadius: 15,
+    width: windowWidth < 400 ? 200 : 250,
     marginBottom: 20,
   },
   topRow: {
