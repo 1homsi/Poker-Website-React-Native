@@ -309,7 +309,7 @@ export default class GameSetting extends Component {
     return (
       <View style={styles.cardDeal}>
         <Animated.View style={this.state.playerCardAnimations[i].getLayout()}>
-          <CardDealing image={image} screen={screen}>
+          <CardDealing image={image} screen={screen} user={this.props.user}>
             {this.movePlayerCards(i)}
           </CardDealing>
         </Animated.View>
@@ -1045,10 +1045,10 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 100,
   },
-  ChipsAmount:{
+  ChipsAmount: {
     top: "2%",
     left: "25%",
-    color : "white",
+    color: "white",
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 10,
@@ -1263,14 +1263,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  cardDeal:{
-    position: "absolute",
-    bottom: "5%",
-    left: "50%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "center",
-    resizeMode: "contain",
-    width: "50%",
-  }
 });

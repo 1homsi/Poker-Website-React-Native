@@ -893,6 +893,7 @@ export default class GameSetting extends Component {
     if (this.state.ready) {
       return (
         <GameView
+          user={this.props.userData}
           game={this.state.game}
           myCards={this.state.myCards}
           matchName={this.state.matchName}
