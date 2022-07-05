@@ -262,6 +262,7 @@ export default class GameSetting extends Component {
           <View
             style={{
               position: "absolute",
+              bottom: 0,
               borderRadius: 2,
               justifyContent: "center",
               alignItems: "center",
@@ -306,7 +307,7 @@ export default class GameSetting extends Component {
     var image = CardImages(suit, value);
     var screen = this.state.screen;
     return (
-      <View>
+      <View style={styles.cardDeal}>
         <Animated.View style={this.state.playerCardAnimations[i].getLayout()}>
           <CardDealing image={image} screen={screen}>
             {this.movePlayerCards(i)}
@@ -1017,7 +1018,7 @@ export default class GameSetting extends Component {
               source={require("../../../assets/chipAmount.png")}
             />
           </View>
-          <Text style={{ fontSize: 17, fontWeight: "bold", color: "white" }}>
+          <Text style={styles.ChipsAmount}>
             chips: {this.props.game.balance[this.props.playerNum]}
           </Text>
         </View>
@@ -1043,6 +1044,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 100,
+  },
+  ChipsAmount:{
+    top: "2%",
+    left: "25%",
+    color : "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 10,
   },
   container: {
     flex: 1,
@@ -1078,14 +1087,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#D70040",
   },
   timer: {
+    position: "absolute",
+    top: "2%",
+    left: "50%",
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     resizeMode: "contain",
-    top: "90%",
-    right: "0%",
-    width: "25%",
-    position: "absolute",
+    width: "50%",
   },
   timerTextBackground: {
     flexDirection: "column",
@@ -1190,7 +1199,7 @@ const styles = StyleSheet.create({
   chipView: {
     position: "absolute",
     width: 50,
-    right: "4%",
+    right: "50%",
     top: "2%",
     alignContent: "center",
     alignItems: "center",
@@ -1215,8 +1224,8 @@ const styles = StyleSheet.create({
   },
   bettingButtonsView: {
     position: "absolute",
-    bottom: "2%",
-    left: "2%",
+    bottom: "20%",
+    left: "25%",
     flexDirection: "row",
   },
   bettingButtons: {
@@ -1227,12 +1236,15 @@ const styles = StyleSheet.create({
   },
   raiseButt: {
     backgroundColor: "#add8e6",
+    paddingHorizontal: 10,
   },
   callButt: {
     backgroundColor: "#fed8b1",
+    paddingHorizontal: 10,
   },
   foldButt: {
     backgroundColor: "#ffcccb",
+    paddingHorizontal: 10,
   },
   disabled: {
     backgroundColor: "#cccccc",
@@ -1251,4 +1263,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  cardDeal:{
+    position: "absolute",
+    bottom: "5%",
+    left: "50%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
+    resizeMode: "contain",
+    width: "50%",
+  }
 });
