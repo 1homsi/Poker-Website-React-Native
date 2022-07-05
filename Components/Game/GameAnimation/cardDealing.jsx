@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   },
   flipCardBack: {
     position: "absolute",
-    top: 720,
+    top: 600,
+    left: 780,
   },
 });
