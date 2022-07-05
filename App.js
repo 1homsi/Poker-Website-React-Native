@@ -68,21 +68,22 @@ export default class App extends PureComponent {
             var newDate = new Date().getDate(); //change this
             if (data.daily_login != newDate) {
               //every new day you login you get more chips
-              var dailyAlert = "Daily Login Bonus Awarded. + 200 Chips";
-              data.chips += 200;
-              data.daily_login = newDate;
+              // var dailyAlert = "Daily Login Bonus Awarded. + 200 Chips";
+              // data.chips += 200;
+              // data.daily_login = newDate;
 
-              if (data.alerts == null) {
-                data.alerts = [dailyAlert];
-              }
-              else {
-                data.alerts.push(dailyAlert);
-              }
+              // if (data.alerts == null) {
+              //   data.alerts = [dailyAlert];
+              // }
+              // else {
+              //   data.alerts.push(dailyAlert);
+              // }
 
-              updates["/users/" + user.uid + "/data/chips"] = data.chips;
-              updates["/users/" + user.uid + "/data/daily_login"] = data.daily_login;
-              updates["/users/" + user.uid + "/data/newAlert"] = true;
-              updates["/users/" + user.uid + "/data/alerts"] = data.alerts;
+              // updates["/users/" + user.uid + "/data/chips"] = data.chips;
+              // updates["/users/" + user.uid + "/data/daily_login"] = data.daily_login;
+              // updates["/users/" + user.uid + "/data/newAlert"] = true;
+              // updates["/users/" + user.uid + "/data/alerts"] = data.alerts;
+              console.log("Daily Login");
             }
             if (request.friend_request_alert) {
               request.friend_request_alert = false;

@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingContainer: {
     paddingHorizontal: 20,
-    width: "100%",
+    width: "40%",
     flex: 1,
     backgroundColor: "#1B2430",
     alignItems: "center",
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "40%",
     marginBottom: 20,
   },
   registerButtonText: {

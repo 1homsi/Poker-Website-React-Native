@@ -13,34 +13,36 @@ import {
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import Chat from "./Chat";
-import CardDealing from "./cardDealing";
-import { CardImageUtil as CardImages } from "./CardImages";
+import Chat from "./Chat"; //Importing the chat Modal screen
+import CardDealing from "./cardDealing"; //Cards are dealt from here
+import { CardImageUtil as CardImages } from "./CardImages"; //Importing the card images
+//Ps: jalal this is the cards array i was talking about that contains all the cards you wanted to seprate
 
 export default class GameSetting extends Component {
   constructor(props) {
     super(props);
 
-    var dimensions = Dimensions.get("screen");
+    var dimensions = Dimensions.get("screen"); //Getting the screen dimensions
     if (dimensions.height > dimensions.width) {
+      //If the screen is in portrait mode swap the width and height
       var temp = dimensions.height;
       dimensions.height = dimensions.width;
       dimensions.width = temp;
     }
-    var xOS = dimensions.width * 0.035;
+    var xOS = dimensions.width * 0.035; //X offset for the cards
     this.state = {
       animationBB: [
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 185, y: 0 }),
         new Animated.ValueXY({ x: 450, y: 80 }),
         new Animated.ValueXY({ x: -225, y: 75 }),
-      ],
+      ], //Animated value for the big blinds
       animationSB: [
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 225, y: -95 }),
         new Animated.ValueXY({ x: 415, y: -75 }),
         new Animated.ValueXY({ x: 625, y: 0 }),
-      ],
+      ], //Animated value for the small blinds
       playerCardAnimations: [
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
@@ -50,14 +52,14 @@ export default class GameSetting extends Component {
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
-      ],
+      ], //Animated value for the player cards
       tableCardsStart: [
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
         new Animated.ValueXY({ x: 0, y: 0 }),
-      ],
+      ], //Animated value for the table cards
 
       valueFoldCard: new Animated.ValueXY({ x: 25, y: 25 }),
       fadeAnimation: [
@@ -65,15 +67,15 @@ export default class GameSetting extends Component {
         new Animated.Value(0),
         new Animated.Value(0),
         new Animated.Value(0),
-      ],
+      ], //Animated value for the fold card
 
-      quitVisible: false,
-      raiseVisible: false,
-      kickVisible: true,
-      idle: false,
-      autoFolds: 0,
-      raiseAmount: 10,
-      screen: dimensions,
+      quitVisible: false, //Boolean to show the quit game modal
+      raiseVisible: false, //Boolean to show the raise modal
+      kickVisible: true, //Boolean to show the kick player modal
+      idle: false, //Boolean to show the idle modal
+      autoFolds: 0, //Number of auto folds
+      raiseAmount: 10, //Amount to raise
+      screen: dimensions, //Screen dimensions
 
       newValueBlinds: [
         {
@@ -104,7 +106,7 @@ export default class GameSetting extends Component {
             xOS,
           y: dimensions.height * (parseFloat(styles.player4View.top) / 100.0),
         },
-      ],
+      ], //Array of new values for the blinds1
 
       playerNewValues: [
         {
@@ -171,47 +173,9 @@ export default class GameSetting extends Component {
             dimensions.height *
             (1.09 - parseFloat(styles.player4View.top) / 100.0),
         },
-      ],
+      ], //Array of new values for the player cards
     };
   }
-
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.backAction
-    );
-  }
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
-
-  backAction = () => {
-    Alert.alert("Hold on!", "Are you sure you want to go back?", [
-      {
-        text: "Cancel",
-        onPress: () => null,
-        style: "cancel",
-      },
-      {
-        text: "YES",
-        onPress: () => {
-          this.props.navigation.navigate("HomePage");
-        },
-      },
-    ]);
-    return true;
-  };
-
-  setModalVisible = (visible) => {
-    this.setState({ quitVisible: visible });
-  };
-  setRaiseVisible = (visible) => {
-    this.setState({ raiseVisible: visible });
-  };
-  setKickVisible = (visible) => {
-    this.setState({ kickVisible: visible });
-  };
 
   //Use state variable called round 1 = flop 2 = turn 3 = river
   foldCard() {
@@ -371,33 +335,33 @@ export default class GameSetting extends Component {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={[styles.exitStyle, { fontSize: 20 }]}>
-              Game:{" "}
+              Game Name:{" "}
               {this.props.matchName.slice(0, this.props.matchName.indexOf("-"))}
             </Text>
 
             <TouchableOpacity
               style={styles.buttonInExit}
               onPress={() => {
-                this.setModalVisible(!this.state.quitVisible);
+                this.setState({ quitVisible: !this.state.quitVisible });
               }}
             >
               <Text style={styles.exitStyle}>Return To Game</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.buttonInExit}
               onPress={() => {
-                this.setModalVisible(!this.state.quitVisible);
+                this.setState({ quitVisible: !this.state.quitVisible });
                 this.props.navigation.navigate("HomePage");
               }}
             >
               <Text style={styles.exitStyle}>Go to Main Menu</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={[styles.buttonInExit, { backgroundColor: "#c80c0d" }]}
               onPress={() => {
-                this.setModalVisible(!this.state.quitVisible);
+                this.setState({ quitVisible: !this.state.quitVisible });
                 this.leaveGame();
               }}
             >
@@ -440,7 +404,7 @@ export default class GameSetting extends Component {
               strokeWidth={8}
               duration={duration}
               onComplete={() => {
-                this.setKickVisible(!this.state.kickVisible);
+                this.setState({ kickVisible: !this.state.kickVisible });
                 this.leaveGame();
               }}
               colors={[
@@ -470,7 +434,7 @@ export default class GameSetting extends Component {
             <TouchableOpacity
               style={[styles.buttonInExit, { backgroundColor: "#c80c0d" }]}
               onPress={() => {
-                this.setKickVisible(!this.state.kickVisible);
+                this.setState({ kickVisible: !this.state.kickVisible });
                 this.leaveGame();
               }}
             >
@@ -525,7 +489,9 @@ export default class GameSetting extends Component {
 
             <Slider
               style={{ width: 200, height: 40 }}
-              minimumValue={this.props.game.blindAmount}
+              minimumValue={
+                this.props.game.blindAmount ? this.props.game.blindAmount : 0
+              }
               maximumValue={maxChips - callAmount}
               step={10}
               onValueChange={(raiseAmount) => {
@@ -541,7 +507,7 @@ export default class GameSetting extends Component {
               style={styles.buttonInExit}
               onPress={() => {
                 //this.raiseAnimation()
-                this.setRaiseVisible(!raiseVisible);
+                this.setState({ raiseVisible: !raiseVisible });
                 //this.raisePot();
                 if (this.state.raiseAmount > 0) {
                   if (
@@ -577,7 +543,7 @@ export default class GameSetting extends Component {
             <TouchableOpacity
               style={styles.buttonInExit}
               onPress={() => {
-                this.setRaiseVisible(!raiseVisible);
+                this.setState({ raiseVisible: !raiseVisible });
               }}
             >
               <Text style={styles.exitStyle}>CANCEL</Text>
@@ -693,7 +659,7 @@ export default class GameSetting extends Component {
             myTurn && !raiseDisabled ? styles.raiseButt : styles.disabled,
           ]}
           disabled={!myTurn || raiseDisabled}
-          onPress={() => this.setRaiseVisible(true)}
+          onPress={() => this.setState({ raiseVisible: true })}
         >
           {this.props.game.raisedVal == 0 ? (
             <Text>Raise</Text>
@@ -874,17 +840,17 @@ export default class GameSetting extends Component {
 
   timedOut() {
     if (this.state.autoFolds == 3 || this.state.autoFolds > 5) {
-      this.setModalVisible(false);
-      this.setRaiseVisible(false);
-      this.setKickVisible(true);
+      this.setState({ quitVisible: false });
+      this.setState({ raiseVisible: false });
+      this.setState({ kickVisible: true });
       this.setState({ idle: true, autoFolds: this.state.autoFolds + 1 });
     } else {
       /* else if(this.state.autoFolds > 5){ //This kicks user out of game without choice
         this.setKickVisible(true)
         this.setState({idle: true})
       } */
-      this.setModalVisible(false);
-      this.setRaiseVisible(false);
+      this.setState({ quitVisible: false });
+      this.setState({ raiseVisible: false });
       this.setState({ autoFolds: this.state.autoFolds + 1 });
     }
     this.props.updateGame("fold");
@@ -986,7 +952,7 @@ export default class GameSetting extends Component {
         <View style={{ left: "2%", top: "2.5%", position: "absolute" }}>
           <TouchableOpacity
             style={styles.exitButton}
-            onPress={() => this.setModalVisible(true)}
+            onPress={() => this.setState({ quitVisible: true })}
           >
             <Text style={styles.textStyle}>MENU</Text>
           </TouchableOpacity>
@@ -1014,15 +980,6 @@ export default class GameSetting extends Component {
         <View style={styles.player4View}>{this.playerAvatarView(3)}</View>
 
         <View style={styles.potView}>
-          <Image
-            style={{
-              width: 150,
-              height: 150,
-              resizeMode: "contain",
-            }}
-            source={require("../../../assets/table.png")}
-          />
-
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
             Pot: {this.props.game.pot}
           </Text>
@@ -1060,8 +1017,8 @@ export default class GameSetting extends Component {
               source={require("../../../assets/chipAmount.png")}
             />
           </View>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-            {this.props.game.balance[this.props.playerNum]}
+          <Text style={{ fontSize: 17, fontWeight: "bold", color: "white" }}>
+            chips: {this.props.game.balance[this.props.playerNum]}
           </Text>
         </View>
 
@@ -1125,8 +1082,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     resizeMode: "contain",
-    top: "81%",
-    right: "37%",
+    top: "90%",
+    right: "0%",
     width: "25%",
     position: "absolute",
   },
@@ -1136,11 +1093,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: "#ff9f1a",
+    backgroundColor: "#D70040",
     borderRadius: 15,
     marginLeft: 5,
     maxHeight: 50,
-    width: "80%",
+    width: "40%",
     marginTop: 10,
   },
   textStyle: {
@@ -1175,7 +1132,7 @@ const styles = StyleSheet.create({
     width: "35%",
   },
   textBackground: {
-    backgroundColor: "#ff9f1a",
+    backgroundColor: "#D70040",
     paddingBottom: 4,
     paddingHorizontal: 5,
     borderRadius: 15,
@@ -1216,8 +1173,8 @@ const styles = StyleSheet.create({
   },
   potView: {
     position: "absolute",
-    top: "0%",
-    right: "2%",
+    top: "10%",
+    right: "4%",
   },
   pot: {
     borderRadius: 2,
@@ -1233,16 +1190,16 @@ const styles = StyleSheet.create({
   chipView: {
     position: "absolute",
     width: 50,
-    right: "2%",
-    bottom: "2%",
+    right: "4%",
+    top: "2%",
     alignContent: "center",
     alignItems: "center",
   },
   tableView: {
     position: "absolute",
-    top: "6%",
+    top: "5%",
     bottom: 0,
-    width: "60%",
+    width: "70%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -1253,8 +1210,8 @@ const styles = StyleSheet.create({
   },
   chat: {
     position: "absolute",
-    bottom: "2%",
-    right: "13%",
+    bottom: "4%",
+    right: "20%",
   },
   bettingButtonsView: {
     position: "absolute",
@@ -1281,8 +1238,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#cccccc",
   },
   cardImage: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     resizeMode: "contain",
   },
   foldCard: {

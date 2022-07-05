@@ -101,7 +101,7 @@ export default class AccountSettings extends Component {
             style={styles.buttonContainer}
             onPress={() => this.LogOut()}
           >
-            <Text style={styles.textStyle}>LogOut</Text>
+            <Text style={styles.textStyle}>Log Out</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
