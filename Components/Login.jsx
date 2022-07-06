@@ -10,6 +10,7 @@ import {
   ImageBackground,
 } from "react-native";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class Login extends Component {
   constructor(props) {
@@ -42,8 +43,18 @@ export default class Login extends Component {
         <ImageBackground
           source={require("../assets/Images/BG3.jpg")}
           style={styles.background}
-          blurRadius={7}
+          blurRadius={6}
         >
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.props.navigation.navigate("HomePage")}>
+            <Icon
+              name="arrow-back"
+              type="ionicons"
+              color="white"
+              size={30}
+            />
+          </TouchableOpacity>
           <View style={styles.Box}>
             <TextInput
               placeholder="Email"
@@ -85,12 +96,6 @@ export default class Login extends Component {
             >
               <Text style={styles.registerButtonText}>Login</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("HomePage")}
-            >
-              <Text style={styles.forgotPassword}>Go Back</Text>
-            </TouchableOpacity>
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>
@@ -120,15 +125,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingEnd: 10,
     borderRadius: 10,
-    width: "70%",
+    width: "60%",
   },
   Box: {
-    width: "50%",
+    width: "40%",
     height: "50%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
-    padding: 15,
+    padding: 10,
     borderRadius: 15,
     borderWidth: 3,
     borderColor: "gold",
@@ -140,7 +145,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonContainer: {
-    backgroundColor: "red",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
@@ -155,7 +160,13 @@ const styles = StyleSheet.create({
   registerButtonText: {
     textAlign: "center",
     color: "#FFF",
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
+    textTransform: "uppercase"
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });

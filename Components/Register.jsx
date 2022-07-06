@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Logo from "./Utils/Logo";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class Register extends Component {
   constructor(props) {
@@ -96,8 +97,17 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <Logo />
-
+        <Logo/>
+        <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.props.navigation.navigate("HomePage")}>
+            <Icon
+              name="arrow-back"
+              type="ionicons"
+              color="white"
+              size={30}
+            />
+          </TouchableOpacity>
         <TextInput
           placeholder="Username"
           placeholderTextColor="rgba(255, 255, 255, 0.75)"
@@ -148,13 +158,6 @@ export default class Register extends Component {
         >
           <Text style={styles.registerButtonText}>Register</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => this.props.navigation.navigate("HomePage")}
-        >
-          <Text style={styles.registerButtonText}>Go Back</Text>
-        </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   }
@@ -170,16 +173,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
     marginBottom: 20,
   },
   registerButtonText: {
     textAlign: "center",
     color: "#FFF",
+    fontSize: 18,
+    fontWeight: "bold",
+    textTransform: "uppercase"
   },
   input: {
     height: 40,
@@ -189,6 +195,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingEnd: 10,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });
