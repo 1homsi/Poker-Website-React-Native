@@ -99,15 +99,15 @@ export default class Register extends Component {
       <KeyboardAvoidingView style={styles.container}>
         <Logo/>
         <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.props.navigation.navigate("HomePage")}>
-            <Icon
-              name="arrow-back"
-              type="ionicons"
-              color="white"
-              size={30}
-            />
-          </TouchableOpacity>
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("HomePage")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
         <TextInput
           placeholder="Username"
           placeholderTextColor="rgba(255, 255, 255, 0.75)"
