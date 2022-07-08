@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import { joinGame } from "./Utils/JoinGame";
+import { Icon } from "react-native-elements";
 
 export default class JoinGamePage extends Component {
   constructor(props) {
@@ -76,6 +77,16 @@ export default class JoinGamePage extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("HomePage")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
         <View style={styles.balance}>
           <TouchableOpacity
             style={[styles.buttonContainer, { marginBottom: 0 }]}
@@ -108,7 +119,7 @@ export default class JoinGamePage extends Component {
               {this.state.upDown[Number(this.state.reverse)]}
             </Text>
             <Switch
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              trackColor={{ false: "#767577", true: "#474747" }}
               thumbColor={this.state.reverse ? "#f5dd4b" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={this.ReverseData}
@@ -166,13 +177,6 @@ export default class JoinGamePage extends Component {
             }}
           />
         </View>
-
-        <TouchableOpacity
-          style={[styles.buttonContainer, { width: "90%" }]}
-          onPress={() => this.props.navigation.navigate("HomePage")}
-        >
-          <Text style={styles.sortTextStyle}>Go Back</Text>
-        </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   }
@@ -213,19 +217,34 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: "100%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   sortContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
     alignContent: "center",
-    width: "100%",
+    width: "90%",
     marginBottom: 20,
     backgroundColor: "#990f02",
-    borderBottomColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
     borderBottomWidth: 1,
     padding: 10,
-
+    borderRadius: 25
   },
   sortButton: {
     backgroundColor: "#990f02",
@@ -233,7 +252,7 @@ const styles = StyleSheet.create({
   },
   sortTextStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
   },
   switchContainer: {
@@ -248,7 +267,7 @@ const styles = StyleSheet.create({
   registerButtonText: {
     textAlign: "center",
     color: "#FFF",
-    fontWeight: "900",
+    fontWeight: 700,
   },
   input: {
     height: 40,
@@ -259,9 +278,23 @@ const styles = StyleSheet.create({
     paddingEnd: 10,
     borderRadius: 20,
     width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   balance: {
     marginTop: 20,
     padding: 20,
+    alignItems:"flex-end"
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });
