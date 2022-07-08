@@ -97,16 +97,12 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <Logo/>
+        <Logo />
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => this.props.navigation.navigate("HomePage")}>
-          <Icon
-            name="arrow-back"
-            type="ionicons"
-            color="white"
-            size={30}
-          />
+          onPress={() => this.props.navigation.navigate("HomePage")}
+        >
+          <Icon name="arrow-back" type="ionicons" color="white" size={30} />
         </TouchableOpacity>
         <TextInput
           placeholder="Username"
@@ -185,7 +181,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   input: {
     height: 40,
@@ -201,5 +197,5 @@ const styles = StyleSheet.create({
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

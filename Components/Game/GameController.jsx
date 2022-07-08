@@ -11,8 +11,8 @@ const gameDeck = new Deck();
 export default class GameSetting extends Component {
   constructor(props) {
     super(props);
-    this.leaveGame = this.leaveGame.bind(this); //bind the function to the component
-    this.updateGame = this.updateGame.bind(this); //bind the function to the component
+    this.leaveGame = this.leaveGame.bind(this);
+    this.updateGame = this.updateGame.bind(this);
 
     this.state = {
       matchName: "",
@@ -29,7 +29,7 @@ export default class GameSetting extends Component {
       newPlayer: true,
       roundWinner: "",
       roundWinnerFound: false,
-    }; //initialize the state
+    };
   }
 
   componentDidMount() {
@@ -40,21 +40,21 @@ export default class GameSetting extends Component {
   }
 
   async getData() {
-    const fullMatchName = this.props.userData.in_game; //get the match name
+    const fullMatchName = this.props.userData.in_game;
     if (fullMatchName === "") {
       Alert.alert("You have not Joined/Created Game. Going back to Home Page");
       this.props.navigation.navigate("HomePage");
-    } //if the user has not joined/created a game, then go back to home page
+    }
 
-    var indexOfType = fullMatchName.indexOf("_"); //get the type of the match
-    const matchType = fullMatchName.substring(0, indexOfType); //get the type of the match
-    const matchName = fullMatchName.substring(indexOfType + 1); //get the name of the match
+    var indexOfType = fullMatchName.indexOf("_");
+    const matchType = fullMatchName.substring(0, indexOfType);
+    const matchName = fullMatchName.substring(indexOfType + 1);
 
     this.setState({
       fullMatchName: fullMatchName,
       matchType: matchType,
       matchName: matchName,
-    }); //set the state of the match name and type
+    });
     this.gameData(matchType, fullMatchName);
   }
 
@@ -63,10 +63,12 @@ export default class GameSetting extends Component {
       .database()
       .ref("/games/" + matchType + "/" + matchName)
       .on("value", (snapshot) => {
-        const data = snapshot.val(); //get the data from the database
+        const data = snapshot.val();
         console.log("game updated");
-        this.checkHost(data); //check if the user is the host
-        this.setState({ game: data }, () => this.gameTurnAction()); //set the state of the game
+        this.checkHost(data);
+        this.setState({ game: data }, () => this.gameTurnAction());
+
+        //this.checkHost(data)
       });
   }
 
@@ -77,23 +79,23 @@ export default class GameSetting extends Component {
         this.props.userData.username.slice(
           0,
           this.props.userData.username.indexOf("#")
-        ) //get the player number
+        )
       );
-      var newPlayer = false; //check if the user is a new player
+      var newPlayer = false;
 
       if (this.state.newPlayer) {
         //newPlayer is True by default
         if (playerNum >= game.size - game.newPlayer) {
-          newPlayer = true; //if the user is a new player
+          newPlayer = true;
         } else {
-          newPlayer = false; //if the user is not a new player
+          newPlayer = false;
         }
       }
       this.setState({
         host: playerNum == 0,
         playerNum: playerNum,
         newPlayer: newPlayer,
-      }); //set the state of the host and player number
+      });
     }
   }
 
@@ -108,15 +110,15 @@ export default class GameSetting extends Component {
 
   async gameTurnAction() {
     //check if all players are ready, by seeing if any player is not ready
-    var game = { ...this.state.game }; //copy the game
-    console.log(...this.state.game); //TODO: remove console log
-    const allPlayersReady = !game.ready.includes(false); //check if all players are ready
+    var game = { ...this.state.game };
+    const allPlayersReady = !game.ready.includes(false);
 
     if (this.state.host) {
-      console.log("game.turn = ", game.turn); //TODO: remove console log
-      var updates = {}; //initialize the updates
+      console.log("game.turn = ", game.turn);
+      var updates = {};
       const matchPath =
-        "/games/" + this.state.matchType + "/" + this.state.fullMatchName; //get the path of the match
+        "/games/" + this.state.matchType + "/" + this.state.fullMatchName;
+
       if (game.turn == 0) {
         if (game.newPlayer > 0) {
           for (var i = 0; i < game.newPlayer; i++) {
@@ -126,7 +128,7 @@ export default class GameSetting extends Component {
             game.chipsWon.push(0);
             game.move[game.size - game.newPlayer + i] = "check";
             game.ready.push(false);
-          } //add new players to the game
+          }
 
           updates[matchPath + "/wins"] = game.wins;
           updates[matchPath + "/move"] = game.move;
@@ -140,9 +142,7 @@ export default class GameSetting extends Component {
           Math.min(...game.balance) < game.blindAmount
         ) {
           //waiting for users to leave/join
-          console.log("waiting for users to leave/join");
         } else {
-          //shuffle cards and upload to database
           var cards = await this.giveOutCards();
           game.player_cards = cards[0];
           game.deck = cards[1];
@@ -628,10 +628,9 @@ export default class GameSetting extends Component {
     }
   }
 
-  //TODO: let the host always win the game
   async giveOutCards() {
     gameDeck.shuffle();
-    //TODO: Add later (compare if the host give them better cards if not then give them normal cards)
+
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
       playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
