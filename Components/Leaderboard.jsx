@@ -203,12 +203,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 6,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
-
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   joinButton: {
     backgroundColor: "#000000",
@@ -216,6 +215,14 @@ const styles = StyleSheet.create({
     width: "95%",
     paddingTop: 5,
     marginLeft: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   buttonContainer: {
     backgroundColor: "#990f02",
@@ -224,16 +231,24 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "40%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   registerButtonText: {
     textAlign: "center",
     color: "#FFF",
-    fontWeight: "900",
+    fontWeight: 700,
   },
   statButtonText: {
     color: "white",
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: 700,
   },
   statButton: {
     backgroundColor: "#990f02",
@@ -245,6 +260,14 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingLeft: 5,
     paddingRight: 5, 
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   input: {
     height: 40,
@@ -255,6 +278,14 @@ const styles = StyleSheet.create({
     paddingEnd: 10,
     borderRadius: 15,
     width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   statButtonsContainer: {
     width: "90%",

@@ -194,6 +194,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: windowWidth < 400 ? 220 : 270,
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   continueButton: {
     backgroundColor: "#990f02",
@@ -202,6 +210,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: windowWidth < 400 ? 200 : 250,
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   topRow: {
     flexDirection: "row",
@@ -219,6 +235,14 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     backgroundColor: "#990f02",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   SignedView: {
     width: "60%",
