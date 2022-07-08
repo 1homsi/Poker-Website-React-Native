@@ -98,6 +98,7 @@ export default class Leaderboard extends Component {
             >
               <Text style={styles.statButtonText}>Total Wins</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.statButton}
               onPress={() => this.setState({ lbStatistic: "chips_won" })}
@@ -111,13 +112,13 @@ export default class Leaderboard extends Component {
               <Text style={styles.statButtonText}>Total Chips Lost</Text>
             </TouchableOpacity>
           </View>
+
           <View
             style={{
-              flex: 1,
-              alignSelf: "center",
+              width: "60%",
               justifyContent: "center",
-              paddingBottom: 10,
-              width: "75%",
+              alignItems: "center",
+              alignSelf: "center",
             }}
           >
             <FlatList
@@ -199,6 +200,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom:20,
     marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+
   },
   joinButton: {
     backgroundColor: "#000000",
