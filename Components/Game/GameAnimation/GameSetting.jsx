@@ -1161,7 +1161,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 110,
     left: "20%",
-    top: "1%",
+    top: "10%",
   },
   player3View: {
     borderRadius: 2,
@@ -1169,7 +1169,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 110,
     right: "20%",
-    top: "1%",
+    top: "10%",
   },
   player4View: {
     position: "absolute",
