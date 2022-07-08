@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Logo from "../Utils/Logo";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class DeleteAccount extends Component {
   constructor(props) {
@@ -46,8 +47,18 @@ export default class DeleteAccount extends Component {
     return (
       <KeyboardAvoidingView style={styles.container}>
         <Logo />
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("AccountSettings")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
         <Text style={styles.textStyle}>
-          Are you sure you want to Delete your account?
+          Are you sure you want to delete your account?
         </Text>
 
         <TouchableOpacity
@@ -60,7 +71,7 @@ export default class DeleteAccount extends Component {
           style={styles.noButtonContainer}
           onPress={() => this.props.navigation.navigate("AccountSettings")}
         >
-          <Text style={styles.ButtonText}>No</Text>
+          <Text style={styles.noButtonText}>No</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -69,10 +80,11 @@ export default class DeleteAccount extends Component {
 
 const styles = StyleSheet.create({
   textStyle: {
-    marginBottom: 10,
+    marginBottom: 20,
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
+    fontSize: 20,
   },
   container: {
     padding: 20,
@@ -82,24 +94,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   noButtonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#fff",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
     marginBottom: 20,
   },
   yesButtonContainer: {
-    backgroundColor: "#c80c0d",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
     marginBottom: 20,
   },
   ButtonText: {
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
     color: "#FFF",
+    textTransform: "uppercase"
   },
+  noButtonText: {
+    fontWeight: 700,
+    textAlign: "center",
+    color: "#990f02",
+    textTransform: "uppercase"
+  },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });

@@ -7,8 +7,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class AccountSettings extends Component {
   LogOut = () => {
@@ -34,6 +34,16 @@ export default class AccountSettings extends Component {
     var user = firebase.auth().currentUser;
     return (
       <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("HomePage")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
         <View style={styles.head}>
         <Image
           source={{ uri: user.photoURL }}
@@ -98,17 +108,10 @@ export default class AccountSettings extends Component {
             <Text style={styles.textStyle}>Friends</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.buttonContainer}
+            style={styles.logoutButton}
             onPress={() => this.LogOut()}
           >
-            <Text style={styles.textStyle}>Log Out</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.buttonContainer, {width: "20%", marginTop: "5%"}]}
-            onPress={() => this.props.navigation.navigate("HomePage")}
-          >
-            <Text style={styles.textStyle}>Go Back</Text>
+            <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -119,7 +122,7 @@ export default class AccountSettings extends Component {
 const styles = StyleSheet.create({
   textStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
   },
   title: {
@@ -159,12 +162,30 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     padding: 20,
     borderRadius: 10,
-    width: "30%",
+    width: "15%",
     marginBottom: 20,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
     textalign: "center",
+  },
+  logoutButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 20,
+    padding: 20,
+    borderRadius: 10,
+    width: "15%",
+    marginBottom: 20,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    textalign: "center",
+  },
+  logoutText: {
+    color: "#990f02",
+    fontWeight: 700,
+    textAlign: "center",
+    textTransform: "uppercase"
   },
   input: {
     height: 40,
@@ -176,4 +197,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "100%",
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });

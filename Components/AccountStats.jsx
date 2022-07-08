@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Logo from "./Utils/Logo";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class AccountStats extends Component {
   constructor(props) {
@@ -38,6 +39,16 @@ export default class AccountStats extends Component {
     if (this.state.ready) {
       return (
         <SafeAreaView style={styles.container}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.props.navigation.navigate("AccountSettings")}>
+            <Icon
+              name="arrow-back"
+              type="ionicons"
+              color="white"
+              size={30}
+            />
+          </TouchableOpacity>
           <View style={styles.bubble}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <Image
@@ -82,12 +93,6 @@ export default class AccountStats extends Component {
               </Text>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => this.props.navigation.navigate("HomePage")}
-          >
-            <Text style={styles.buttonText}>Go Back</Text>
-          </TouchableOpacity>
         </SafeAreaView>
       );
     } else {
@@ -118,20 +123,21 @@ const styles = StyleSheet.create({
   Stats: {
     //backgroundColor: "#7befb2",
     elevation: 2,
-    color: "black",
-    fontWeight: "bold",
+    color: "white",
+    fontWeight: 700,
     textAlign: "center",
   },
   textContainer: {
     /* margin: 10,
         padding: 10,
         borderRadius: 20,        backgroundColor: "#7befb2", */
-    backgroundColor: "#7befb2",
+    backgroundColor: "#249c5c",
     margin: 10,
     padding: 10,
     borderRadius: 15,
     overflow: "hidden",
-    width: "100%",
+    width: "30%",
+    alignSelf: "center"
   },
   avatarImage: {
     width: 150,
@@ -142,11 +148,11 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   bubble: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     padding: 20,
-    borderRadius: 15,
-    width: "80%",
-    marginBottom: 30,
+    borderRadius: 20,
+    width: "50%",
+    marginBottom: 20,
     textAlign: "center",
     justifyContent: "center",
     alignContent: "center",
@@ -164,4 +170,9 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontWeight: "900",
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });

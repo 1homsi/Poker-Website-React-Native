@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Logo from "../Utils/Logo";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class ChangeEmail extends Component {
   constructor(props) {
@@ -47,9 +48,19 @@ export default class ChangeEmail extends Component {
     return (
       <KeyboardAvoidingView
         // behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+        style={styles.container}>
         <Logo />
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("AccountSettings")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
+        <Text style={styles.emailText}>Enter your new email.</Text>
         <TextInput
           placeholder={this.state.oldEmail}
           placeholderTextColor="rgba(255, 255, 255, 0.75)"
@@ -68,13 +79,6 @@ export default class ChangeEmail extends Component {
           onPress={() => this.Update()}
         >
           <Text style={styles.sendButtonText}>Change Email</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => this.props.navigation.navigate("AccountSettings")}
-        >
-          <Text style={styles.sendButtonText}>Go Back</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -97,19 +101,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingEnd: 10,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "100%",
+    width: "30%",
     marginBottom: 20,
   },
   sendButtonText: {
     textAlign: "center",
     color: "#FFF",
-    fontWeight: "900",
+    fontWeight: 700,
+    textTransform: "uppercase"
   },
+  emailText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: 700,
+    marginTop: "-30%",
+    color: "#FFF",
+    marginBottom: "2%"
+  },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });
