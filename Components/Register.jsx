@@ -47,7 +47,7 @@ export default class Register extends Component {
             .updateProfile({
               displayName: this.state.username.trim(),
               photoURL:
-                "https://firebasestorage.googleapis.com/v0/b/pokerfriends-843ef.appspot.com/o/default_player_image.jpg?alt=media&token=8353b7ac-d6f0-4c6c-a379-712cb8cb48de",
+                "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_1200,h_423/https://maydaytrust.org.uk/wp-content/uploads/2019/01/Poker-Chips-1200x423.jpg",
             })
             .then(() => {
               this.props.navigation.navigate("HomePage");
@@ -70,7 +70,7 @@ export default class Register extends Component {
       .ref("users/" + user.uid + "/data")
       .set({
         daily_login: new Date().getDay(),
-        chips: 1000,
+        chips: 0,
         username: username,
         email: this.state.email,
         friends: [""],
@@ -80,6 +80,7 @@ export default class Register extends Component {
         chips_won: 0,
         in_game: "",
         newAlert: false,
+        isDealer: false,
         photoURL:
           "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_1200,h_423/https://maydaytrust.org.uk/wp-content/uploads/2019/01/Poker-Chips-1200x423.jpg",
       });
