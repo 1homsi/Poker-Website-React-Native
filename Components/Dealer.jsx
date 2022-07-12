@@ -87,25 +87,22 @@ export default class Dealer extends Component {
           >
             <Icon name="arrow-back" type="ionicons" color="white" size={30} />
           </TouchableOpacity>
-          <View style={searchContainer}>
-            <Text style={styles.TextUp}>Search Email</Text>
+          <View style={styles.searchContainer}>
+            <Text style={styles.title}>Search Email</Text>
             <View style={styles.search}>
             <TextInput
-              style={{
-                height: 40,
-                borderColor: "gray",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                padding: 5,
-                width: "50%",
-                color: "white",
-              }}
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="rgba(255, 255, 255, 0.75)"
+              autoCompleteType="email"
+              returnKeyType="next"
+              keyboardType="email-address"
+              autoCapitalize="none"
               onChangeText={(text) => this.setState({ searchEmail: text })}
               value={this.state.searchEmail}
             />
-            <TouchableOpacity onPress={() => this.FindUser()}>
-              <Text onPress={this.FindUser}>Find User</Text>
+            <TouchableOpacity onPress={() => this.FindUser()} style={styles.buttonContainer}>
+              <Text onPress={this.FindUser} style={styles.buttonText}>Find User</Text>
             </TouchableOpacity>
             </View>
           </View>
@@ -204,12 +201,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B2430",
     alignUserDatas: "center",
     justifyContent: "center",
+    alignContent: "center"
   },
-  TextUp: {
+  title: {
     color: "white",
     fontWeight: 700,
     textAlign: "center",
     fontSize: 30,
+    marginTop: "-20%",
+    marginBottom: "5%"
   },
   readyContainer: {
     flex: 1,
@@ -233,41 +233,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  joinButton: {
-    backgroundColor: "#000000",
-    borderRadius: 15,
-    width: "95%",
-    paddingTop: 5,
-    marginLeft: 5,
-  },
   buttonContainer: {
     backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "40%",
+    width: "30%",
     marginBottom: 20,
+    alignSelf: "center"
   },
-  registerButtonText: {
+  buttonText: {
     textAlign: "center",
     color: "#FFF",
-    fontWeight: "900",
-  },
-  statButtonText: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "600",
-  },
-  statButton: {
-    backgroundColor: "#990f02",
-    borderRadius: 15,
-    marginHorizontal: 5,
-    marginBottom: 10,
-    width: "10%",
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 5,
-    paddingRight: 5,
+    fontWeight: 700,
+    textTransform: "uppercase",
   },
   input: {
     height: 40,
@@ -277,15 +256,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingEnd: 10,
     borderRadius: 15,
-    width: "100%",
-  },
-  statButtonsContainer: {
-    width: "90%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly",
-    marginTop: 30,
-    marginBottom: 15,
+    alignSelf: "center",
+    width: "30%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   avatarImage: {
     width: 80,

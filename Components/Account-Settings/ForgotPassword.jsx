@@ -42,7 +42,7 @@ export default class ForgotPassword extends Component {
         <Logo />
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => this.props.navigation.navigate("HomePage")}>
+          onPress={() => this.props.navigation.navigate("AccountSettings")}>
           <Icon
             name="arrow-back"
             type="ionicons"

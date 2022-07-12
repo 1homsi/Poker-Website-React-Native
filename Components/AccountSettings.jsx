@@ -63,7 +63,7 @@ export default class AccountSettings extends Component {
             style={styles.buttonContainer}
             onPress={() => this.props.navigation.navigate("ForgotPassword")}
           >
-            <Text style={styles.textStyle}>Password Reset</Text>
+            <Text style={styles.textStyle}>Reset Password</Text>
           </TouchableOpacity>
 
           {/* <TouchableOpacity
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     padding: 20,
     borderRadius: 10,
-    width: "30%",
+    width: "18%",
     marginBottom: 20,
     justifyContent: "center",
     alignContent: "center",
