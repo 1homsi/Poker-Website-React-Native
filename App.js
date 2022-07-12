@@ -27,6 +27,7 @@ import AccountStats from "./Components/AccountStats";
 import ChangeAvatar from "./Components/Account-Settings/ChangeAvatar";
 import Leaderboard from "./Components/Leaderboard";
 import IntroScreen from "./Components/IntroScreen";
+import Dealer from "./Components/Dealer";
 
 const Stack = createStackNavigator();
 
@@ -202,6 +203,11 @@ export default class App extends PureComponent {
             <Stack.Screen name="AccountSettings">
               {(props) => (
                 <AccountSettings {...props} userData={this.state.userData} />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="Dealer">
+              {(props) => (
+                <Dealer {...props} userData={this.state.userData} />
               )}
             </Stack.Screen>
 
