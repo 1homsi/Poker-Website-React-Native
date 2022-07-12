@@ -17,6 +17,7 @@ import {
   StatusBar,
   Platform,
 } from "react-native";
+import { Icon } from "react-native-elements";
 
 import firebase from "firebase";
 //import 'firebase/firestore'
@@ -91,7 +92,7 @@ export default function Chat(matchInfo) {
             flex: 1,
           }}
         >
-          <KeyboardAvoidingView style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
             <View style={styles.head}>
               <TouchableWithoutFeedback
                 style={{ maxHeight: 100, height: 100 }}
@@ -99,26 +100,19 @@ export default function Chat(matchInfo) {
                   Keyboard.dismiss();
                 }}
               >
-                <Text style={styles.title}>Chat room</Text>
+                <Text style={styles.title}>Chat Room</Text>
               </TouchableWithoutFeedback>
 
-              <Pressable
-                style={[
-                  styles.button,
-                  styles.buttonClose,
-                  {
-                    width: "20%",
-                    marginLeft: "auto",
-                  },
-                ]}
+              <TouchableOpacity
+                style={styles.icon}
                 onPress={() => {
                   setModalVisible(false);
 
                   setNewMessages(messages.length);
                 }}
               >
-                <Text style={styles.exitTextStyle}>EXIT</Text>
-              </Pressable>
+                <Icon name="x" type="feather" color="black" size={30} />
+              </TouchableOpacity>
             </View>
 
             <GiftedChat
@@ -153,7 +147,7 @@ export default function Chat(matchInfo) {
                 );
               }}
             />
-          </KeyboardAvoidingView>
+          </View>
         </View>
       </Modal>
 
@@ -162,7 +156,7 @@ export default function Chat(matchInfo) {
           styles.button,
           {
             backgroundColor:
-              messages.length - newMessages == 0 ? "#D70040" : "#c80c0d",
+              messages.length - newMessages == 0 ? "#990f02" : "#5e0901",
           },
         ]}
         onPress={() => {
@@ -212,14 +206,31 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 15,
-    padding: 10,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   buttonOpen: {
     backgroundColor: "#2196F3",
   },
   buttonClose: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     marginTop: 20,
+    width: "10%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   modalText: {
     marginBottom: 35,
@@ -238,14 +249,22 @@ const styles = StyleSheet.create({
   },
   exitTextStyle: {
     color: "#FFFFFF",
-    fontWeight: "bold",
+    fontWeight: 700,
     textTransform: "uppercase",
+    textAlign: "center",
+    fontSize: 15,
   },
   title: {
     fontWeight: "bold",
     fontSize: 30,
     // marginBottom: 10,
     textAlign: "center",
-    marginLeft: "2%",
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  icon: {
+    right: 20,
+    top: 20,
+    position: "absolute",
   },
 });
