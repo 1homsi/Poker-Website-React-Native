@@ -11,6 +11,7 @@ import {
   FlatList,
 } from "react-native";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class HelpButton extends Component {
   state = {
@@ -61,10 +62,23 @@ export default class HelpButton extends Component {
         >
           <View style={styles.buttonTextView}>
             <View style={styles.modalView}>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => {
+                this.setModalVisible(!modalVisible), this.removeNewAlert();
+              }}
+                >
+              <Icon 
+                name="x" 
+                type="feather" 
+                color="black" 
+                size={30} 
+              />
+            </TouchableOpacity>
               <Text
                 style={{
                   fontWeight: "bold",
-                  marginTop: -35,
+                  marginTop: -20,
                   fontSize: 30,
                   marginBottom: 25,
                 }}
@@ -82,30 +96,40 @@ export default class HelpButton extends Component {
                       style={{
                         flexDirection: "row",
                         justifyContent: "center",
-                        width: "85%",
+                        width: "90%",
                         backgroundColor: "#cccccc",
                         padding: 20,
                         paddingEnd: 20,
                         marginLeft: 20,
-                        borderRadius: 30,
+                        borderRadius: 10,
                         marginBottom: 10,
                       }}
                     >
-                      <Text style={styles.textStyle}>{item}</Text>
+                      <Text style={[styles.textStyle, {textAlign: "left"}]}>{item}</Text>
 
                       <View style={{ paddingLeft: 5 }}>
                         <TouchableOpacity
-                          style={styles.NotificationClearButton}
+                          style={{
+                            top: 5, 
+                            backgroundColor: "#990f02", 
+                            borderRadius: 30, 
+                            padding: 2, 
+                            marginLeft: 4,
+                          }}
                           onPress={() => this.removeAlerts(index)}
                         >
-                          <Text style={styles.NotificationButtonText}>X</Text>
+                          <Icon 
+                            name="x" 
+                            type="feather" 
+                            color="white" 
+                            size={20} 
+                          />
                         </TouchableOpacity>
                       </View>
                     </View>
                   );
                 }}
               />
-
               <View
                 styles={{
                   flexDirection: "row",
@@ -122,15 +146,6 @@ export default class HelpButton extends Component {
                 >
                   <Text style={styles.NotificationButtonText}>Clear All</Text>
                 </TouchableOpacity>
-
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    this.setModalVisible(!modalVisible), this.removeNewAlert();
-                  }}
-                >
-                  <Text style={styles.textStyle}>EXIT</Text>
-                </Pressable>
               </View>
             </View>
           </View>
@@ -141,7 +156,7 @@ export default class HelpButton extends Component {
             style={[
               styles.NotificationButton,
               this.props.userData.newAlert
-                ? { backgroundColor: "#c80c0d" }
+                ? { backgroundColor: "#5e0901" }
                 : { backgroundColor: "#990f02" },
             ]}
             onPress={() => this.setModalVisible(!modalVisible)}
@@ -191,13 +206,9 @@ const styles = StyleSheet.create({
   buttonOpen: {
     backgroundColor: "#990f02",
   },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-    marginTop: 20,
-  },
   textStyle: {
     color: "black",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
   },
   modalText: {
@@ -226,11 +237,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#c80c0d",
+    backgroundColor: "#990f02",
   },
   NotificationButtonText: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
+    textTransform: "uppercase",
+  },
+  icon: {
+    right: 20,
+    top: 20,
+    position: "absolute",
   },
 });
