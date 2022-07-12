@@ -16,6 +16,7 @@ import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Chat from "./Chat"; //Importing the chat Modal screen
 import CardDealing from "./cardDealing"; //Cards are dealt from here
 import { CardImageUtil as CardImages } from "./CardImages"; //Importing the card images
+import { Icon } from "react-native-elements";
 //Ps: jalal this is the cards array i was talking about that contains all the cards you wanted to seprate
 
 export default class GameSetting extends Component {
@@ -335,19 +336,32 @@ export default class GameSetting extends Component {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          <TouchableOpacity
+                style={styles.icon}
+                onPress={() => {
+                  this.setState({ quitVisible: !this.state.quitVisible });
+                }}
+              >
+                <Icon 
+                  name="x" 
+                  type="feather" 
+                  color="black" 
+                  size={30} 
+                />
+              </TouchableOpacity>
             <Text style={[styles.exitStyle, { fontSize: 20 }]}>
               Game Name:{" "}
               {this.props.matchName.slice(0, this.props.matchName.indexOf("-"))}
             </Text>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.buttonInExit}
               onPress={() => {
                 this.setState({ quitVisible: !this.state.quitVisible });
               }}
             >
               <Text style={styles.exitStyle}>Return To Game</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TouchableOpacity
               style={styles.buttonInExit}
@@ -360,7 +374,7 @@ export default class GameSetting extends Component {
             </TouchableOpacity> */}
 
             <TouchableOpacity
-              style={[styles.buttonInExit, { backgroundColor: "#c80c0d" }]}
+              style={[styles.buttonInExit, { backgroundColor: "#990f02" }]}
               onPress={() => {
                 this.setState({ quitVisible: !this.state.quitVisible });
                 this.leaveGame();
@@ -409,9 +423,9 @@ export default class GameSetting extends Component {
                 this.leaveGame();
               }}
               colors={[
-                ["#004777", 0.4],
-                ["#F7B801", 0.4],
-                ["#A30000", 0.2],
+                ["#4faff0", 0.4],
+                ["#fad325", 0.4],
+                ["#e60505", 0.2],
               ]}
             >
               {({ remainingTime, animatedColor }) => (
@@ -433,7 +447,7 @@ export default class GameSetting extends Component {
             )}
 
             <TouchableOpacity
-              style={[styles.buttonInExit, { backgroundColor: "#c80c0d" }]}
+              style={[styles.buttonInExit, { backgroundColor: "#990f02" }]}
               onPress={() => {
                 this.setState({ kickVisible: !this.state.kickVisible });
                 this.leaveGame();
@@ -466,23 +480,23 @@ export default class GameSetting extends Component {
             {callAmount == 0 ? (
               this.state.raiseAmount ==
               this.props.game.balance[this.props.playerNum] ? (
-                <Text style={{ padding: 0, fontWeight: "bold" }}>
+                <Text style={{ padding: 5, fontWeight: 700 }}>
                   ALL IN! {this.state.raiseAmount} Chips
                 </Text>
               ) : (
-                <Text style={{ padding: 0, fontWeight: "bold" }}>
+                <Text style={{ padding: 5, fontWeight: 700 }}>
                   Raise {this.state.raiseAmount} Chips
                 </Text>
               )
             ) : callAmount + this.state.raiseAmount ==
               this.props.game.balance[this.props.playerNum] ? (
-              <Text style={{ padding: 0, fontWeight: "bold" }}>
+              <Text style={{ padding: 5, fontWeight: 700 }}>
                 {" "}
                 ALL IN!
                 {" " + (callAmount + this.state.raiseAmount)} Chips
               </Text>
             ) : (
-              <Text style={{ padding: 0, fontWeight: "bold" }}>
+              <Text style={{ padding: 5, fontWeight: 700 }}>
                 Call: {callAmount} + New Re-Raise {this.state.raiseAmount} =
                 {" " + (callAmount + this.state.raiseAmount)} Chips
               </Text>
@@ -537,7 +551,7 @@ export default class GameSetting extends Component {
                 }
               }}
             >
-              <Text style={{ fontWeight: "bold" }}>APPLY</Text>
+              <Text style={{ fontWeight: 700 }}>APPLY</Text>
             </TouchableOpacity>
 
             <View style={{ padding: 5 }}></View>
@@ -726,12 +740,12 @@ export default class GameSetting extends Component {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text
-              style={{ fontWeight: "bold", fontSize: 20, color: "#ff9f1a" }}
+              style={{ fontWeight: 700, fontSize: 20, color: "#fc9403" }}
             >
               {" "}
               {this.props.game.roundWinner}{" "}
             </Text>
-            <Text style={{ padding: 0, fontWeight: "bold", marginBottom: 10 }}>
+            <Text style={{ padding: 5, fontWeight: 700, marginBottom: 10 }}>
               won with a {this.props.game.roundWinnerRank}!
             </Text>
 
@@ -754,9 +768,9 @@ export default class GameSetting extends Component {
                 });
               }}
               colors={[
-                ["#004777", 0.4],
-                ["#F7B801", 0.4],
-                ["#A30000", 0.2],
+                ["#4faff0", 0.4],
+                ["#fad325", 0.4],
+                ["#e60505", 0.2],
               ]}
             >
               {({ remainingTime, animatedColor }) => (
@@ -814,9 +828,9 @@ export default class GameSetting extends Component {
           duration={45}
           onComplete={() => (myTurn ? this.timedOut() : [false])}
           colors={[
-            ["#004777", 0.4],
-            ["#F7B801", 0.4],
-            ["#A30000", 0.2],
+            ["#4faff0", 0.4],
+            ["#fad325", 0.4],
+            ["#e60505", 0.2],
           ]}
         >
           {({ remainingTime, animatedColor }) => (
@@ -828,7 +842,7 @@ export default class GameSetting extends Component {
 
         <View style={[styles.timerTextBackground]}>
           {0 == this.props.game.turn || this.props.game.turn == 5 ? (
-            <Text style={[styles.playerNames, { marginLeft: 20 }]}>
+            <Text style={styles.playerNames}>
               Waiting For Other Players
             </Text>
           ) : (
@@ -883,7 +897,7 @@ export default class GameSetting extends Component {
             opacity: this.state.fadeAnimation[num],
             backgroundColor: "#990f02",
             padding: 2,
-            borderRadius: 15,
+            borderRadius: 20,
           },
         ]}
       >
@@ -981,7 +995,7 @@ export default class GameSetting extends Component {
         <View style={styles.player4View}>{this.playerAvatarView(3)}</View>
 
         <View style={styles.potView}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+          <Text style={{ fontSize: 18, fontWeight: 700, color: "white", marginHorizontal: "2%" }}>
             Pot: {this.props.game.pot}
           </Text>
         </View>
@@ -1011,8 +1025,8 @@ export default class GameSetting extends Component {
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
               
           </View>
-          <Text style={styles.ChipsAmount}>
-            chips: {this.props.game.balance[this.props.playerNum]}
+          <Text style={[styles.ChipsAmount, {fontSize: 18, fontWeight: 700, color: "white", marginHorizontal: "2%"}]}>
+            Chips: {this.props.game.balance[this.props.playerNum]}
           </Text>
         </View>
 
@@ -1063,12 +1077,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: "2%"
   },
   buttonInExit: {
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    width: "80%",
+    width: "40%",
     backgroundColor: "#cccccc",
     marginTop: 5,
     alignItems: "center",
@@ -1078,6 +1093,14 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     backgroundColor: "#990f02",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   timer: {
     position: "absolute",
@@ -1096,26 +1119,37 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     backgroundColor: "#990f02",
-    borderRadius: 15,
-    marginLeft: 5,
+    borderRadius: 20,
+    marginLeft: "5%",
     maxHeight: 50,
-    width: "40%",
+    width: "35%",
+    padding: 5,
     marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   textStyle: {
     color: "#FFFFFF",
-    fontWeight: "bold",
+    fontWeight: 700,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
+    fontSize: 15
   },
   playerNames: {
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 700,
     justifyContent: "center",
     alignItems: "center",
+    padding: 8
   },
   modalView: { 
     margin: 20,
@@ -1137,7 +1171,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#990f02",
     paddingBottom: 4,
     paddingHorizontal: 5,
-    borderRadius: 15,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   player1View: {
     position: "absolute",
@@ -1224,20 +1266,51 @@ const styles = StyleSheet.create({
   bettingButtons: {
     borderRadius: 15,
     padding: 10,
-    elevation: 2,
     marginHorizontal: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   raiseButt: {
     backgroundColor: "#add8e6",
     paddingHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   callButt: {
     backgroundColor: "#fed8b1",
     paddingHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   foldButt: {
     backgroundColor: "#ffcccb",
     paddingHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   disabled: {
     backgroundColor: "#cccccc",
@@ -1255,5 +1328,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  icon: {
+    right: 20,
+    top: 20,
+    position: "absolute",
   },
 });
