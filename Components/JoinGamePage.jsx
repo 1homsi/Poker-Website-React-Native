@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "45%",
     padding: 15,
-    margin: 10,
+    marginHorizontal: "6%",
   },
   joinButton: {
     backgroundColor: "#000000",
@@ -290,7 +290,6 @@ const styles = StyleSheet.create({
   balance: {
     marginTop: 20,
     padding: 20,
-    alignItems:"flex-end"
   },
   icon: {
     left: 20,

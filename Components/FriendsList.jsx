@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#cccccc",
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
@@ -667,7 +667,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   friendListContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     borderRadius: 30,
     textAlign: "center",
     justifyContent: "center",

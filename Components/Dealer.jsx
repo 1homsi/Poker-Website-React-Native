@@ -87,15 +87,19 @@ export default class Dealer extends Component {
           >
             <Icon name="arrow-back" type="ionicons" color="white" size={30} />
           </TouchableOpacity>
-          <View>
-            <Text>Search Email</Text>
+          <View style={searchContainer}>
+            <Text style={styles.TextUp}>Search Email</Text>
+            <View style={styles.search}>
             <TextInput
               style={{
                 height: 40,
                 borderColor: "gray",
                 borderWidth: 1,
+                borderRadius: 10,
                 margin: 10,
                 padding: 5,
+                width: "50%",
+                color: "white",
               }}
               onChangeText={(text) => this.setState({ searchEmail: text })}
               value={this.state.searchEmail}
@@ -103,6 +107,7 @@ export default class Dealer extends Component {
             <TouchableOpacity onPress={() => this.FindUser()}>
               <Text onPress={this.FindUser}>Find User</Text>
             </TouchableOpacity>
+            </View>
           </View>
           {this.state.UserData ? (
             <>
@@ -146,10 +151,11 @@ export default class Dealer extends Component {
                     <TextInput
                       style={{
                         height: 40,
-                        borderColor: "gray",
-                        borderWidth: 1,
+                        borderColor: "white",
+                        borderWidth: 2,
                         margin: 10,
                         padding: 5,
+                        color: "white",
                       }}
                       placeholder="Enter new Chips amount"
                       onChangeText={(text) => {
@@ -198,6 +204,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B2430",
     alignUserDatas: "center",
     justifyContent: "center",
+  },
+  TextUp: {
+    color: "white",
+    fontWeight: 700,
+    textAlign: "center",
+    fontSize: 30,
   },
   readyContainer: {
     flex: 1,

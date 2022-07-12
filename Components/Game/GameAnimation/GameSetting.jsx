@@ -881,7 +881,7 @@ export default class GameSetting extends Component {
         style={[
           {
             opacity: this.state.fadeAnimation[num],
-            backgroundColor: "#D70040",
+            backgroundColor: "#990f02",
             padding: 2,
             borderRadius: 15,
           },
@@ -1000,23 +1000,16 @@ export default class GameSetting extends Component {
 
         {this.timerView()}
 
-        <View style={styles.chat}>
+        <View style={styles.chat}> 
           <Chat
             matchName={this.props.matchName}
             matchType={this.props.matchType}
-          />
+            />
         </View>
 
         <View style={styles.chipView}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Image
-              style={{
-                width: 40,
-                height: 40,
-                resizeMode: "contain",
-              }}
-              source={require("../../../assets/chipAmount.png")}
-            />
+              
           </View>
           <Text style={styles.ChipsAmount}>
             chips: {this.props.game.balance[this.props.playerNum]}
@@ -1084,11 +1077,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
   },
   timer: {
     position: "absolute",
-    top: "18%",
+    top: "10%",
     right: "25%",
     flexDirection: "row",
     justifyContent: "center",
@@ -1102,7 +1095,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     borderRadius: 15,
     marginLeft: 5,
     maxHeight: 50,
@@ -1124,7 +1117,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  modalView: {
+  modalView: { 
     margin: 20,
     backgroundColor: "white",
     borderRadius: 15,
@@ -1141,7 +1134,7 @@ const styles = StyleSheet.create({
     width: "35%",
   },
   textBackground: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingBottom: 4,
     paddingHorizontal: 5,
     borderRadius: 15,
@@ -1150,7 +1143,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderRadius: 2,
     borderColor: "black",
-    top: "33%",
+    top: "37%",
     left: "6%",
     alignContent: "center",
     paddingBottom: 15,
@@ -1161,7 +1154,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 110,
     left: "20%",
-    top: "10%",
+    top: "4%",
   },
   player3View: {
     borderRadius: 2,
@@ -1169,20 +1162,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 110,
     right: "20%",
-    top: "10%",
+    top: "4%",
   },
   player4View: {
     position: "absolute",
     borderRadius: 2,
     borderColor: "black",
     width: 110,
-    top: "33%",
+    top: "37%",
     right: "6%",
     alignContent: "center",
   },
   potView: {
     position: "absolute",
-    top: "10%",
+    top: "15%",
     right: "4%",
   },
   pot: {
@@ -1199,7 +1192,7 @@ const styles = StyleSheet.create({
   chipView: {
     position: "absolute",
     width: 50,
-    right: "50%",
+    right: "4%",
     top: "2%",
     alignContent: "center",
     alignItems: "center",
@@ -1217,7 +1210,7 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "contain",
   },
-  chat: {
+  chat: { 
     position: "absolute",
     bottom: "4%",
     right: "20%",
