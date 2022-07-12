@@ -129,7 +129,7 @@ export default function Chat(matchInfo) {
                     {...props}
                     textStyle={{
                       right: {
-                        color: "black",
+                        color: "#fff",
                       },
                       left: {
                         color: "black",
@@ -137,10 +137,10 @@ export default function Chat(matchInfo) {
                     }}
                     wrapperStyle={{
                       left: {
-                        backgroundColor: "red",
+                        backgroundColor: "#E3E3E3E3",
                       },
                       right: {
-                        backgroundColor: "yellow",
+                        backgroundColor: "#990f02",
                       },
                     }}
                   />
