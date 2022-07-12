@@ -100,6 +100,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "30%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   yesButtonContainer: {
     backgroundColor: "#990f02",
@@ -108,6 +116,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "30%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   ButtonText: {
     fontWeight: 700,

@@ -11,6 +11,7 @@ import {
 import Slider from "@react-native-community/slider";
 import Logo from "./Utils/Logo";
 import firebase from "firebase";
+import { Icon } from "react-native-elements";
 
 export default class CreateGame extends Component {
   constructor(props) {
@@ -28,20 +29,20 @@ export default class CreateGame extends Component {
 
     if (this.props.userData.chips - buyIn < 0) {
       alert(
-        "Insufficent Balance",
-        "Your Buy-In is higher than you current Balance, please lower Buy-In to Proceed"
+        "Insufficent balance",
+        "Your Buy-In is higher than your current balance, please lower Buy-In to proceed"
       );
       return false;
     } else if (!this.props.userData.in_game === "") {
       alert(
-        "Already in a Game",
-        "Please leave the game you currently are in, to create a Game"
+        "Already in a game",
+        "Please leave the game you currently are in, to create a game"
       );
       return false;
     } else if (this.state.name === "") {
       alert(
-        "Match must have a Name",
-        "Please enter a valid name for the Match"
+        "Match must have a name",
+        "Please enter a valid name for the match"
       );
       return false;
     }
@@ -99,6 +100,16 @@ export default class CreateGame extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("HomePage")}>
+          <Icon
+            name="arrow-back"
+            type="ionicons"
+            color="white"
+            size={30}
+          />
+        </TouchableOpacity>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboardAvoidingContainer}
@@ -130,6 +141,7 @@ export default class CreateGame extends Component {
           minimumValue={50}
           maximumValue={this.props.userData.chips}
           step={50}
+          thumbTintColor={"#990f02"}
           onValueChange={(buyIn) => {
             this.setState({ buyIn });
           }}
@@ -158,13 +170,6 @@ export default class CreateGame extends Component {
         >
           <Text style={styles.registerButtonText}>Create Private Game</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => this.props.navigation.navigate("HomePage")}
-        >
-          <Text style={styles.registerButtonText}>Go Back</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -175,8 +180,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
+    textTransform: "uppercase"
   },
   container: {
     padding: 20,
@@ -194,17 +200,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#D70040",
+    backgroundColor: "#990f02",
     paddingVertical: 20,
     padding: 20,
     borderRadius: 15,
-    width: "40%",
+    width: "25%",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   registerButtonText: {
     textAlign: "center",
     color: "#FFF",
-    fontWeight: "900",
+    fontWeight: 700,
+    textTransform: "uppercase"
   },
   input: {
     height: 40,
@@ -214,6 +229,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingEnd: 10,
     borderRadius: 15,
-    width: "100%",
+    width: "80%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
+  icon: {
+    left: 20,
+    top: 20,
+    position: "absolute",
+  }
 });

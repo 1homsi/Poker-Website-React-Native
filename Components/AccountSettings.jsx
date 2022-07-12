@@ -168,6 +168,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     textalign: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   logoutButton: {
     backgroundColor: "#fff",
@@ -180,6 +188,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
     textalign: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   logoutText: {
     color: "#990f02",
@@ -196,6 +212,14 @@ const styles = StyleSheet.create({
     paddingEnd: 10,
     borderRadius: 15,
     width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
   icon: {
     left: 20,
