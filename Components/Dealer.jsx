@@ -4,10 +4,10 @@ import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
+  usernameboardAvoidingView,
   TouchableOpacity,
   ActivityIndicator,
-  FlatList,
+  TextInput,
 } from "react-native";
 import firebase from "firebase";
 import { Icon } from "react-native-elements";
@@ -16,163 +16,164 @@ export default class Dealer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameList: [],
+      userId: "",
+      FoundUser: false,
+      UserData: null,
       ready: false,
-      lbStatistic: "chips",
+      newChips: 0,
+      searchEmail: "",
     };
   }
 
   componentDidMount() {
-    firebase
-      .database()
-      .ref("/users/")
-      .orderByChild("data/" + this.state.lbStatistic)
-      .limitToFirst(50)
-      .on("value", (snapshot) => {
-        var data = [];
-        snapshot.forEach((child) => {
-          data.push({
-            key: child.val().data.username,
-            chips: child.val().data.chips,
-            chips_won: child.val().data.chips_won,
-            chips_lost: child.val().data.chips_lost,
-            wins: child.val().data.wins,
-            photoURL: child.val().data.photoURL,
-          });
-        });
-        data.reverse();
-        this.setState({ gameList: data, ready: true });
-      });
-  }
-  componentDidUpdate() {
-    firebase
-      .database()
-      .ref("/users/")
-      .orderByChild("data/" + this.state.lbStatistic)
-      .limitToFirst(50)
-      .on("value", (snapshot) => {
-        var data = [];
-        snapshot.forEach((child) => {
-          data.push({
-            key: child.val().data.username,
-            chips: child.val().data.chips,
-            chips_won: child.val().data.chips_won,
-            chips_lost: child.val().data.chips_lost,
-            wins: child.val().data.wins,
-          });
-        });
-        data.reverse();
-        this.state.gameList = data;
-        this.state.ready = true;
-      });
+    this.setState({ ready: true });
   }
 
   componentWillUnmount() {
     firebase.database().ref("/users/").off();
   }
 
+  handleUpdate = () => {
+    if (
+      this.state.newChips > 0 &&
+      this.state.newChips != this.state.UserData?.chips
+    ) {
+      firebase
+        .database()
+        .ref("/users")
+        .child(this.state.userId)
+        .child("data")
+        .update({
+          chips: this.state.newChips,
+        });
+    } else {
+      alert("Please enter a valid number");
+    }
+  };
+
+  FindUser = () => {
+    var searchEmail = this.state.searchEmail.trim();
+    this.setState({ searchEmail: "" });
+
+    firebase
+      .database()
+      .ref("/users")
+      .orderByChild("/data/email")
+      .equalTo(searchEmail)
+      .limitToFirst(1)
+      .once("value", (snapshot) => {
+        if (snapshot.val() == null) {
+          alert("A user was not found with email entered");
+          this.setState({ foundUser: false });
+          return;
+        }
+
+        var id = Object.keys(snapshot.val())[0];
+        var UserData = snapshot.val()[id].data;
+        this.setState({
+          userId: id,
+          UserData,
+        });
+      });
+  };
+
   render() {
     if (this.state.ready) {
       return (
-        <KeyboardAvoidingView style={styles.container}>
+        <View style={styles.container}>
           <TouchableOpacity
             style={styles.icon}
             onPress={() => this.props.navigation.navigate("HomePage")}
           >
             <Icon name="arrow-back" type="ionicons" color="white" size={30} />
           </TouchableOpacity>
-          <View style={styles.statButtonsContainer}>
-            <TouchableOpacity
-              style={styles.statButton}
-              onPress={() => this.setState({ lbStatistic: "chips" })}
-            >
-              <Text style={styles.statButtonText}>Total Chips</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.statButton}
-              onPress={() => this.setState({ lbStatistic: "wins" })}
-            >
-              <Text style={styles.statButtonText}>Total Wins</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.statButton}
-              onPress={() => this.setState({ lbStatistic: "chips_won" })}
-            >
-              <Text style={styles.statButtonText}>Total Chips Won</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.statButton}
-              onPress={() => this.setState({ lbStatistic: "chips_lost" })}
-            >
-              <Text style={styles.statButtonText}>Total Chips Lost</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{
-              width: "60%",
-              justifyContent: "center",
-              alignItems: "center",
-              alignSelf: "center",
-            }}
-          >
-            <FlatList
-              style={{ width: "70%" }}
-              data={this.state.gameList}
-              keyExtractor={(item) => item.key}
-              renderItem={({ item }) => {
-                return (
-                  <View style={styles.gameDisplay}>
-                    <View
-                      style={{ flexDirection: "row", justifyContent: "center" }}
-                    >
-                      <Image
-                        source={{ uri: item.photoURL }}
-                        style={styles.avatarImage}
-                      />
-                    </View>
-                    <Text style={[styles.textStyle, { fontSize: 25 }]}>
-                      {item.key.slice(0, item.key.indexOf("#"))}
-                    </Text>
-
-                    <View
-                      style={[
-                        {
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                        },
-                      ]}
-                    >
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
-                        Chips: {item.chips}
-                      </Text>
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
-                        Wins: {item.wins}
-                      </Text>
-                    </View>
-
-                    <View
-                      style={[
-                        {
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                        },
-                      ]}
-                    >
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
-                        Chips Won: {item.chips_won}
-                      </Text>
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
-                        Chips Lost: {item.chips_lost}
-                      </Text>
-                    </View>
-                  </View>
-                );
+          <View>
+            <Text>Search Email</Text>
+            <TextInput
+              style={{
+                height: 40,
+                borderColor: "gray",
+                borderWidth: 1,
+                margin: 10,
+                padding: 5,
               }}
+              onChangeText={(text) => this.setState({ searchEmail: text })}
+              value={this.state.searchEmail}
             />
+            <TouchableOpacity onPress={() => this.FindUser()}>
+              <Text onPress={this.FindUser}>Find User</Text>
+            </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
+          {this.state.UserData ? (
+            <>
+              <View
+                style={{
+                  width: "60%",
+                  justifyContent: "center",
+                  alignUserDatas: "center",
+                  alignSelf: "center",
+                }}
+              >
+                <View style={styles.gameDisplay}>
+                  <View
+                    style={{ flexDirection: "row", justifyContent: "center" }}
+                  >
+                    <Image
+                      source={{ uri: this.state?.UserData.photoURL }}
+                      style={styles.avatarImage}
+                    />
+                  </View>
+                  <Text style={[styles.textStyle, { fontSize: 25 }]}>
+                    {this.state.UserData?.username.slice(
+                      0,
+                      this.state.UserData?.username.indexOf("#")
+                    )}
+                  </Text>
+
+                  <View
+                    style={[
+                      {
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                      },
+                    ]}
+                  >
+                    <Text style={[styles.textStyle, { fontSize: 15 }]}>
+                      Chips: {this.state?.UserData.chips}
+                    </Text>
+                  </View>
+                  <View>
+                    <TextInput
+                      style={{
+                        height: 40,
+                        borderColor: "gray",
+                        borderWidth: 1,
+                        margin: 10,
+                        padding: 5,
+                      }}
+                      placeholder="Enter new Chips amount"
+                      onChangeText={(text) => {
+                        this.setState({
+                          newChips: text,
+                        });
+                      }}
+                      value={
+                        this.state.newChips > 0
+                          ? this.state.newChips
+                          : this.state.UserData?.chips
+                      }
+                    />
+                    <TouchableOpacity onPress={() => this.handleUpdate()}>
+                      <Text>Update Chips</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </>
+          ) : (
+            <></>
+          )}
+        </View>
       );
     } else {
       return (
@@ -195,13 +196,13 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     backgroundColor: "#1B2430",
-    alignItems: "center",
+    alignUserDatas: "center",
     justifyContent: "center",
   },
   readyContainer: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    alignUserDatas: "center",
     justifyContent: "center",
   },
   gameDisplay: {

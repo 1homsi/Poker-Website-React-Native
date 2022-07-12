@@ -41,7 +41,8 @@ export default class HomeScreen extends Component {
                   }}
                   onPress={() => {
                     this.props.navigation.navigate("Leaderboard");
-                  }}>
+                  }}
+                >
                   <Icon
                     name="trophy"
                     type="font-awesome"
@@ -51,7 +52,7 @@ export default class HomeScreen extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Logo/>
+            <Logo />
 
             <View style={styles.SignedView}>
               {this.props.userData.in_game == "" ? (
@@ -90,6 +91,14 @@ export default class HomeScreen extends Component {
                   <Text style={styles.continueText}>Continue Game</Text>
                 </TouchableOpacity>
               )}
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#fff",
+                }}
+                onPress={() => this.props.navigation.navigate("Dealer")}
+              >
+                <Text>Temp</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>

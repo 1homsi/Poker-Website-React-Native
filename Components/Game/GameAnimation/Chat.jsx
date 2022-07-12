@@ -1,6 +1,6 @@
 //@refresh reset
 import React, { useState, useEffect, useCallback } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import {
   Alert,
   Modal,
@@ -82,47 +82,43 @@ export default function Chat(matchInfo) {
         animationType="slide"
         transparent={false}
         visible={modalVisible}
+        style={{
+          margin: 0,
+        }}
       >
-        <SafeAreaView
+        <View
           style={{
-            // marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
             flex: 1,
           }}
         >
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            // behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
+          <KeyboardAvoidingView style={{ flex: 1 }}>
             <View style={styles.head}>
-            <TouchableWithoutFeedback
-              style={{ maxHeight: 100, height: 100 }}
-              onPress={() => {
-                Keyboard.dismiss();
-              }}
-            >
-              <Text style={styles.title}>
-                Chat room
-              </Text>
-            </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                style={{ maxHeight: 100, height: 100 }}
+                onPress={() => {
+                  Keyboard.dismiss();
+                }}
+              >
+                <Text style={styles.title}>Chat room</Text>
+              </TouchableWithoutFeedback>
 
-            <Pressable
-              style={[
-                styles.button,
-                styles.buttonClose,
-                {
-                  // marginBottom: Platform.OS === "android" ? 20 : 5,
-                  width: "20%",
-                  marginLeft: "auto",
-                },
-              ]}
-              onPress={() => {
-                setModalVisible(false);
+              <Pressable
+                style={[
+                  styles.button,
+                  styles.buttonClose,
+                  {
+                    width: "20%",
+                    marginLeft: "auto",
+                  },
+                ]}
+                onPress={() => {
+                  setModalVisible(false);
 
-                setNewMessages(messages.length);
-              }}
-            >
-              <Text style={styles.exitTextStyle}>EXIT</Text>
-            </Pressable>
+                  setNewMessages(messages.length);
+                }}
+              >
+                <Text style={styles.exitTextStyle}>EXIT</Text>
+              </Pressable>
             </View>
 
             <GiftedChat
@@ -133,12 +129,32 @@ export default function Chat(matchInfo) {
               placeholder={"Type..."}
               isKeyboardInternallyHandled={false}
               maxInputLength={100}
-              //bottomOffset={10}
+              renderBubble={(props) => {
+                return (
+                  <Bubble
+                    {...props}
+                    textStyle={{
+                      right: {
+                        color: "black",
+                      },
+                      left: {
+                        color: "black",
+                      },
+                    }}
+                    wrapperStyle={{
+                      left: {
+                        backgroundColor: "red",
+                      },
+                      right: {
+                        backgroundColor: "yellow",
+                      },
+                    }}
+                  />
+                );
+              }}
             />
-
-            
           </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
       </Modal>
 
       <Pressable
@@ -230,6 +246,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     // marginBottom: 10,
     textAlign: "center",
-    marginLeft: "2%"
+    marginLeft: "2%",
   },
 });
