@@ -84,7 +84,7 @@ export default class App extends PureComponent {
               // updates["/users/" + user.uid + "/data/daily_login"] = data.daily_login;
               // updates["/users/" + user.uid + "/data/newAlert"] = true;
               // updates["/users/" + user.uid + "/data/alerts"] = data.alerts;
-              console.log("Daily Login");
+              console.log("Remove me {App.js}");
             }
             if (request.friend_request_alert) {
               request.friend_request_alert = false;
