@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -29,7 +30,12 @@ import Leaderboard from "./Components/Leaderboard";
 import IntroScreen from "./Components/IntroScreen";
 import Dealer from "./Components/Dealer";
 
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { Button } from "react-native-elements";
+
 const Stack = createStackNavigator();
+const dimensions = Dimensions.get("window");
+
 
 export default class App extends PureComponent {
   constructor(props) {
@@ -141,92 +147,99 @@ export default class App extends PureComponent {
   }
 
   render() {
-    if (this.state.ready) {
-      return (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}
-            initialRouteName={this.state.LoggedIn ? "HomePage" : "Intro"}
-          >
-            <Stack.Screen name="HomePage">
-              {(props) => (
-                <HomeScreen
-                  {...props}
-                  userData={this.state.userData}
-                  LoggedIn={this.state.LoggedIn}
-                />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-
-            <Stack.Screen name="FriendsList">
-              {(props) => (
-                <FriendsList
-                  {...props}
-                  userData={this.state.userData}
-                  userRequest={this.state.userRequest}
-                />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="GameController">
-              {(props) => (
-                <GameController {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="CreateGame">
-              {(props) => (
-                <CreateGame {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="JoinGamePage">
-              {(props) => (
-                <JoinGamePage {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="AccountStats">
-              {(props) => (
-                <AccountStats {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="ChangeUsername">
-              {(props) => (
-                <ChangeUsername {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="AccountSettings">
-              {(props) => (
-                <AccountSettings {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="Dealer">
-              {(props) => (
-                <Dealer {...props} userData={this.state.userData} />
-              )}
-            </Stack.Screen>
-
-            <Stack.Screen name="Leaderboard" component={Leaderboard} />
-            <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
-            <Stack.Screen name="ChangeAvatar" component={ChangeAvatar} />
-            <Stack.Screen name="Intro" component={IntroScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      );
-    } else {
-      return (
-        <View style={[styles.container]}>
-          <ActivityIndicator size="large" color="#f5f5f5" />
-        </View>
-      );
+    if (dimensions.width < 500) {
+      return (<>
+        <View>Turn your screen</View>
+        <Button title="Refresh" onPress={() => window.location.reload()} />
+      </>);
     }
+    else
+      if (this.state.ready) {
+        return (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}
+              initialRouteName={this.state.LoggedIn ? "HomePage" : "Intro"}
+            >
+              <Stack.Screen name="HomePage">
+                {(props) => (
+                  <HomeScreen
+                    {...props}
+                    userData={this.state.userData}
+                    LoggedIn={this.state.LoggedIn}
+                  />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+
+              <Stack.Screen name="FriendsList">
+                {(props) => (
+                  <FriendsList
+                    {...props}
+                    userData={this.state.userData}
+                    userRequest={this.state.userRequest}
+                  />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="GameController">
+                {(props) => (
+                  <GameController {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="CreateGame">
+                {(props) => (
+                  <CreateGame {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="JoinGamePage">
+                {(props) => (
+                  <JoinGamePage {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="AccountStats">
+                {(props) => (
+                  <AccountStats {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="ChangeUsername">
+                {(props) => (
+                  <ChangeUsername {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="AccountSettings">
+                {(props) => (
+                  <AccountSettings {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+              <Stack.Screen name="Dealer">
+                {(props) => (
+                  <Dealer {...props} userData={this.state.userData} />
+                )}
+              </Stack.Screen>
+
+              <Stack.Screen name="Leaderboard" component={Leaderboard} />
+              <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
+              <Stack.Screen name="ChangeAvatar" component={ChangeAvatar} />
+              <Stack.Screen name="Intro" component={IntroScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        );
+      } else {
+        return (
+          <View style={[styles.container]}>
+            <ActivityIndicator size="large" color="#f5f5f5" />
+          </View>
+        );
+      }
   }
 }
 
