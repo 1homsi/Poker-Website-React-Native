@@ -91,14 +91,14 @@ export default class HomeScreen extends Component {
                 <Text style={styles.continueText}>Continue Game</Text>
               </TouchableOpacity>
             )}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 backgroundColor: "#fff",
               }}
               onPress={() => this.props.navigation.navigate("Dealer")}
             >
               <Text>Temp</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         {/* </ImageBackground> */}

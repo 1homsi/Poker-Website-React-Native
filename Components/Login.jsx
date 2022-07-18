@@ -11,7 +11,9 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import { Icon } from "react-native-elements";
+import { Dimensions } from "react-native";
 
+const width = Dimensions.get("window").width;
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -47,13 +49,9 @@ export default class Login extends Component {
         >
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => this.props.navigation.navigate("HomePage")}>
-            <Icon
-              name="arrow-back"
-              type="ionicons"
-              color="white"
-              size={30}
-            />
+            onPress={() => this.props.navigation.navigate("Intro")}
+          >
+            <Icon name="arrow-back" type="ionicons" color="white" size={30} />
           </TouchableOpacity>
           <View style={styles.Box}>
             <TextInput
@@ -162,11 +160,11 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   icon: {
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

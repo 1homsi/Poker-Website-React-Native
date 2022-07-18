@@ -1,34 +1,38 @@
-import { StyleSheet, Text, View, Button, ImageBackground, Touchable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  Touchable,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-web";
 
+const width = Dimensions.get("window").width;
 export default class IntroScreen extends React.PureComponent {
   render() {
     return (
       <View style={styles.Container}>
-        <ImageBackground
+        {/* <ImageBackground
           source={require("../assets/Images/BG3.jpg")}
           style={styles.background}
-        >
-
-          <View style={styles.TitleContainer}>
-            <Text style={styles.Title}>
-              GOPOKER
-            </Text>
-          </View>
+        > */}
+        <View style={styles.TitleContainer}>
+          <Text style={styles.Title}>GOPOKER</Text>
+        </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("HomePage")}
+          onPress={() => this.props.navigation.navigate("Login")}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Play now</Text>
         </TouchableOpacity>
 
         <View style={styles.Box}>
-          <Text style={styles.BoxText}>
-            ONLINE CASINO
-          </Text>
+          <Text style={styles.BoxText}>ONLINE CASINO</Text>
         </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     );
   }
@@ -37,7 +41,7 @@ export default class IntroScreen extends React.PureComponent {
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -51,44 +55,44 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#990f02",
     borderRadius: 15,
-    width: "25%",
-    height: "12%",
+    width: width >= 400 ? "25%" : "50%",
+    height: width >= 400 ? "10%" : "12%",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "10%",
+    marginTop: width >= 400 ? "10%" : "5%",
     paddingBottom: "0.5%",
   },
   buttonText: {
     color: "white",
-    fontSize: 50,
+    fontSize: width >= 400 ? 20 : 50,
     fontWeight: "bold",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   Box: {
-    marginVertical: "10%",
+    marginVertical: width <= 400 ? "10%" : "2%",
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
-    padding: '1%',
+    padding: "1%",
     borderRadius: 15,
     borderWidth: 3,
     borderColor: "gold",
   },
   BoxText: {
     color: "gold",
-    fontSize: 50,
+    fontSize: width >= 400 ? 20 : 30,
     fontWeight: "bold",
   },
   TitleContainer: {
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
-    padding: '1%',
+    padding: "1%",
   },
   Title: {
     color: "white",
-    fontSize: 100,
+    fontSize: 50,
     fontWeight: "bold",
   },
 });

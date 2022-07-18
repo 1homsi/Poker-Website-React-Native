@@ -62,19 +62,14 @@ export default class HelpButton extends Component {
         >
           <View style={styles.buttonTextView}>
             <View style={styles.modalView}>
-            <TouchableOpacity
-              style={styles.icon}
-              onPress={() => {
-                this.setModalVisible(!modalVisible), this.removeNewAlert();
-              }}
-                >
-              <Icon 
-                name="x" 
-                type="feather" 
-                color="black" 
-                size={30} 
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.icon}
+                onPress={() => {
+                  this.setModalVisible(!modalVisible), this.removeNewAlert();
+                }}
+              >
+                <Icon name="x" type="feather" color="black" size={30} />
+              </TouchableOpacity>
               <Text
                 style={{
                   fontWeight: "bold",
@@ -105,24 +100,26 @@ export default class HelpButton extends Component {
                         marginBottom: 10,
                       }}
                     >
-                      <Text style={[styles.textStyle, {textAlign: "left"}]}>{item}</Text>
+                      <Text style={[styles.textStyle, { textAlign: "left" }]}>
+                        {item}
+                      </Text>
 
                       <View style={{ paddingLeft: 5 }}>
                         <TouchableOpacity
                           style={{
-                            top: 5, 
-                            backgroundColor: "#990f02", 
-                            borderRadius: 30, 
-                            padding: 2, 
+                            top: 5,
+                            backgroundColor: "#990f02",
+                            borderRadius: 30,
+                            padding: 2,
                             marginLeft: 4,
                           }}
                           onPress={() => this.removeAlerts(index)}
                         >
-                          <Icon 
-                            name="x" 
-                            type="feather" 
-                            color="white" 
-                            size={20} 
+                          <Icon
+                            name="x"
+                            type="feather"
+                            color="white"
+                            size={20}
                           />
                         </TouchableOpacity>
                       </View>
