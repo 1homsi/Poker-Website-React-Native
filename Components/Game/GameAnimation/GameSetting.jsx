@@ -336,19 +336,14 @@ export default class GameSetting extends Component {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <TouchableOpacity
-                style={styles.icon}
-                onPress={() => {
-                  this.setState({ quitVisible: !this.state.quitVisible });
-                }}
-              >
-                <Icon 
-                  name="x" 
-                  type="feather" 
-                  color="black" 
-                  size={30} 
-                />
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => {
+                this.setState({ quitVisible: !this.state.quitVisible });
+              }}
+            >
+              <Icon name="x" type="feather" color="black" size={30} />
+            </TouchableOpacity>
             <Text style={[styles.exitStyle, { fontSize: 20 }]}>
               Game Name:{" "}
               {this.props.matchName.slice(0, this.props.matchName.indexOf("-"))}
@@ -739,9 +734,7 @@ export default class GameSetting extends Component {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text
-              style={{ fontWeight: 700, fontSize: 20, color: "#fc9403" }}
-            >
+            <Text style={{ fontWeight: 700, fontSize: 20, color: "#fc9403" }}>
               {" "}
               {this.props.game.roundWinner}{" "}
             </Text>
@@ -842,9 +835,7 @@ export default class GameSetting extends Component {
 
         <View style={[styles.timerTextBackground]}>
           {0 == this.props.game.turn || this.props.game.turn == 5 ? (
-            <Text style={styles.playerNames}>
-              Waiting For Other Players
-            </Text>
+            <Text style={styles.playerNames}>Waiting For Other Players</Text>
           ) : (
             <Text style={styles.playerNames}>{name}'s Turn</Text>
           )}
@@ -924,7 +915,7 @@ export default class GameSetting extends Component {
 
     return this.props.game.size > num ? (
       <View style={{ alignItems: "center" }}>
-        <View
+        {/* <View
           style={[
             styles.avatarImage,
             { overflow: "hidden", marginBottom: -10 },
@@ -934,7 +925,7 @@ export default class GameSetting extends Component {
             source={{ uri: this.props.game.playerAvatar[num] }}
             style={styles.avatarImage}
           />
-        </View>
+        </View> */}
         <View style={styles.textBackground}>
           <Text style={styles.playerNames}>{name}</Text>
         </View>
@@ -995,7 +986,14 @@ export default class GameSetting extends Component {
         <View style={styles.player4View}>{this.playerAvatarView(3)}</View>
 
         <View style={styles.potView}>
-          <Text style={{ fontSize: 18, fontWeight: 700, color: "white", marginHorizontal: "2%" }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 700,
+              color: "white",
+              marginHorizontal: "2%",
+            }}
+          >
             Pot: {this.props.game.pot}
           </Text>
         </View>
@@ -1014,18 +1012,28 @@ export default class GameSetting extends Component {
 
         {this.timerView()}
 
-        <View style={styles.chat}> 
+        <View style={styles.chat}>
           <Chat
             matchName={this.props.matchName}
             matchType={this.props.matchType}
-            />
+          />
         </View>
 
         <View style={styles.chipView}>
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              
-          </View>
-          <Text style={[styles.ChipsAmount, {fontSize: 18, fontWeight: 700, color: "white", marginHorizontal: "2%"}]}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "center" }}
+          ></View>
+          <Text
+            style={[
+              styles.ChipsAmount,
+              {
+                fontSize: 18,
+                fontWeight: 700,
+                color: "white",
+                marginHorizontal: "2%",
+              },
+            ]}
+          >
             Chips: {this.props.game.balance[this.props.playerNum]}
           </Text>
         </View>
@@ -1077,7 +1085,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "2%"
+    marginBottom: "2%",
   },
   buttonInExit: {
     borderRadius: 15,
@@ -1141,7 +1149,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
-    fontSize: 15
+    fontSize: 15,
   },
   playerNames: {
     color: "white",
@@ -1149,9 +1157,9 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     justifyContent: "center",
     alignItems: "center",
-    padding: 8
+    padding: 8,
   },
-  modalView: { 
+  modalView: {
     margin: 20,
     backgroundColor: "white",
     borderRadius: 15,
@@ -1252,7 +1260,7 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "contain",
   },
-  chat: { 
+  chat: {
     position: "absolute",
     bottom: "4%",
     right: "20%",

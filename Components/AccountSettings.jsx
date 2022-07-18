@@ -36,22 +36,15 @@ export default class AccountSettings extends Component {
       <SafeAreaView style={styles.container}>
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => this.props.navigation.navigate("HomePage")}>
-          <Icon
-            name="arrow-back"
-            type="ionicons"
-            color="white"
-            size={30}
-          />
+          onPress={() => this.props.navigation.navigate("HomePage")}
+        >
+          <Icon name="arrow-back" type="ionicons" color="white" size={30} />
         </TouchableOpacity>
         <View style={styles.head}>
-        <Image
-          source={{ uri: user.photoURL }}
-          style={styles.image}
-        />
-        <Text style={styles.title}>{user.displayName}</Text>
+          {/* <Image source={{ uri: user.photoURL }} style={styles.image} /> */}
+          <Text style={styles.title}>Username: {user.displayName}</Text>
         </View>
-        
+
         <View
           style={{
             width: "100%",
@@ -201,7 +194,7 @@ const styles = StyleSheet.create({
     color: "#990f02",
     fontWeight: 700,
     textAlign: "center",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   input: {
     height: 40,
@@ -225,5 +218,5 @@ const styles = StyleSheet.create({
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

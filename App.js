@@ -160,7 +160,9 @@ export default class App extends PureComponent {
             <Stack.Navigator screenOptions={{ headerShown: false }}
               initialRouteName={this.state.LoggedIn ? "HomePage" : "Intro"}
             >
-              <Stack.Screen name="HomePage">
+              <Stack.Screen name="HomePage" options={{
+                title: "Home",
+              }}>
                 {(props) => (
                   <HomeScreen
                     {...props}

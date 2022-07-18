@@ -19,89 +19,89 @@ export default class HomeScreen extends Component {
   SignedIn = () => {
     return (
       <View style={styles.container}>
-        <ImageBackground
+        {/* <ImageBackground
           source={require("../assets/Images/BG3.jpg")}
           style={styles.SignedOutImageContainer}
-        >
-          <View style={styles.InnerContainer}>
-            <View style={styles.topRow}>
-              {this.AccountSettings()}
-              <View style={{ flexDirection: "row" }}>
-                <View style={{ marginTop: 26 }}>
-                  <Balance chips={this.props.userData.chips} />
-                </View>
-                <Notification userData={this.props.userData} />
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "#990f02",
-                    padding: 10,
-                    borderRadius: 15,
-                    marginLeft: 5,
-                    marginTop: 26,
-                  }}
-                  onPress={() => {
-                    this.props.navigation.navigate("Leaderboard");
-                  }}
-                >
-                  <Icon
-                    name="trophy"
-                    type="font-awesome"
-                    color="white"
-                    size={20}
-                  />
-                </TouchableOpacity>
+        > */}
+        <View style={styles.InnerContainer}>
+          <View style={styles.topRow}>
+            {this.AccountSettings()}
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ marginTop: 26 }}>
+                <Balance chips={this.props.userData.chips} />
               </View>
-            </View>
-            <Logo />
-
-            <View style={styles.SignedView}>
-              {this.props.userData.in_game == "" ? (
-                <View
-                  style={{
-                    width: "100%",
-                    alignItems: "center",
-                    alignContent: "center",
-                  }}
-                >
-                  <TouchableOpacity
-                    style={styles.continueButton}
-                    onPress={() => {
-                      this.props.navigation.navigate("JoinGamePage");
-                    }}
-                  >
-                    <Text style={styles.continueText}>Play Now</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.continueButton}
-                    onPress={() => {
-                      this.props.navigation.navigate("CreateGame");
-                    }}
-                  >
-                    <Text style={styles.continueText}>Create Game</Text>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  style={styles.continueButton}
-                  onPress={() => {
-                    this.props.navigation.navigate("GameController"); // 'GameSetting'
-                  }}
-                >
-                  <Text style={styles.continueText}>Continue Game</Text>
-                </TouchableOpacity>
-              )}
+              <Notification userData={this.props.userData} />
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#fff",
+                  backgroundColor: "#990f02",
+                  padding: 10,
+                  borderRadius: 15,
+                  marginLeft: 5,
+                  marginTop: 26,
                 }}
-                onPress={() => this.props.navigation.navigate("Dealer")}
+                onPress={() => {
+                  this.props.navigation.navigate("Leaderboard");
+                }}
               >
-                <Text>Temp</Text>
+                <Icon
+                  name="trophy"
+                  type="font-awesome"
+                  color="white"
+                  size={20}
+                />
               </TouchableOpacity>
             </View>
           </View>
-        </ImageBackground>
+          <Logo />
+
+          <View style={styles.SignedView}>
+            {this.props.userData.in_game == "" ? (
+              <View
+                style={{
+                  width: "100%",
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+              >
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  onPress={() => {
+                    this.props.navigation.navigate("JoinGamePage");
+                  }}
+                >
+                  <Text style={styles.continueText}>Play Now</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  onPress={() => {
+                    this.props.navigation.navigate("CreateGame");
+                  }}
+                >
+                  <Text style={styles.continueText}>Create Game</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.continueButton}
+                onPress={() => {
+                  this.props.navigation.navigate("GameController"); // 'GameSetting'
+                }}
+              >
+                <Text style={styles.continueText}>Continue Game</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#fff",
+              }}
+              onPress={() => this.props.navigation.navigate("Dealer")}
+            >
+              <Text>Temp</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* </ImageBackground> */}
       </View>
     );
   };
@@ -169,6 +169,7 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#1B2430",
   },
   SignedOutImageContainer: {
     justifyContent: "center",
