@@ -108,10 +108,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backfaceVisibility: "hidden",
     width: "100%",
+    position: "absolute",
+    bottom: 0,
   },
   flipCardBack: {
     position: "absolute",
-    top: "850%",
-    left: "1100%",
+    top: 0,
   },
 });
