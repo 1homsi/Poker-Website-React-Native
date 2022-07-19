@@ -673,7 +673,7 @@ export default class GameSetting extends Component {
           onPress={() => this.setState({ raiseVisible: true })}
         >
           {this.props.game.raisedVal == 0 ? (
-            <Text>Raise</Text>
+            <Text style={{color: "white"}} >Raise</Text>
           ) : (
             <Text>Re-Raise</Text>
           )}
@@ -699,7 +699,7 @@ export default class GameSetting extends Component {
             disabled={!myTurn}
             onPress={() => this.props.updateGame(callType, callAmount)}
           >
-            <Text>{callString}</Text>
+            <Text style={{color: "white"}} >{callString}</Text>
           </TouchableOpacity>
         )}
 
@@ -714,7 +714,7 @@ export default class GameSetting extends Component {
             this.props.updateGame("fold");
           }}
         >
-          <Text>Fold</Text>
+          <Text style={{color: "white"}}>Fold</Text>
         </TouchableOpacity>
       </View>
     );
@@ -1265,14 +1265,15 @@ const styles = StyleSheet.create({
   },
   bettingButtonsView: {
     position: "absolute",
-    bottom: "20%",
-    left: "25%",
-    flexDirection: "row",
+    bottom: "0%",
+    left: 0,
+    flexDirection: "column",
+    marginLeft: "3%",
   },
   bettingButtons: {
-    borderRadius: 15,
+    borderRadius: 5,
     padding: 10,
-    marginHorizontal: 5,
+    marginVertical: 5,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -1283,8 +1284,8 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   raiseButt: {
-    backgroundColor: "#add8e6",
-    paddingHorizontal: 10,
+    backgroundColor: "#990f02",
+    paddingHorizontal: "15%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -1295,8 +1296,8 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   callButt: {
-    backgroundColor: "#fed8b1",
-    paddingHorizontal: 10,
+    backgroundColor: "#990f02",
+    paddingHorizontal: "15%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -1307,8 +1308,8 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   foldButt: {
-    backgroundColor: "#ffcccb",
-    paddingHorizontal: 10,
+    backgroundColor: "#990f02",
+    paddingHorizontal: "10%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
