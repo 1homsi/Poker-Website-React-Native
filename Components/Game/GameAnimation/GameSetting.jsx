@@ -305,7 +305,7 @@ export default class GameSetting extends Component {
     }).start();
   }
 
-  cardDeal(suit, value, i) {
+  cardDeal(suit, value, i) { //Deal the cards to the players and the table cards and set the initial positions 
     var image = CardImages(suit, value);
     var screen = this.state.screen;
     return (
@@ -1198,7 +1198,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     alignContent: "center",
     paddingBottom: 15,
-    zIndex: 1,
+    zIndex: 1, 
   },
   player2View: {
     borderRadius: 2,
@@ -1247,7 +1247,12 @@ const styles = StyleSheet.create({
   },
   cardDeal:{
     position: "absolute",
-    bottom: "20%",
+    bottom: "5%",
+    left: "50%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
+    width: "50%",
   },
   tableView: {
     position: "absolute",
