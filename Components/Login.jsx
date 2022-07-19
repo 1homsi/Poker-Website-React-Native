@@ -77,7 +77,7 @@ export default class Login extends Component {
               value={this.state.password}
             />
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 Keyboard.dismiss();
                 setTimeout(() => {
@@ -86,7 +86,7 @@ export default class Login extends Component {
               }}
             >
               <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={styles.buttonContainer}

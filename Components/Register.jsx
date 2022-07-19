@@ -13,6 +13,7 @@ import {
 import Logo from "./Utils/Logo";
 import firebase from "firebase";
 import { Icon } from "react-native-elements";
+import { CreateUserauth } from "../firebase";
 
 export default class Register extends Component {
   constructor(props) {
@@ -30,14 +31,12 @@ export default class Register extends Component {
       Alert.alert("No Name Entered", "Please enter a valid name for yourself.");
       return;
     }
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        this.state.email.trim(),
-        this.state.password.trim()
-      )
+    CreateUserauth.createUserWithEmailAndPassword(
+      `${this.state.username.trim()}@pokerGo.com`,
+      this.state.password.trim()
+    )
       .then((userCredential) => {
-        var user = firebase.auth().currentUser;
+        var user = userCredential.user;
         if (user) {
           this.InitializeUserInDB(
             user,
@@ -50,6 +49,7 @@ export default class Register extends Component {
                 "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_1200,h_423/https://maydaytrust.org.uk/wp-content/uploads/2019/01/Poker-Chips-1200x423.jpg",
             })
             .then(() => {
+              CreateUserauth.signOut();
               this.props.navigation.navigate("HomePage");
             })
             .catch(function (error) {
