@@ -154,11 +154,14 @@ export default class JoinGamePage extends Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      justifyContent: "space-between",
+                      // justifyContent: "space-between",
+                      marginBottom: "3%",
+                      marginTop: "3%",
+                      justifyContent: "space-evenly"
                     }}
                   >
                     <Text style={styles.textStyle}>Size: {item.size}</Text>
-                    <Text style={styles.textStyle}> Buy In: {item.buyIn}</Text>
+                    <Text style={styles.textStyle}>Buy In: {item.buyIn}</Text>
                   </View>
                   <TouchableOpacity
                     style={styles.joinButton}
@@ -170,7 +173,7 @@ export default class JoinGamePage extends Component {
                       )
                     }
                   >
-                    <Text style={styles.textStyle}>Join Game</Text>
+                    <Text style={[styles.textStyle,{color: "#990f02", textTransform: "uppercase", fontWeight: 700}]}>Join Game</Text>
                   </TouchableOpacity>
                 </View>
               );
@@ -185,8 +188,9 @@ export default class JoinGamePage extends Component {
 const styles = StyleSheet.create({
   textStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
+    fontSize: 15,
   },
   container: {
     flex: 1,
@@ -196,18 +200,40 @@ const styles = StyleSheet.create({
   },
   gameDisplay: {
     backgroundColor: "#990f02",
-    borderRadius: 15,
-    width: "45%",
-    padding: 15,
-    marginHorizontal: "6%",
+    borderRadius: 20,
+    width: "30%",
+    paddingBottom: 25,
+    paddingTop: 25,
+    // paddingLeft: 20,
+    // paddingRight: 20,
+    marginHorizontal: "5%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+    borderBottomWidth: 1,
   },
   joinButton: {
-    backgroundColor: "#000000",
-    borderRadius: 20,
+    backgroundColor: "#fff",
+    borderRadius: 25,
     width: "30%",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+    borderBottomWidth: 1,
     padding: 10,
   },
   buttonContainer: {

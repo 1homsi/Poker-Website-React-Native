@@ -42,7 +42,7 @@ export default class AccountSettings extends Component {
         </TouchableOpacity>
         <View style={styles.head}>
           {/* <Image source={{ uri: user.photoURL }} style={styles.image} /> */}
-          <Text style={styles.title}>Username: {user.displayName}</Text>
+          <Text style={styles.title}>{user.displayName}</Text>
         </View>
 
         <View
