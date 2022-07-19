@@ -38,19 +38,18 @@ export default class ForgotPassword extends Component {
     return (
       <KeyboardAvoidingView
         // behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}>
+        style={styles.container}
+      >
         <Logo />
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => this.props.navigation.navigate("AccountSettings")}>
-          <Icon
-            name="arrow-back"
-            type="ionicons"
-            color="white"
-            size={30}
-          />
+          onPress={() => this.props.navigation.navigate("AccountSettings")}
+        >
+          <Icon name="arrow-back" type="ionicons" color="white" size={30} />
         </TouchableOpacity>
-        <Text style={styles.textPassword}>Enter your email to reset your password.</Text>
+        <Text style={styles.textPassword}>
+          Enter your email to reset your password.
+        </Text>
         <TextInput
           placeholder="Email"
           placeholderTextColor="rgba(255, 255, 255, 0.75)"
@@ -131,11 +130,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginTop: "-30%",
     color: "#FFF",
-    marginBottom: "2%"
+    marginBottom: "2%",
   },
   icon: {
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

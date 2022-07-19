@@ -77,13 +77,9 @@ export default class Leaderboard extends Component {
         <KeyboardAvoidingView style={styles.container}>
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => this.props.navigation.navigate("HomePage")}>
-            <Icon
-              name="arrow-back"
-              type="ionicons"
-              color="white"
-              size={30}
-            />
+            onPress={() => this.props.navigation.navigate("HomePage")}
+          >
+            <Icon name="arrow-back" type="ionicons" color="white" size={30} />
           </TouchableOpacity>
           <View style={styles.statButtonsContainer}>
             <TouchableOpacity
@@ -122,32 +118,48 @@ export default class Leaderboard extends Component {
             }}
           >
             <FlatList
-              style={{ width: "70%"}}
+              style={{ width: "70%" }}
               data={this.state.gameList}
               keyExtractor={(item) => item.key}
               renderItem={({ item }) => {
                 return (
                   <View style={styles.gameDisplay}>
-                    <View
+                    {/* <View
                       style={{ flexDirection: "row", justifyContent: "center" }}
                     >
                       <Image
                         source={{ uri: item.photoURL }}
                         style={styles.avatarImage}
                       />
-                    </View>
+                    </View> */}
                     <Text style={[styles.textStyle, { fontSize: 25 }]}>
                       {item.key.slice(0, item.key.indexOf("#"))}
                     </Text>
 
                     <View
-                      style={[{ flexDirection: "row", justifyContent: "space-evenly", },]}>
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>Chips: {item.chips}</Text>
-                      <Text style={[styles.textStyle, { fontSize: 15 }]}>Wins: {item.wins}</Text>
+                      style={[
+                        {
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                        },
+                      ]}
+                    >
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
+                        Chips: {item.chips}
+                      </Text>
+                      <Text style={[styles.textStyle, { fontSize: 15 }]}>
+                        Wins: {item.wins}
+                      </Text>
                     </View>
 
                     <View
-                      style={[{ flexDirection: "row", justifyContent: "space-evenly",},]}>
+                      style={[
+                        {
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                        },
+                      ]}
+                    >
                       <Text style={[styles.textStyle, { fontSize: 15 }]}>
                         Chips Won: {item.chips_won}
                       </Text>
@@ -160,7 +172,6 @@ export default class Leaderboard extends Component {
               }}
             />
           </View>
-
         </KeyboardAvoidingView>
       );
     } else {
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     width: "100%",
     paddingTop: 20,
-    paddingBottom:20,
+    paddingBottom: 20,
     marginBottom: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -259,7 +270,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     paddingLeft: 5,
-    paddingRight: 5, 
+    paddingRight: 5,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -306,5 +317,5 @@ const styles = StyleSheet.create({
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

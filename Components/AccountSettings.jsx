@@ -66,19 +66,19 @@ export default class AccountSettings extends Component {
             <Text style={styles.textStyle}>Change Username</Text>
           </TouchableOpacity> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => this.props.navigation.navigate("ChangeEmail")}
           >
             <Text style={styles.textStyle}>Change Email</Text>
-          </TouchableOpacity>
-          {/* 
+          </TouchableOpacity> */}
+
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => this.props.navigation.navigate("ChangeAvatar")}
+            onPress={() => this.props.navigation.navigate("Register")}
           >
-            <Text style={styles.textStyle}>Change Avatar</Text>
-          </TouchableOpacity> */}
+            <Text style={styles.textStyle}>Create User</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.buttonContainer}

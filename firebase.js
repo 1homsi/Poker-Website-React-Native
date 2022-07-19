@@ -16,6 +16,12 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
+// Initialize another app with a same config
+var createUserApp = firebase.initializeApp(firebaseConfig, "createUserApp");
+
+let CreateUserauth = createUserApp.auth();
+
+export { CreateUserauth };
 
 
 
