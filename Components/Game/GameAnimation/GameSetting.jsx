@@ -1245,15 +1245,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
   },
-  cardDeal:{
-    position: "absolute",
-    bottom: "5%",
-    left: "50%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignContent: "center",
-    width: "50%",
-  },
   tableView: {
     position: "absolute",
     top: "10%",
