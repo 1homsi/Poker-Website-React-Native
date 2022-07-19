@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   bubble: {
+    marginTop: "2%",
     backgroundColor: "#990f02",
     padding: 20,
     borderRadius: 20,
