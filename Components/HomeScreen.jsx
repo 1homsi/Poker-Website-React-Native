@@ -13,7 +13,7 @@ import Balance from "./Utils/Balance";
 import Notification from "./Utils/Notification";
 import { Icon } from "react-native-elements";
 
-const windowWidth = Dimensions.get("window").height;
+const windowWidth = Dimensions.get("window").width;
 
 export default class HomeScreen extends Component {
   SignedIn = () => {
@@ -115,7 +115,7 @@ export default class HomeScreen extends Component {
           resizeMode="cover"
           style={styles.SignedOutImageContainer}
         >
-          <View style={windowWidth >= 400 ? styles.SignedView : styles.SignedViewDesktop}>
+          <View style={windowWidth <= 400 ? styles.SignedView : styles.SignedViewDesktop}>
             <TouchableOpacity
               style={styles.continueButton}
               onPress={() => this.props.navigation.navigate("Register")}
@@ -263,6 +263,11 @@ const styles = StyleSheet.create({
   SignedView: {
     width: "60%",
     alignSelf: "center",
+    marginTop: windowWidth < 400 ? 20 : 40,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    
   },
   SignedViewDesktop: {
     width: "60%",

@@ -888,7 +888,7 @@ export default class GameSetting extends Component {
           {
             opacity: this.state.fadeAnimation[num],
             backgroundColor: "#990f02",
-            padding: 2,
+            padding: "5%",
             borderRadius: 20,
           },
         ]}
@@ -938,19 +938,19 @@ export default class GameSetting extends Component {
   }
 
   defaultEmptyAvatar() {
-    return (
-      <View style={{ alignItems: "center" }}>
-        <Image
-          source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/pokerfriends-843ef.appspot.com/o/transparent.png?alt=media&token=30b3c6ed-592b-4802-a2ee-d9c846ab3a05",
-          }}
-          style={styles.avatarImage}
-        />
-        <View style={styles.textBackground}>
-          <Text style={styles.playerNames}>Empty</Text>
-        </View>
-      </View>
-    );
+    return //(
+      // <View style={{ alignItems: "center" }}>
+      //   <Image
+      //     source={{
+      //       uri: "https://firebasestorage.googleapis.com/v0/b/pokerfriends-843ef.appspot.com/o/transparent.png?alt=media&token=30b3c6ed-592b-4802-a2ee-d9c846ab3a05",
+      //     }}
+      //     style={styles.avatarImage}
+      //   />
+      //   <View style={styles.textBackground}>
+      //     <Text style={styles.playerNames}>Empty</Text>
+      //   </View>
+      // </View>
+    //);
   }
 
   render() {
@@ -1130,8 +1130,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: "5%",
     maxHeight: 50,
-    width: "80%",
-    padding: width <= 400 ? 10 : 2,
+    padding: "2%",
     marginTop: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -1158,7 +1157,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
-    paddingHorizontal: 30,
   },
   Waiting:{},
   modalView: {
@@ -1195,28 +1193,28 @@ const styles = StyleSheet.create({
   },
   player1View: {
     position: "absolute",
+    bottom: 0,
     borderRadius: 2,
     borderColor: "black",
-    top: "37%",
-    left: "6%",
     alignContent: "center",
     paddingBottom: 15,
+    zIndex: 1,
   },
   player2View: {
     borderRadius: 2,
     borderColor: "black",
     position: "absolute",
     width: 110,
-    left: "20%",
-    top: "4%",
+    left: "2%",
+    top: "45%",
   },
   player3View: {
     borderRadius: 2,
     borderColor: "black",
     position: "absolute",
     width: 110,
-    right: "20%",
-    top: "4%",
+    right: "5%",
+    top: "20%",
   },
   player4View: {
     position: "absolute",
@@ -1246,6 +1244,10 @@ const styles = StyleSheet.create({
     top: "2%",
     alignContent: "center",
     alignItems: "center",
+  },
+  cardDeal:{
+    position: "absolute",
+    bottom: "20%",
   },
   tableView: {
     position: "absolute",
