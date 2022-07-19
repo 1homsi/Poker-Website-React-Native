@@ -19,6 +19,7 @@ import { CardImageUtil as CardImages } from "./CardImages"; //Importing the card
 import { Icon } from "react-native-elements";
 //Ps: jalal this is the cards array i was talking about that contains all the cards you wanted to seprate
 
+const width = Dimensions.get("window").width;
 export default class GameSetting extends Component {
   constructor(props) {
     super(props);
@@ -960,7 +961,7 @@ export default class GameSetting extends Component {
             style={styles.exitButton}
             onPress={() => this.setState({ quitVisible: true })}
           >
-            <Text style={styles.textStyle}>MENU</Text>
+            <Text style={styles.textStyle}>Menu</Text>
           </TouchableOpacity>
         </View>
 
@@ -991,7 +992,6 @@ export default class GameSetting extends Component {
               fontSize: 18,
               fontWeight: 700,
               color: "white",
-              marginHorizontal: "2%",
             }}
           >
             Pot: {this.props.game.pot}
@@ -1112,7 +1112,7 @@ const styles = StyleSheet.create({
   },
   timer: {
     position: "absolute",
-    top: "10%",
+    top: width >= 400 ? "1%" : "10%",
     right: "25%",
     flexDirection: "row",
     justifyContent: "center",
@@ -1130,8 +1130,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: "5%",
     maxHeight: 50,
-    width: "35%",
-    padding: 5,
+    width: "80%",
+    padding: width <= 400 ? 10 : 2,
     marginTop: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -1158,7 +1158,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
+    paddingHorizontal: 30,
   },
+  Waiting:{},
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -1176,9 +1178,11 @@ const styles = StyleSheet.create({
     width: "35%",
   },
   textBackground: {
-    backgroundColor: "#990f02",
+    backgroundColor: "#4c4d4c",
     paddingBottom: 4,
     paddingHorizontal: 5,
+    borderWidth: 5,
+    borderColor: "darkgrey",
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: {
@@ -1224,16 +1228,12 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   potView: {
-    position: "absolute",
-    top: "15%",
-    right: "4%",
+    alignContent: "center",
+    alignSelf: "center",
+    bottom: "20%"  
   },
   pot: {
-    borderRadius: 2,
-    borderColor: "black",
-    flexDirection: "row",
     paddingVertical: 10,
-    paddingHorizontal: 0,
   },
   chipAmount: {
     top: "500%",
@@ -1249,7 +1249,7 @@ const styles = StyleSheet.create({
   },
   tableView: {
     position: "absolute",
-    top: "5%",
+    top: "10%",
     bottom: 0,
     width: "70%",
     justifyContent: "center",

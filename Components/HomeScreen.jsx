@@ -13,7 +13,7 @@ import Balance from "./Utils/Balance";
 import Notification from "./Utils/Notification";
 import { Icon } from "react-native-elements";
 
-const windowWidth = Dimensions.get("window").width;
+const windowWidth = Dimensions.get("window").height;
 
 export default class HomeScreen extends Component {
   SignedIn = () => {
@@ -88,6 +88,7 @@ export default class HomeScreen extends Component {
                   this.props.navigation.navigate("GameController"); // 'GameSetting'
                 }}
               >
+                <Text style={{color: "white"}}>{windowWidth}</Text>
                 <Text style={styles.continueText}>Continue Game</Text>
               </TouchableOpacity>
             )}
@@ -114,7 +115,7 @@ export default class HomeScreen extends Component {
           resizeMode="cover"
           style={styles.SignedOutImageContainer}
         >
-          <View style={[styles.SignedView, { flex: 0.33 }]}>
+          <View style={windowWidth >= 400 ? styles.SignedView : styles.SignedViewDesktop}>
             <TouchableOpacity
               style={styles.continueButton}
               onPress={() => this.props.navigation.navigate("Register")}
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1B2430",
+    justifyContent: "center",
   },
   SignedOutImageContainer: {
     justifyContent: "center",
@@ -199,6 +201,8 @@ const styles = StyleSheet.create({
   },
   centerButtons: {
     backgroundColor: "#990f02",
+    alignItems: "center",
+    alignSelf: "center",
     paddingVertical: 20,
     padding: 80,
     borderRadius: 15,
@@ -215,6 +219,8 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     backgroundColor: "#990f02",
+    alignItems: "center",
+    alignSelf: "center",
     paddingVertical: 20,
     padding: 40,
     borderRadius: 15,
@@ -256,8 +262,13 @@ const styles = StyleSheet.create({
   },
   SignedView: {
     width: "60%",
+    alignSelf: "center",
+  },
+  SignedViewDesktop: {
+    width: "60%",
     alignItems: "center",
     alignContent: "center",
     marginBottom: 350,
+    backgroundColor: "#990f02",
   },
 });
