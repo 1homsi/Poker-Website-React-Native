@@ -114,7 +114,7 @@ export default class FriendsList extends Component {
   }
 
   FindUser() {
-    var searchEmail = `${this.state.searchEmail.trim()}@pokerGo.com`;
+    var searchEmail = `${this.state.searchEmail.trim()}@pokergo.com`;
     this.setState({ searchEmail: "" });
 
     firebase

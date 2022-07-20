@@ -32,7 +32,7 @@ export default class Register extends Component {
       return;
     }
     CreateUserauth.createUserWithEmailAndPassword(
-      `${this.state.username.trim()}@pokerGo.com`,
+      `${this.state.username.trim()}@pokergo.com`,
       this.state.password.trim()
     )
       .then((userCredential) => {
@@ -72,7 +72,7 @@ export default class Register extends Component {
         daily_login: new Date().getDay(),
         chips: 0,
         username: username,
-        email: this.state.email,
+        email: `${this.state.username.trim()}@pokergo.com`,
         friends: [""],
         games: 0,
         wins: 0,
@@ -125,7 +125,7 @@ export default class Register extends Component {
           value={this.state.username}
         />
 
-        <TextInput
+        {/* <TextInput
           placeholder="Email"
           placeholderTextColor="rgba(255, 255, 255, 0.75)"
           returnKeyType="next"
@@ -136,7 +136,7 @@ export default class Register extends Component {
           style={styles.input}
           onChangeText={(text) => this.setState({ email: text })}
           value={this.state.email}
-        />
+        /> */}
 
         <TextInput
           placeholder="Password"

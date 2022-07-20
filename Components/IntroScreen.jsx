@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Button,
-  ImageBackground,
   Touchable,
   Dimensions,
 } from "react-native";
@@ -15,10 +14,6 @@ export default class IntroScreen extends React.PureComponent {
   render() {
     return (
       <View style={styles.Container}>
-        {/* <ImageBackground
-          source={require("../assets/Images/BG3.jpg")}
-          style={styles.background}
-        > */}
         <View style={styles.TitleContainer}>
           <Text style={styles.Title}>GOPOKER</Text>
         </View>
@@ -32,7 +27,6 @@ export default class IntroScreen extends React.PureComponent {
         <View style={styles.Box}>
           <Text style={styles.BoxText}>ONLINE CASINO</Text>
         </View>
-        {/* </ImageBackground> */}
       </View>
     );
   }

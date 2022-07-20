@@ -52,12 +52,12 @@ export default class AccountSettings extends Component {
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => this.props.navigation.navigate("ForgotPassword")}
           >
             <Text style={styles.textStyle}>Reset Password</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* <TouchableOpacity
             style={styles.buttonContainer}
@@ -72,13 +72,24 @@ export default class AccountSettings extends Component {
           >
             <Text style={styles.textStyle}>Change Email</Text>
           </TouchableOpacity> */}
-
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => this.props.navigation.navigate("Register")}
-          >
-            <Text style={styles.textStyle}>Create User</Text>
-          </TouchableOpacity>
+          {firebase.auth().currentUser.uid == "uD8xZ17eFIXkLsWXyyzsGycqpYB3" ? (
+            <>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => this.props.navigation.navigate("Register")}
+              >
+                <Text style={styles.textStyle}>Create User</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => this.props.navigation.navigate("Dealer")}
+              >
+                <Text style={styles.textStyle}>Dealer</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <></>
+          )}
 
           <TouchableOpacity
             style={styles.buttonContainer}

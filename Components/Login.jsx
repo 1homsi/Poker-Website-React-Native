@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Keyboard,
   KeyboardAvoidingView,
-  ImageBackground,
 } from "react-native";
 import firebase from "firebase";
 import { Icon } from "react-native-elements";
@@ -26,7 +25,7 @@ export default class Login extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(
-        this.state.email.trim(),
+        `${this.state.email.trim()}@pokergo.com`,
         this.state.password.trim()
       )
       .then(() => {
@@ -42,42 +41,35 @@ export default class Login extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <ImageBackground
-          source={require("../assets/Images/BG3.jpg")}
-          style={styles.background}
-          blurRadius={6}
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => this.props.navigation.navigate("Intro")}
         >
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.props.navigation.navigate("Intro")}
-          >
-            <Icon name="arrow-back" type="ionicons" color="white" size={30} />
-          </TouchableOpacity>
-          <View style={styles.Box}>
-            <TextInput
-              placeholder="Email"
-              returnKeyType="next"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCompleteType="email"
-              autoCorrect={false}
-              style={styles.input}
-              onChangeText={(text) => this.setState({ email: text })}
-              value={this.state.email}
-            />
+          <Icon name="arrow-back" type="ionicons" color="white" size={30} />
+        </TouchableOpacity>
+        <View style={styles.Box}>
+          <TextInput
+            placeholder="Username"
+            returnKeyType="next"
+            autoCapitalize="none"
+            autoCorrect={false}
+            style={styles.input}
+            onChangeText={(text) => this.setState({ email: text })}
+            value={this.state.email}
+          />
 
-            <TextInput
-              placeholder="Password"
-              returnKeyType="go"
-              secureTextEntry
-              autoCorrect={false}
-              autoCompleteType="password"
-              style={styles.input}
-              onChangeText={(text) => this.setState({ password: text })}
-              value={this.state.password}
-            />
+          <TextInput
+            placeholder="Password"
+            returnKeyType="go"
+            secureTextEntry
+            autoCorrect={false}
+            autoCompleteType="password"
+            style={styles.input}
+            onChangeText={(text) => this.setState({ password: text })}
+            value={this.state.password}
+          />
 
-            {/* <TouchableOpacity
+          {/* <TouchableOpacity
               onPress={() => {
                 Keyboard.dismiss();
                 setTimeout(() => {
@@ -88,14 +80,13 @@ export default class Login extends Component {
               <Text style={styles.forgotPassword}>Forgot Password?</Text>
             </TouchableOpacity> */}
 
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => this.Login()}
-            >
-              <Text style={styles.registerButtonText}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => this.Login()}
+          >
+            <Text style={styles.registerButtonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     );
   }

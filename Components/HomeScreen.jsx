@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Alert,
   Dimensions,
-  ImageBackground,
 } from "react-native";
 import Logo from "./Utils/Logo";
 import Balance from "./Utils/Balance";
@@ -19,10 +18,6 @@ export default class HomeScreen extends Component {
   SignedIn = () => {
     return (
       <View style={styles.container}>
-        {/* <ImageBackground
-          source={require("../assets/Images/BG3.jpg")}
-          style={styles.SignedOutImageContainer}
-        > */}
         <View style={styles.InnerContainer}>
           <View style={styles.topRow}>
             {this.AccountSettings()}
@@ -88,7 +83,7 @@ export default class HomeScreen extends Component {
                   this.props.navigation.navigate("GameController"); // 'GameSetting'
                 }}
               >
-                <Text style={{color: "white"}}>{windowWidth}</Text>
+                <Text style={{ color: "white" }}>{windowWidth}</Text>
                 <Text style={styles.continueText}>Continue Game</Text>
               </TouchableOpacity>
             )}
@@ -102,7 +97,6 @@ export default class HomeScreen extends Component {
             </TouchableOpacity> */}
           </View>
         </View>
-        {/* </ImageBackground> */}
       </View>
     );
   };
@@ -110,27 +104,25 @@ export default class HomeScreen extends Component {
   SignedOut = () => {
     return (
       <View style={styles.container}>
-        <ImageBackground
-          source={require("../assets/Images/BG2.png")}
-          resizeMode="cover"
-          style={styles.SignedOutImageContainer}
+        <View
+          style={
+            windowWidth <= 400 ? styles.SignedView : styles.SignedViewDesktop
+          }
         >
-          <View style={windowWidth <= 400 ? styles.SignedView : styles.SignedViewDesktop}>
-            <TouchableOpacity
-              style={styles.continueButton}
-              onPress={() => this.props.navigation.navigate("Register")}
-            >
-              <Text style={styles.continueText}>Sign Up</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={() => this.props.navigation.navigate("Register")}
+          >
+            <Text style={styles.continueText}>Sign Up</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.continueButton}
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
-              <Text style={styles.continueText}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={() => this.props.navigation.navigate("Login")}
+          >
+            <Text style={styles.continueText}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -267,7 +259,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    
   },
   SignedViewDesktop: {
     width: "60%",
