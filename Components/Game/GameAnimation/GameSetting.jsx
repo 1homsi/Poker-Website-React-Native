@@ -259,7 +259,12 @@ export default class GameSetting extends Component {
     var screen = this.state.screen;
     var image = CardImages(suit, value);
     return (
-      <View style={{ left: 0, right: 0 }}>
+      <View style={{
+        position: "absolute",
+        alignContent: "center",
+        alignSelf: "center",
+        justifyContent: "center",
+      }}>
         <Animated.View style={this.state.tableCardsStart[i].getLayout()}>
           <View
             style={{
@@ -1099,6 +1104,7 @@ const styles = StyleSheet.create({
   carddealingView:{
     position: "absolute",
     bottom: 0,
+    right: 5,
     flexDirection: "row",
   },
   exitButton: {
