@@ -30,6 +30,7 @@ export default class Deck {
     }
   }
 }
+
 class Cards {
   constructor(suit, value, image) {
     this.suit = suit;
@@ -37,6 +38,7 @@ class Cards {
     this.image = image;
   }
 }
+
 function freshDeck() {
   return VALUE.flatMap((value) => {
     return SUITS.map((suit) => {
