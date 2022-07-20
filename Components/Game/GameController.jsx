@@ -629,31 +629,55 @@ export default class GameSetting extends Component {
   }
 
   async giveOutCards() {
-    gameDeck.shuffle();
+    gameDeck.shuffle(); // Shuffle the deck before giving out cards
 
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
-      playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+      // we multiply by 2 because each player has 2 decks
+      // Create a deck for each player
+      //create a better deck for the player who started the game
+      console.log(i);
+      if (i == 0 || i == 2 || i == 4 || i == 6) {
+        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+      } else {
+        playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
+      }
+      // take the first two cards from the deck and add them to the player's deck
     }
     //output: [ [card, card], [card, card] ]
-    this.setState({ myCards: playerDecks[0] });
+    this.setState({ myCards: playerDecks[0] }); // set my cards
 
     var playerRanks = playerDecks.map((cards) => {
+      // map each player's deck to a rank array
+      //ranks are in the form of [rank, [card1, card2]]
+      console.log("cards", cards);
+      //ranks are 1-9, 10 is a special case
+      //1 - straight flush
+      //2 - 4 of a kind
+      //3 - full house
+      //4 - flush
+      //5 - straight
+      //6 - 3 of a kind
+      //7 - 2 pair
+      //8 - pair
+      //9 - high card
+      //10 - no rank
       var obj = {
         rank: 10,
         myCards: cards,
-      };
-      return obj;
+      }; // create an object to store the rank and cards
+      return obj; // return an object with the rank and the cards
     });
     //example output: [{rank: 10, myCards: [Card, Card]}, {rank: 10, myCards: [Card, Card]}]
 
-    var deck = [];
+    var deck = []; // create a new deck because we don't want to modify the original deck
     for (var i = 0; i < 5; i++) {
-      deck.push(gameDeck.cards.shift());
-    }
+      // loop through the 5 cards in the deck
+      deck.push(gameDeck.cards.shift()); // take the first card from the deck and add it to the new deck
+    } // output: [Card, Card, Card, Card, Card]
     //this.setState({deck: deck})
     //console.log(playerRanks, deck, 'GameDeck, /n',gameDeck)
-    return [playerRanks, deck];
+    return [playerRanks, deck]; // return the player ranks and the deck (the 5 cards)
   }
 
   updateGame(type, amount) {
