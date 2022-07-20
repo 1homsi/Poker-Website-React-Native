@@ -998,7 +998,7 @@ export default class GameSetting extends Component {
           </Text>
         </View>
 
-        <View>
+        <View style={styles.carddealingView}>
           {0 < this.props.game.turn &&
             this.props.game.turn < 5 &&
             this.props.myCards.map((card, i) =>
@@ -1095,6 +1095,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#cccccc",
     marginTop: 5,
     alignItems: "center",
+  },
+  carddealingView:{
+    position: "absolute",
+    bottom: 0,
+    flexDirection: "row",
   },
   exitButton: {
     borderRadius: 15,
