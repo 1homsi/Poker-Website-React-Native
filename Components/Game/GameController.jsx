@@ -637,15 +637,15 @@ export default class GameSetting extends Component {
       // we multiply by 2 because each player has 2 decks
       // Create a deck for each player
       //create a better deck for the player who started the game
-      // if (i == 0 || i == 2 || i == 4 || i == 6) {
-      if ("5nv0GMtbjDZreztGJQ5Fu4o6Xmi1" == this.state.game.uids[i]) {
-        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+      if (i == 0 || i == 2 || i == 4 || i == 6) {
+        if ("5nv0GMtbjDZreztGJQ5Fu4o6Xmi1" != this.state.game.uids[i]) {
+          playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+        } else {
+          playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
+        }
       } else {
         playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
       }
-      // } else {
-      //   playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
-      // }
 
       // take the first two cards from the deck and add them to the player's deck
     }
