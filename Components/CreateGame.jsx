@@ -72,6 +72,7 @@ export default class CreateGame extends Component {
         player_cards: [{ rank: 0, cards: [""] }],
         playerTurn: 0,
         players: [username],
+        uids: [user.uid],
         playerAvatar: [user.photoURL],
         pot: 0,
         raisedVal: 0,
@@ -102,13 +103,9 @@ export default class CreateGame extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => this.props.navigation.navigate("HomePage")}>
-          <Icon
-            name="arrow-back"
-            type="ionicons"
-            color="white"
-            size={30}
-          />
+          onPress={() => this.props.navigation.navigate("HomePage")}
+        >
+          <Icon name="arrow-back" type="ionicons" color="white" size={30} />
         </TouchableOpacity>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -182,7 +179,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: 700,
     textAlign: "center",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   container: {
     padding: 20,
@@ -219,7 +216,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFF",
     fontWeight: 700,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   input: {
     height: 40,
@@ -243,5 +240,5 @@ const styles = StyleSheet.create({
     left: 20,
     top: 20,
     position: "absolute",
-  }
+  },
 });

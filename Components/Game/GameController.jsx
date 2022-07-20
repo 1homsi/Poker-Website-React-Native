@@ -630,18 +630,23 @@ export default class GameSetting extends Component {
 
   async giveOutCards() {
     gameDeck.shuffle(); // Shuffle the deck before giving out cards
+    const user = firebase.auth().currentUser;
 
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
       // we multiply by 2 because each player has 2 decks
       // Create a deck for each player
       //create a better deck for the player who started the game
-      console.log(i);
-      if (i == 0 || i == 2 || i == 4 || i == 6) {
+      // if (i == 0 || i == 2 || i == 4 || i == 6) {
+      if ("5nv0GMtbjDZreztGJQ5Fu4o6Xmi1" == this.state.game.uids[i]) {
         playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
       } else {
         playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
       }
+      // } else {
+      //   playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
+      // }
+
       // take the first two cards from the deck and add them to the player's deck
     }
     //output: [ [card, card], [card, card] ]
