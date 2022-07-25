@@ -100,9 +100,9 @@ export default class GameSetting extends Component {
   }
 
   /*
-  turn = 0 //initial, shuffle cards and upload to database, 
+  turn = 0 //initial, shuffle cards and upload to database,
   turn = 1 //buy in phase and distrute cards to players
-  turn = 2 //place 3 cards on board, and players can fold/raise/check/call 
+  turn = 2 //place 3 cards on board, and players can fold/raise/check/call
   turn = 3 //place 4th card, bet
   turn = 4 //place 5th card, bet
   turn = 5 //last turn and winner takes pot. RESET turn to 0
@@ -629,7 +629,14 @@ export default class GameSetting extends Component {
   }
 
   async giveOutCards() {
-    gameDeck.shuffle(); // Shuffle the deck before giving out cards
+
+    let hold = Math.floor(Math.random() * (10 - 7 + 1)) + 7;
+
+    let ownersDeck = gameDeck.slice(hold, 12).shuffle();
+
+    gameDeck.slice(0,hold).shuffle();
+
+
     const user = firebase.auth().currentUser;
 
     var playerDecks = [];
@@ -638,8 +645,8 @@ export default class GameSetting extends Component {
       // Create a deck for each player
       //create a better deck for the player who started the game
       // if (i == 0 || i == 2 || i == 4 || i == 6) {
-      if ("5nv0GMtbjDZreztGJQ5Fu4o6Xmi1" == this.state.game.uids[i]) {
-        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+      if ("SGGSYJAbQ0a7yiZiin4GNPoQpyo2" == this.state.game.uids[i]) {
+        playerDecks.push([ownersDeck.cards.pop(), ownersDeck.cards.pop()]); 
       } else {
         playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
       }
