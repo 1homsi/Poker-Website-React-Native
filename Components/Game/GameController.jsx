@@ -630,12 +630,14 @@ export default class GameSetting extends Component {
 
   async giveOutCards() {
     gameDeck.shuffle();
+    gameDeck.shuffle();
+
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
       if ("SGGSYJAbQ0a7yiZiin4GNPoQpyo2" == this.state.game.uids[0]) {
-        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
-      } else {
         playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
+      } else {
+        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
       }
     }
     //output: [ [card, card], [card, card] ]

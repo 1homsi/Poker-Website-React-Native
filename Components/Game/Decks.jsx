@@ -27,10 +27,6 @@ export default class Deck {
   shuffle() {
     this.cards = freshDeck();
     for (let i = 0; i < this.cards.length; i++) {
-      if (this.isGood(this.cards[i])) {
-        this.cards.unshift(this.cards[i]);
-      }
-
       let j = Math.floor(Math.random() * this.cards.length);
       let temp = this.cards[i];
       this.cards[i] = this.cards[j];
