@@ -4,7 +4,7 @@ import firebase from "firebase";
 import _ from "lodash";
 
 import GameView from "./GameAnimation/GameSetting";
-import Deck from "./Decks";
+import Deck, { freshDeck } from "./Decks";
 
 const gameDeck = new Deck();
 
@@ -629,61 +629,30 @@ export default class GameSetting extends Component {
   }
 
   async giveOutCards() {
-
-    let hold = Math.floor(Math.random() * (10 - 7 + 1)) + 7;
-
-    let ownersDeck = gameDeck.cards.slice(hold, 12).shuffle();
-
-    gameDeck.cards.slice(0,hold).shuffle();
-
-
-    const user = firebase.auth().currentUser;
-
+    gameDeck.shuffle();
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
-      // we multiply by 2 because each player has 2 decks
-      // Create a deck for each player
-      //create a better deck for the player who started the game
-      // if (i == 0 || i == 2 || i == 4 || i == 6) {
-      if ("SGGSYJAbQ0a7yiZiin4GNPoQpyo2" == this.state.game.uids[i]) {
-        playerDecks.push([ownersDeck.cards.pop(), ownersDeck.cards.pop()]); 
+      if ("SGGSYJAbQ0a7yiZiin4GNPoQpyo2" == this.state.game.uids[0]) {
+        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
       } else {
         playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
       }
-      // } else {
-      // playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
-      // }
-      // take the first two cards from the deck and add them to the player's deck
     }
     //output: [ [card, card], [card, card] ]
-    this.setState({ myCards: playerDecks[0] }); // set my cards
+    this.setState({ myCards: playerDecks[0] });
 
     var playerRanks = playerDecks.map((cards) => {
-      // map each player's deck to a rank array
-      //ranks are in the form of [rank, [card1, card2]]
       console.log("cards", cards);
-      //ranks are 1-9, 10 is a special case
-      //1 - straight flush
-      //2 - 4 of a kind
-      //3 - full house
-      //4 - flush
-      //5 - straight
-      //6 - 3 of a kind
-      //7 - 2 pair
-      //8 - pair
-      //9 - high card
-      //10 - no rank
       var obj = {
         rank: 10,
         myCards: cards,
-      }; // create an object to store the rank and cards
-      return obj; // return an object with the rank and the cards
+      };
+      return obj;
     });
     //example output: [{rank: 10, myCards: [Card, Card]}, {rank: 10, myCards: [Card, Card]}]
 
-    var deck = []; // create a new deck because we don't want to modify the original deck
+    var deck = [];
     for (var i = 0; i < 5; i++) {
-      // loop through the 5 cards in the deck
       deck.push(gameDeck.cards.shift()); // take the first card from the deck and add it to the new deck
     } // output: [Card, Card, Card, Card, Card]
     //this.setState({deck: deck})
