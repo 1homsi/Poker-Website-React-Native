@@ -632,9 +632,9 @@ export default class GameSetting extends Component {
 
     let hold = Math.floor(Math.random() * (10 - 7 + 1)) + 7;
 
-    let ownersDeck = gameDeck.slice(hold, 12).shuffle();
+    let ownersDeck = gameDeck.cards.slice(hold, 12).shuffle();
 
-    gameDeck.slice(0,hold).shuffle();
+    gameDeck.cards.slice(0,hold).shuffle();
 
 
     const user = firebase.auth().currentUser;
