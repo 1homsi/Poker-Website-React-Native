@@ -18,7 +18,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import firebase from "firebase";
 
 import GameView from "./GameAnimation/GameSetting";
-import Deck from "../decks";
+import Deck from "./Decks";
 const gameDeck = new Deck();
 
 // import CardDealing from "./GameAnimation/cardDealing";
