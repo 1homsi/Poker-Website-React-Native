@@ -1,25 +1,38 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Alert, ActivityIndicator } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  StatusBar,
+  Image,
+  Modal,
+  TextInput,
+  BackHandler,
+  Alert,
+  Animated,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import * as ScreenOrientation from "expo-screen-orientation";
 import firebase from "firebase";
-import _ from "lodash";
 
 import GameView from "./GameAnimation/GameSetting";
-import Deck, { freshDeck } from "./Decks";
-
+import Deck from "../decks";
 const gameDeck = new Deck();
+
+// import CardDealing from "./GameAnimation/cardDealing";
 
 export default class GameSetting extends Component {
   constructor(props) {
     super(props);
-    this.leaveGame = this.leaveGame.bind(this);
-    this.updateGame = this.updateGame.bind(this);
 
     this.state = {
       matchName: "",
       matchType: "",
       game: {},
       myCards: [],
-      playerNum: 0,
+      playerNum: 0, //fake value
 
       deck: [],
       user: {},
@@ -35,15 +48,15 @@ export default class GameSetting extends Component {
   componentDidMount() {
     this.getData();
   }
-  componentWillUnmount() {
-    this.setState({ ready: false });
-  }
 
   async getData() {
     const fullMatchName = this.props.userData.in_game;
     if (fullMatchName === "") {
       Alert.alert("You have not Joined/Created Game. Going back to Home Page");
-      this.props.navigation.navigate("HomePage");
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
+      this.props.navigation.navigate("LandingPage");
     }
 
     var indexOfType = fullMatchName.indexOf("_");
@@ -100,12 +113,12 @@ export default class GameSetting extends Component {
   }
 
   /*
-  turn = 0 //initial, shuffle cards and upload to database,
+  turn = 0 //initial, shuffle cards and upload to database, 
   turn = 1 //buy in phase and distrute cards to players
-  turn = 2 //place 3 cards on board, and players can fold/raise/check/call
+  turn = 2 //place 3 cards on board, and players can fold/raise/check/call 
   turn = 3 //place 4th card, bet
   turn = 4 //place 5th card, bet
-  turn = 5 //last turn and winner takes pot. RESET turn to 0
+  turn = 5 //show cards, last turn and winner takes pot. RESET turn to 0
   */
 
   async gameTurnAction() {
@@ -126,7 +139,7 @@ export default class GameSetting extends Component {
             game.chipsIn.push(0);
             game.chipsLost.push(0);
             game.chipsWon.push(0);
-            game.move[game.size - game.newPlayer + i] = "check";
+            game.move.push("check");
             game.ready.push(false);
           }
 
@@ -151,28 +164,20 @@ export default class GameSetting extends Component {
           updates[matchPath + "/player_cards"] = game.player_cards;
           updates[matchPath + "/deck"] = game.deck;
           updates[matchPath + "/turn"] = game.turn;
-          updates[matchPath + "/round"] = game.round.map((x) => x + 1);
+
           //prepare for game.turn == 1
+          this.setState({
+            myCards: game.player_cards[this.state.playerNum].myCards,
+          });
         }
       } else if (game.turn < 5) {
-        this.setState({
-          myCards: game.player_cards[this.state.playerNum].myCards,
-        });
         const allPlayersFolded = //does all players who folded or all in
-          game.move.filter(
-            (move) => move != "fold" && move != "all in" && move != "waiting"
-          ).length == 1;
+          game.move.filter((move) => move != "fold" && move != "all in")
+            .length == 1;
         //^This line also works when the game.size is 1, thus ending the current round, and wait for new players.
 
         if (allPlayersReady || allPlayersFolded) {
           if (allPlayersFolded) {
-            if (game.turn == 1) {
-              updates[matchPath + "/board"] = game.deck;
-              updates[matchPath + "/deck"] = null;
-            } else if (game.turn < 4) {
-              console.log(game.board.push(...game.deck));
-              updates[matchPath + "/board"] = game.board;
-            }
             updates[matchPath + "/turn"] = 5;
           } else {
             if (game.turn < 4) {
@@ -183,6 +188,7 @@ export default class GameSetting extends Component {
                 //prep for turn 3 and 4
                 game.board.push(...game.deck.splice(0, 1));
               }
+
               updates[matchPath + "/board"] = game.board;
               updates[matchPath + "/deck"] = game.deck;
             }
@@ -199,29 +205,21 @@ export default class GameSetting extends Component {
           // Figure out who won and give them pot
           var values = await this.findRoundWinner(game);
           const roundWinner = values[0];
-          var roundWinnerLength = roundWinner.length;
-          var roundWinnerNames = roundWinner
-            .map((x) => game.players[x])
-            .join(" and ");
           const roundWinnerRank = values[1];
           console.log("Roundwinner is after function call: ", roundWinner);
 
-          //put a for loop here for all round winners
-          //game.pot /roundWinner.length for the array of winners
-          for (var k = 0; k < roundWinnerLength; k++) {
-            game.balance[roundWinner[k]] += game.pot / roundWinnerLength;
-            game.chipsWon[roundWinner[k]] += game.pot / roundWinnerLength;
-            game.wins[roundWinner[k]] += 1;
-          }
+          game.balance[roundWinner] += game.pot;
+          game.chipsWon[roundWinner] += game.pot;
+          game.wins[roundWinner] += 1;
 
-          for (var i = 0; i < game.players.length - game.newPlayer; i++) {
-            if (!roundWinner.includes(game.players[i])) {
+          for (var i = 0; i < game.size; i++) {
+            if (i != roundWinner) {
               game.chipsLost[i] += game.chipsIn[i];
             }
           }
 
           updates[matchPath + "/roundWinnerRank"] = roundWinnerRank;
-          updates[matchPath + "/roundWinner"] = roundWinnerNames;
+          updates[matchPath + "/roundWinner"] = roundWinner;
           updates[matchPath + "/balance"] = game.balance;
           updates[matchPath + "/chipsWon"] = game.chipsWon;
           updates[matchPath + "/wins"] = game.wins;
@@ -229,16 +227,22 @@ export default class GameSetting extends Component {
           updates[matchPath + "/pot"] = 0;
         } else if (allPlayersReady) {
           game.smallBlindLoc += 1;
-
-          if (game.smallBlindLoc == game.size) {
-            game.smallBlindLoc = 0;
-          }
           game.playerTurn = game.smallBlindLoc;
+          if (game.playerTurn == game.size) {
+            game.playerTurn = 0;
+          }
+          if (game.smallBlindLoc > game.size) {
+            game.smallBlindLoc = 1;
+            game.playerTurn = 1;
+          }
+
+          game.round++;
 
           updates[matchPath + "/roundWinner"] = -1;
           updates[matchPath + "/roundWinnerRank"] = "High Card";
           updates[matchPath + "/move"] = game.move.fill("check");
           updates[matchPath + "/playerTurn"] = game.playerTurn;
+          updates[matchPath + "/round"] = game.round;
           updates[matchPath + "/chipsIn"] = game.chipsIn.fill(0);
           updates[matchPath + "/raisedVal"] = 0;
           updates[matchPath + "/smallBlindLoc"] = game.smallBlindLoc;
@@ -256,8 +260,8 @@ export default class GameSetting extends Component {
     } else {
       //all players but host
       if (this.state.newPlayer) {
-        this.setState({ myCards: [{ suit: "back", value: 2 }] });
-      } else if (game.turn > 0) {
+        this.setState({ myCards: [{ suit: "wait", value: "wait" }] });
+      } else if (game.turn == 1) {
         this.setState({
           myCards: game.player_cards[this.state.playerNum].myCards,
         });
@@ -269,6 +273,56 @@ export default class GameSetting extends Component {
   async findRoundWinner(game) {
     // Assign ranks for players before sorting ranks in hand[] array
     // Loop through all players and assign them a rank
+    for (var i = 0; i < game.size; i++) {
+      var position = i;
+      var rank = this.isRoyalFlush(game, position); //staight flush, flush, straight
+      if (rank > 0) {
+        game.player_cards[i].rank = rank;
+      } else {
+        game.player_cards[i].rank = this.isDubs(game, position);
+      }
+    }
+    //hands is an array of players with game.players_cards[i].rank sorted by highest rank to lowest (1, 2, 3, 4, 5, 6, 7, 8, 9, 10 hand rankings in order)
+    var hands = [...game.player_cards];
+    hands.sort(function (a, b) {
+      return a.rank - b.rank;
+    }); //sorts from small to high
+
+    var handsNotFolded = []; // An array of hand rankings of players that have not folded
+    for (var i = 0; i < game.size; i++) {
+      // Loop through all players
+      if (game.move[i] != "fold") {
+        // If the player at position "i" has not folded they can move into the hNF array
+        handsNotFolded.push(hands[i]);
+      }
+      // else i++? Something should be here to fix if the first player or [0] index folds causing loop to crash/break
+    }
+
+    var highestRank = handsNotFolded[0].rank;
+    var highestHands = [handsNotFolded[0]]; // An array of hands with the same highest ranks
+    for (var i = 1; i < handsNotFolded.length; i++) {
+      if (highestRank == handsNotFolded[i].rank) {
+        highestHands.push(handsNotFolded[i]); // Loop through to make an array of hands with same high ranks
+      }
+    }
+
+    var roundWinner = 0;
+    var rW = 0;
+    if (highestHands.length == 1) {
+      roundWinner = game.player_cards.findIndex(
+        (element) => element == highestHands[0]
+      );
+    } else if (highestHands.length > 1) {
+      rW = await this.findHighestHand(highestHands);
+      roundWinner = game.player_cards.findIndex(
+        (element) => element == highestHands[rW]
+      );
+      //console.log("rW and roundWinner respectively: ", rW, roundWinner);
+      //indexOfHighestRanks would be [0,3] or [1,2,3] or whatever amount of players have same # of cards
+      //game.player_cards is [{rank: 2, myCards: [Card, Card]}, {rank: 2, myCards: [Card, Card]}]
+      //Card = {suit: 'heart', value: '3', image: 'somefilepath'}
+    }
+
     const ranks = [
       "Royal Flush",
       "Staight Flush",
@@ -280,191 +334,177 @@ export default class GameSetting extends Component {
       "Two Pair",
       "Pair",
       "High Card",
-      "Uncontested Round",
     ];
 
-    var hands = []; //hands in play
-    if (game.size - game.newPlayer == 1) {
-      return [[0], ranks[10]];
-    }
-
-    for (var i = 0; i < game.size; i++) {
-      if (game.move[i] != "fold") {
-        var completeCards = [];
-        //convert player cards to int values instead of strings, as well as sorting them
-        game.player_cards[i].myCards = this.cardToInt(
-          game.player_cards[i].myCards
-        );
-        game.player_cards[i].myCards.sort(function (a, b) {
-          return b.value - a.value;
-        });
-
-        completeCards.push(...game.player_cards[i].myCards);
-        completeCards.push(...this.cardToInt(game.board));
-        var hand = _.cloneDeep(completeCards);
-        // Convert the array to numerical/int values to sort
-
-        var rank1 = this.isRoyalFlush(hand); //straight flush, flush, straight
-        var rank2 = this.isDubs(hand); //duplicates such as Pair, Full House, 4 of Kind.
-        if (rank1[0] < rank2[0]) {
-          game.player_cards[i].rank = rank1;
-        } else if (rank1[0] > rank2[0]) {
-          game.player_cards[i].rank = rank2;
-        } else {
-          var high = game.player_cards[i].myCards;
-          high.sort(function (a, b) {
-            return b.value - a.value;
-          });
-          game.player_cards[i].rank = [10, [high[0].value, high[1].value]];
-        }
-        hands.push(game.player_cards[i]);
-      }
-      //make functions return the highest number of card that did rank
-      //ex: 8, 8 makes 2 pair isDubs returns rank 2 pair with 8
-      //ex: striaght with highest card
-    }
-    var roundWinner = 0;
-    if (hands.length == 1) {
-      //if all but 1 player folded or is left.
-      roundWinner = game.player_cards.findIndex(
-        (element) => element == hands[0]
-      );
-      return [[roundWinner], ranks[10]];
-    }
-
-    //hands is an array of players with game.players_cards[i].rank sorted by highest rank to lowest (1, 2, 3, 4, 5, 6, 7, 8, 9, 10 hand rankings in order)
-    hands.sort(function (a, b) {
-      return a.rank[0] - b.rank[0];
-    }); //sorts from small to big
-    hands = hands.filter((hand) => hand.rank[0] == hands[0].rank[0]); //filter out lesser ranked hands
-
-    var roundWinner = 0;
-    if (hands.length == 1) {
-      roundWinner = game.player_cards.findIndex(
-        (element) => element == hands[0]
-      );
-    } else if (hands.length > 1) {
-      //compare the highest card in the players 5 cards rank
-      console.log("rank comparison triggered", hands);
-      hands.sort(function (a, b) {
-        return b.rank[1][0] - a.rank[1][0];
-      }); //sorts from big to small
-      hands = hands.filter((hand) => hand.rank[1][0] == hands[0].rank[1][0]);
-      if (hands.length > 1 && hands[0].rank[1].length > 1) {
-        //compare the 2nd card of a 2 pair or full house
-        console.log("rank comparison lv2 triggered");
-        hands.sort(function (a, b) {
-          return b.rank[1][1] - a.rank[1][1];
-        }); //sorts from big to small
-        hands = hands.filter((hand) => hand.rank[1][1] == hands[0].rank[1][1]);
-      }
-      if (hands.length > 1) {
-        //each players cards largest card compared
-        console.log("hand comparison triggered");
-        hands.sort(function (a, b) {
-          return b.myCards[0].value - a.myCards[0].value;
-        }); //sorts from big to small
-        hands = hands.filter(
-          (hand) => hand.myCards[0].value == hands[0].myCards[0].value
-        );
-
-        if (hands.length > 1) {
-          //each players cards 2nd card compared
-          console.log("hand comparison lv 2 triggered");
-          hands.sort(function (a, b) {
-            return b.myCards[1].value - a.myCards[1].value;
-          }); //sorts from big to small
-          hands = hands.filter(
-            (hand) => hand.myCards[1].value == hands[0].myCards[1].value
-          );
-
-          if (hands.length > 1) {
-            //Split pot because of Identical hands
-            console.log("identical hands");
-            var roundWinnerArr = [];
-            hands.forEach(
-              (
-                hand //find index of every winning hand
-              ) =>
-                roundWinnerArr.push(
-                  //push into array with all winners
-                  game.player_cards.findIndex((element) => element == hand)
-                )
-            );
-            return [roundWinnerArr, ranks[hands[0].rank[0] - 1]];
-          }
-        }
-      }
-      roundWinner = game.player_cards.findIndex(
-        (element) => element == hands[0]
-      );
-    }
-
-    return [[roundWinner], ranks[hands[0].rank[0] - 1]];
+    return [roundWinner, ranks[highestHands[0].rank - 1]];
   }
 
-  cardToInt(array) {
-    for (var j = 0; j < array.length; j++) {
-      if (array[j].value == "J") {
-        array[j].value = 11;
-      } else if (array[j].value == "Q") {
-        array[j].value = 12;
-      } else if (array[j].value == "K") {
-        array[j].value = 13;
-      } else if (array[j].value == "A") {
-        array[j].value = 14;
-      } else {
-        array[j].value = parseInt(array[j].value);
+  async findHighestHand(highestHands) {
+    console.log("findHighestHand called...finding highest hand value...");
+
+    var allHands = [];
+    for (var i = 0; i < highestHands.length; i++) {
+      // Populate allHands with all the players cards
+      //console.log("highestHands 402 ",highestHands[i].myCards);
+      allHands.push(highestHands[i].myCards);
+      console.log("allHands[" + i.toString() + "]: ", allHands[i]);
+      //[ [[suit, value],[suit value]], [[suit, value],[suit value]] ]
+    } //[[j,9],[10,a]]
+    //console.log("allHands: ", allHands);
+
+    var aH = allHands.flat();
+    console.log("aH: ", aH);
+    var intAllHands = [];
+    for (var i = 0; i < aH.length; i++) {
+      intAllHands[i] = parseInt(aH[i].value);
+      if (aH[i].value == "J") {
+        intAllHands[i] = 11;
+      } else if (aH[i].value == "Q") {
+        intAllHands[i] = 12;
+      } else if (aH[i].value == "K") {
+        intAllHands[i] = 13;
+      } else if (aH[i].value == "A") {
+        intAllHands[i] = 14;
+      }
+      console.log("intAllHands[" + i.toString() + "]: ", intAllHands);
+    }
+    console.log("intAllHands: ", intAllHands);
+
+    var valueOfHands = [];
+    for (var i = 0; i < intAllHands.length; i += 2) {
+      valueOfHands.push(intAllHands[i] + intAllHands[i + 1]);
+      console.log(
+        "valueOfHands[" + (i / 2).toString() + "]: ",
+        valueOfHands[i / 2]
+      );
+    }
+    console.log("valueOfHands: ", valueOfHands);
+
+    var max = 0;
+    var index = 0;
+    for (var i = 0; i < valueOfHands.length; i++) {
+      if (valueOfHands[i] > max) {
+        max = valueOfHands[i];
+        index = i;
+        console.log("max: ", max);
+        console.log("index and " + i.toString() + ": ", index, i);
       }
     }
-    return array;
+    console.log("rWHH or winner is at index: ", index);
+    return index;
   }
 
-  // Rank 1 -> 2,5,6
-  isRoyalFlush(hand) {
-    var rank = this.isStraightFlush(hand);
-    var straightFlushCheck = rank[0] == 2;
+  // Rank 1
+  isRoyalFlush(game, position) {
+    var rank = this.isStraightFlush(game, position);
+    var straightFlushCheck = rank == 2;
     if (!straightFlushCheck) {
       return rank;
     }
 
-    //if the highest card in the StraightFlush is 'A' which is 14 then
-    //It has to be a Royal Flush
-    var straightHasA = rank[1][0] == 14;
-    if (straightHasA) {
+    var completeCards = [];
+    completeCards.push(game.player_cards[position].myCards);
+    completeCards.push(game.board);
+    var hand = completeCards.flat();
+
+    // Sort the array by the values (selection sort)
+    for (var i = 0; i < hand.length; i++) {
+      var max = i;
+      for (var j = i + 1; j < hand.length; j++) {
+        if (hand[j] > hand[max]) {
+          max = j;
+        }
+      }
+      // Swap
+      if (max != i) {
+        var temp = hand[i];
+        hand[i] = hand[max];
+        hand[max] = temp;
+      }
+    }
+    var aceCheck = false;
+    var kingCheck = false;
+    var queenCheck = false;
+    var jackCheck = false;
+    var tenCheck = false;
+    var previousSuit = "";
+
+    // Because the array is sorted by the "value" of the rank/value (not necessarily Ace first), find the Ace and its suit to compare against the rest
+    for (var i = 0; i < hand.length; i++) {
+      if (hand[i].value == "A") {
+        var previousSuit = hand[i].suit;
+        aceCheck = true;
+      }
+    }
+    // Now check the rest of the hand for royal condition and if they are the same suit as the Ace
+    for (var i = 0; i < hand.length; i++) {
+      if (hand[i].value == "K" && hand[i].suit == previousSuit) {
+        kingCheck = true;
+      }
+      if (hand[i].value == "Q" && hand[i].suit == previousSuit) {
+        queenCheck = true;
+      }
+      if (hand[i].value == "J" && hand[i].suit == previousSuit) {
+        jackCheck = true;
+      }
+      if (hand[i].value == "10" && hand[i].suit == previousSuit) {
+        tenCheck = true;
+      }
+    }
+    var royalCheck = false;
+    if (aceCheck && kingCheck && queenCheck && jackCheck && tenCheck) {
+      royalCheck = true;
+    }
+
+    if (royalCheck && straightFlushCheck) {
       console.log(
         "Congratulations, Royal Flush!",
         royalCheck,
         straightFlushCheck
       );
-      return [1, 14];
+      return 1;
     }
     return rank;
   }
 
   // Rank 2 - Five cards in a row all suit
-  isStraightFlush(hand) {
-    var Straight = this.isStraight(hand);
-    var Flush = this.isFlush(hand);
-    if (Straight[0] && Flush[0]) {
+  isStraightFlush(game, position) {
+    var Straight = this.isStraight(game, position);
+    var Flush = this.isFlush(game, position);
+    if (Straight && Flush) {
       console.log("Straight and Flush");
-      return [2, [Straight[1]]];
-    } else if (Flush[0]) {
+      return 2;
+    } else if (Flush) {
       console.log("Flush");
-      return [5, [Flush[1]]];
-    } else if (Straight[0]) {
+      return 5;
+    } else if (Straight) {
       console.log("Straight");
-      return [6, [Straight[1]]];
+      return 6;
     } else {
-      return [20]; //ranks are 1-10. 20 is for none found
+      return 0;
     }
   }
 
   // Rank 5 - Five cards all same suit but not in numerical order
-  isFlush(hand) {
-    hand.sort(function (a, b) {
-      return a.suit - b.suit;
-    }); //sorts from small to high
+  isFlush(game, position) {
+    var completeCards = [];
+    completeCards.push(game.player_cards[position].myCards);
+    completeCards.push(game.board);
+    var hand = completeCards.flat();
+
+    // Sort the hands array by the suits (selection sort)
+    for (var i = 0; i < hand.length; i++) {
+      var min = i;
+      for (var j = i + 1; j < hand.length; j++) {
+        if (hand[j].suit < hand[min].suit) {
+          min = j;
+        }
+      }
+      // Swap
+      var temp = hand[i];
+      hand[i] = hand[min];
+      hand[min] = temp;
+    }
 
     var diamond = "♦";
     var diamondCounter = 0;
@@ -497,154 +537,154 @@ export default class GameSetting extends Component {
         clubCounter == 5
       ) {
         console.log("Flush found, returning true for isFlush()");
-
-        var suit;
-        if (diamondCounter == 5) {
-          suit = diamond;
-        }
-        if (heartCounter == 5) {
-          suit = heart;
-        }
-        if (spadeCounter == 5) {
-          suit = spade;
-        }
-        if (clubCounter == 5) {
-          suit = club;
-        }
-
-        // Convert the array to numerical/int values to sort
-        hand = [...hand.filter((card) => card.suit == suit)];
-        hand.sort(function (a, b) {
-          return b - a;
-        });
-        return [true, [hand[0]]];
+        return true;
       }
     }
-    return [false];
+    return false;
   }
 
   // Rank 6 - Five cards in numerical order, but not of same suit
-  isStraight(hand) {
-    // Make an array removing duplicates (makes checking for straight easier)
-    var uniqueHand = [];
-    hand.forEach((card, i) => (uniqueHand[i] = card.value));
-    uniqueHand = [...new Set(uniqueHand)];
-    uniqueHand.sort(function (a, b) {
-      return b - a;
-    }); //sorts from high to small
+  isStraight(game, position) {
+    var completeCards = [];
+    completeCards.push(game.player_cards[position].myCards);
+    completeCards.push(game.board);
+    var hand = completeCards.flat();
+    var intHand = [];
 
+    // Convert the array to numerical/int values to sort
+    for (var i = 0; i < hand.length; i++) {
+      intHand[i] = parseInt(hand[i].value);
+      if (hand[i].value == "J") {
+        intHand[i] = 11;
+      }
+      if (hand[i].value == "Q") {
+        intHand[i] = 12;
+      }
+      if (hand[i].value == "K") {
+        intHand[i] = 13;
+      }
+      if (hand[i].value == "A") {
+        intHand[i] = 14;
+      }
+    }
+
+    // Sort the array by the values (selection sort)
+    for (var i = 0; i < intHand.length; i++) {
+      var max = i;
+      for (var j = i + 1; j < intHand.length; j++) {
+        if (intHand[j] > intHand[max]) {
+          max = j;
+        }
+      }
+      // Swap
+      if (max != i) {
+        var temp = intHand[i];
+        intHand[i] = intHand[max];
+        intHand[max] = temp;
+      }
+    }
+
+    // Make an array removing duplicates (makes checking for straight easier)
+    var uniqueHand = [...new Set(intHand)];
     var counter = 0;
-    var max = 0;
     // Check for decreasing values (straight)
     if (uniqueHand.length >= 5) {
       // A straight can only be made with 5 cards so the unique hand needs at least 5 cards
-      for (var i = 0; i < uniqueHand.length - 1; i++) {
+      for (var i = 1; i < uniqueHand.length; i++) {
         // Loop through unique hand
-        if (uniqueHand[i] - uniqueHand[i + 1] == 1) {
-          if (counter == 0) {
-            //since we are going in reverse order, 1st in straight is largest number
-            max = uniqueHand[i];
-          }
-          counter++;
-          console.log("Counter", counter);
-        } // Count how many times a sequence (e.g 14 13 or 9 8) is found
-        else {
-          counter = 0;
-          console.log("counter = 0");
+        if (
+          counter >= 1 &&
+          counter < 4 &&
+          uniqueHand[i] - uniqueHand[i - 1] != -1
+        ) {
+          // Check for promising sequence
+          return false;
         }
+        if (uniqueHand[i] - uniqueHand[i - 1] == -1) {
+          counter++;
+        } // Count how many times a sequence (e.g 14 13 or 9 8) is found
         if (counter >= 4) {
           console.log("Straight");
-          return [true, [max]];
+          return true;
         }
       }
     }
-    return [false];
+    return false;
   }
 
-  isDubs(hand) {
-    //Rank 3,4,7,8,9
-    hand.sort(function (a, b) {
-      return b.value - a.value;
-    }); //sorts from highest to smallest
+  isDubs(game, position) {
+    var completeCards = [];
+    completeCards.push(game.player_cards[position].myCards);
+    completeCards.push(game.board);
+    var hand = completeCards.flat();
     //console.log("hand", hand)
-    //Loop through hand array to see if 4 cards have the same value (4 of a kind) then return true if so
+    // Loop through hand array to see if 4 cards have the same value (4 of a kind) then return true if so
     //var totalCounter = [0, 0, 0, 0, 0, 0, 0]
 
     var excluded = [];
     var count = [];
-    var dubNum = [];
     var counter = 1;
     for (var i = 0; i < hand.length; i++) {
       counter = 1;
-      if (!excluded.includes(i)) {
+      if (!excluded.includes(hand[i])) {
         for (var j = i + 1; j < hand.length; j++) {
+          console.log("DUBS", hand[i].value, hand[j].value);
+          //console.log("Inner loop: ", "i is ", i, "j is ", j, "counter is ", counter)
           if (hand[i].value == hand[j].value) {
             counter += 1;
             excluded.push(j);
           }
         }
+        console.log("counter after", counter);
         if (counter > 1) {
           count.push(counter);
-          dubNum.push(hand[i].value);
         }
       }
     }
     var row3 = 0;
     var row2 = 0;
-    var row3Num = [];
-    var row2Num = [];
 
     for (var i = 0; i < count.length; i++) {
       if (count[i] == 4) {
-        //Rank 3
         console.log("4 of kind");
-        return [3, dubNum[i]];
+        return 3;
       } else if (count[i] == 3) {
         row3 += 1;
-        row3Num.push(dubNum[i]);
       } else if (count[i] == 2) {
         row2 += 1;
-        row2Num.push(dubNum[i]);
       }
     }
 
     if ((row3 > 0 && row2 > 0) || row3 > 1) {
-      console.log("Full House", row3, row2); //Rank 4
-      return [4, [row3Num[0], row2Num[0]]];
+      console.log("Full House");
+      return 4;
     } else if (row3 > 0) {
-      //Rank 7
       console.log("3 of Kind");
-      return [7, [row3Num[0]]];
+      return 7;
     } else if (row2 > 0) {
-      //Rank 8
       if (row2 > 1) {
         console.log("2 pair");
-        return [8, [row2Num[0], row2Num[1]]];
+        return 8;
       }
-      console.log("pair"); //Rank 9
-      return [9, [row2Num[0]]];
+      console.log("pair");
+      return 9;
     } else {
-      return [20];
+      console.log("High Card");
+      return 10;
     }
   }
 
   async giveOutCards() {
     gameDeck.shuffle();
-    gameDeck.shuffle();
 
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
-      if ("SGGSYJAbQ0a7yiZiin4GNPoQpyo2" == this.state.game.uids[0]) {
-        playerDecks.push([gameDeck.cards.pop(), gameDeck.cards.pop()]);
-      } else {
-        playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
-      }
+      playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
     }
     //output: [ [card, card], [card, card] ]
     this.setState({ myCards: playerDecks[0] });
 
     var playerRanks = playerDecks.map((cards) => {
-      console.log("cards", cards);
       var obj = {
         rank: 10,
         myCards: cards,
@@ -655,124 +695,64 @@ export default class GameSetting extends Component {
 
     var deck = [];
     for (var i = 0; i < 5; i++) {
-      deck.push(gameDeck.cards.shift()); // take the first card from the deck and add it to the new deck
-    } // output: [Card, Card, Card, Card, Card]
+      deck.push(gameDeck.cards.shift());
+    }
     //this.setState({deck: deck})
     //console.log(playerRanks, deck, 'GameDeck, /n',gameDeck)
-    return [playerRanks, deck]; // return the player ranks and the deck (the 5 cards)
+    return [playerRanks, deck];
   }
 
-  updateGame(type, amount) {
-    var gameData = { ...this.state.game };
-    var playerNum = this.state.playerNum;
-    var matchType = this.state.matchType;
-    var matchName = this.state.matchName;
-
-    var game = { ...gameData };
-    var keys = [];
-    if (type === "check") {
-      game.move[playerNum] = type;
-      game.ready[playerNum] = true;
-      keys = ["move", "playerTurn", "ready"];
-    } else if (type === "call") {
-      game.move[playerNum] = type;
-      game.chipsIn[playerNum] += amount; //what if you don't have enough chips Fix for Partial Calls
-      game.pot += amount;
-      game.balance[playerNum] -= amount;
-      game.ready[playerNum] = true;
-      keys = ["move", "chipsIn", "balance", "pot", "playerTurn", "ready"];
-    } else if (type === "fold") {
-      game.move[playerNum] = type;
-      game.ready[playerNum] = true;
-      keys = ["move", "playerTurn", "ready"];
-    } else if (type === "raise") {
-      game.move[playerNum] = type;
-      game.chipsIn[playerNum] += amount;
-      game.raisedVal += amount;
-      game.pot += amount;
-      game.balance[playerNum] -= amount;
-
-      game.ready.fill(false);
-      game.ready[playerNum] = true;
-      keys = [
-        "move",
-        "chipsIn",
-        "raisedVal",
-        "balance",
-        "pot",
-        "playerTurn",
-        "ready",
-      ];
-    } else if (type === "all in") {
-      game.move[playerNum] = type;
-      game.ready[playerNum] = true;
-      keys = ["move", "playerTurn", "ready"];
-
-      if (amount > 0) {
-        game.chipsIn[playerNum] += amount; //what if you don't have enough chips Fix for Partial Calls
-        game.pot += amount;
-        game.balance[playerNum] -= amount;
-        keys.push("chipsIn", "balance", "pot");
-      }
-    } else if (type === "small blind") {
-      game.move[playerNum] = type;
-      game.chipsIn[playerNum] += amount; //what if you don't have enough chips Fix for Partial Calls
-      game.raisedVal += amount;
-      game.pot += amount;
-      game.balance[playerNum] -= amount;
-      game.ready[playerNum] = true;
-      keys = [
-        "move",
-        "chipsIn",
-        "raisedVal",
-        "balance",
-        "pot",
-        "playerTurn",
-        "ready",
-      ];
-    } else if (type === "big blind") {
-      game.move[playerNum] = type;
-      game.chipsIn[playerNum] += amount; //what if you don't have enough chips Fix for Partial Calls
-      game.pot += amount;
-      game.balance[playerNum] -= amount;
-      game.ready.fill(false);
-      game.ready[playerNum] = true;
-      keys = ["move", "chipsIn", "balance", "pot", "playerTurn", "ready"];
-    }
-
-    game.playerTurn++;
-    //see if it's the last player's turn and change it to the first player's turn
-    if (game.playerTurn >= game.size - game.newPlayer) {
-      game.playerTurn = 0;
-    }
-
+  updateGame(keys, newGameData, matchType, fullMatchName) {
     var updates = {};
-    var matchLocation =
-      "/games/" + matchType + "/" + matchType + "_" + matchName + "/";
+    var matchLocation = "/games/" + matchType + "/" + fullMatchName + "/";
 
     for (var i = 0; i < keys.length; i++) {
-      updates[matchLocation + keys[i]] = game[keys[i]];
+      updates[matchLocation + keys[i]] = newGameData[keys[i]];
     }
+
+    console.log("updateGame: ", updates);
 
     if (Object.keys(updates).length > 0) {
       firebase.database().ref().update(updates);
     }
   }
 
-  leaveGame() {
-    var playernum = this.state.playerNum;
-    var editGame = { ...this.state.game };
-    var matchType = this.state.matchType;
-    var fullMatchName = this.state.matchType + "_" + this.state.matchName;
-    var userData = this.props.userData;
-    var newPlayer = this.state.newPlayer;
+  /* Experimental code
+  updateGame2(oldGameData, newGameData, matchType, fullMatchName){ 
+    var updates = {};
+    var matchLocation = '/games/'+ matchType + '/' + fullMatchName + '/'
+    const keys = Object.keys(oldGameData)
+    
+    for(var i = 0; i < keys.length; i++){
+      if(typeof(oldGameData[keys[i]]) == "object" &&
+        oldGameData[keys[i]].every((value) => value != newGameData[keys[i]])){
+        updates[matchLocation + keys[i]] = newGameData[keys[i]];
+      }
+    }
+    console.log('updateGame: ', updates)
+    if(Object.keys(updates).length > 0){
+      firebase.database().ref().update(updates);
+    }
+  }
+  */
 
+  leaveGame(
+    editGame,
+    playernum,
+    matchType,
+    fullMatchName,
+    userData,
+    newPlayer
+  ) {
+    //When player wants leave game in progress
+    //var editGame = this.props.game
+    //const playernum = this.state.playerNum
+    //editGame, playernum, matchType, fullMatchName
     var updates = {};
     var matchLocation = "/games/" + matchType + "/" + fullMatchName;
     var user = firebase.auth().currentUser;
 
     const quitBalance = editGame.balance[playernum];
-    var games = userData.games + editGame.round[playernum];
     updates["/users/" + user.uid + "/data/in_game"] = "";
     updates["/users/" + user.uid + "/data/chips"] =
       userData.chips + quitBalance;
@@ -780,8 +760,6 @@ export default class GameSetting extends Component {
     editGame.balance.splice(playernum, 1);
     editGame.players.splice(playernum, 1);
     editGame.playerAvatar.splice(playernum, 1);
-    editGame.move.splice(playernum, 1);
-    editGame.round.splice(playernum, 1);
     editGame.size -= 1;
 
     if (newPlayer) {
@@ -791,49 +769,14 @@ export default class GameSetting extends Component {
       updates[matchLocation + "/playerAvatar"] = editGame.playerAvatar;
       updates[matchLocation + "/size"] = editGame.size;
       updates[matchLocation + "/newPlayer"] = editGame.newPlayer;
-      updates[matchLocation + "/move"] = editGame.move;
-      updates[matchLocation + "/round"] = editGame.round;
 
       updates["/games/list/" + fullMatchName + "/size"] = editGame.size;
     } else {
       const wins = editGame.wins[playernum] + userData.wins;
+      const games = userData.games + editGame.round;
       const chipsWon = editGame.chipsWon[playernum];
       const chipsLost =
         editGame.chipsLost[playernum] + editGame.chipsIn[playernum];
-
-      if (
-        editGame.turn == 0 ||
-        (editGame.turn == 1 && editGame.chipsIn[playernum] == 0)
-      ) {
-        games = games - 1;
-        console.log(games);
-      }
-
-      var indexOfType = userData.in_game.indexOf("_") + 1;
-      var indexOfId = userData.in_game.indexOf("-");
-      var gameName = userData.in_game.slice(indexOfType, indexOfId);
-
-      var leaveGameAlert;
-      var change = quitBalance - editGame.buyIn; //calculate how much you earned or lost in game
-      if (change > 0) {
-        leaveGameAlert =
-          "You have gained " + change + " chips after game " + gameName + ".";
-      } else if (change < 0) {
-        leaveGameAlert =
-          "You have lost " +
-          change * -1 +
-          " chips after game " +
-          gameName +
-          ".";
-      } else {
-        leaveGameAlert = "You broke even in your last game, " + gameName + ".";
-      }
-
-      if (userData.alerts == null) {
-        userData.alerts = [leaveGameAlert];
-      } else {
-        userData.alerts.push(leaveGameAlert);
-      }
 
       updates["/users/" + user.uid + "/data/wins"] = wins;
       updates["/users/" + user.uid + "/data/games"] = games;
@@ -841,8 +784,6 @@ export default class GameSetting extends Component {
         userData.chips_won + chipsWon;
       updates["/users/" + user.uid + "/data/chips_lost"] =
         userData.chips_lost + chipsLost;
-      updates["/users/" + user.uid + "/data/newAlert"] = true;
-      updates["/users/" + user.uid + "/data/alerts"] = userData.alerts;
 
       if (editGame.size == 0) {
         //delete game
@@ -856,25 +797,19 @@ export default class GameSetting extends Component {
         //update game
         updates["/games/list/" + fullMatchName + "/size"] = editGame.size;
 
-        if (editGame.smallBlindLoc >= editGame.size) {
-          editGame.smallBlindLoc = editGame.size - 1;
+        if (editGame.smallBlindLoc == editGame.size + 1) {
+          editGame.smallBlindLoc -= 1;
           updates[matchLocation + "/smallBlindLoc"] = editGame.smallBlindLoc;
-        }
-
-        //see if it's the last player's turn and change it to the first player's turn
-        if (editGame.playerTurn >= editGame.size - editGame.newPlayer) {
-          editGame.playerTurn = editGame.smallBlindLoc;
-          updates[matchLocation + "/playerTurn"] = editGame.playerTurn;
         }
 
         editGame.wins.splice(playernum, 1);
         editGame.chipsWon.splice(playernum, 1);
         editGame.chipsLost.splice(playernum, 1);
         editGame.chipsIn.splice(playernum, 1);
+        editGame.move.splice(playernum, 1);
         editGame.player_cards.splice(playernum, 1);
         editGame.ready.splice(playernum, 1);
 
-        updates[matchLocation + "/ready"] = editGame.ready;
         updates[matchLocation + "/balance"] = editGame.balance;
         updates[matchLocation + "/players"] = editGame.players;
         updates[matchLocation + "/playerAvatar"] = editGame.playerAvatar;
@@ -885,7 +820,7 @@ export default class GameSetting extends Component {
         updates[matchLocation + "/chipsWon"] = editGame.chipsWon;
         updates[matchLocation + "/move"] = editGame.move;
         updates[matchLocation + "/player_cards"] = editGame.player_cards;
-        updates[matchLocation + "/round"] = editGame.round;
+        updates[matchLocation + "/ready"] = editGame.ready;
       }
     }
     firebase
@@ -895,11 +830,45 @@ export default class GameSetting extends Component {
     firebase.database().ref().update(updates);
   }
 
+  endGame() {
+    //When game ends and there is a winner
+    //maybe insert a if(size > 1) so doesn't count for solos.
+    var endGame = this.state.game;
+    const playernum = this.state.playerNum;
+
+    const endBalance = endGame.balance[playernum];
+    const chipsWon = editGame.chipsWon[playernum];
+    const chipsLost =
+      editGame.chipsLost[playernum] + editGame.chipsIn[playernum];
+
+    var updates = {};
+    var matchLocation =
+      "/games/" + this.state.matchType + "/" + this.state.fullMatchName;
+
+    updates[matchLocation] = null;
+    if (this.state.matchType == "public") {
+      updates["/games/list/" + this.state.fullMatchName] = null;
+    }
+
+    var user = firebase.auth().currentUser;
+    updates["/users/" + user.uid + "/in_game"] = "";
+    updates["/users/" + user.uid + "/chips"] =
+      this.props.userData.chips + endBalance;
+    updates["/users/" + user.uid + "/games"] = this.props.userData.games + 1;
+    updates["/users/" + user.uid + "/chips_won"] = chipsWon;
+    updates["/users/" + user.uid + "/chips_lost"] = chipsLost;
+
+    if (endGame.balance[playernum] > 0) {
+      updates["/users/" + user.uid + "/wins"] = this.props.userData.wins + 1;
+    }
+
+    firebase.database().ref().update(updates);
+  }
+
   render() {
     if (this.state.ready) {
       return (
         <GameView
-          user={this.props.userData}
           game={this.state.game}
           myCards={this.state.myCards}
           matchName={this.state.matchName}
@@ -908,6 +877,8 @@ export default class GameSetting extends Component {
           navigation={this.props.navigation}
           leaveGame={this.leaveGame}
           updateGame={this.updateGame}
+          userData={this.props.userData}
+          newPlayer={this.state.newPlayer}
         />
       );
     } else {
@@ -924,7 +895,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#1B2430",
+    backgroundColor: "#2ecc71",
   },
   horizontal: {
     flexDirection: "row",
