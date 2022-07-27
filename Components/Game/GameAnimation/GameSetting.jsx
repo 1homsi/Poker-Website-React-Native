@@ -259,12 +259,14 @@ export default class GameSetting extends Component {
     var screen = this.state.screen;
     var image = CardImages(suit, value);
     return (
-      <View style={{
-        position: "absolute",
-        alignContent: "center",
-        alignSelf: "center",
-        justifyContent: "center",
-      }}>
+      <View
+        style={{
+          position: "absolute",
+          alignContent: "center",
+          alignSelf: "center",
+          justifyContent: "center",
+        }}
+      >
         <Animated.View style={this.state.tableCardsStart[i].getLayout()}>
           <View
             style={{
@@ -310,7 +312,8 @@ export default class GameSetting extends Component {
     }).start();
   }
 
-  cardDeal(suit, value, i) { //Deal the cards to the players and the table cards and set the initial positions 
+  cardDeal(suit, value, i) {
+    //Deal the cards to the players and the table cards and set the initial positions
     var image = CardImages(suit, value);
     var screen = this.state.screen;
     return (
@@ -463,8 +466,8 @@ export default class GameSetting extends Component {
   }
 
   leaveGame() {
-    this.props.navigation.navigate("HomePage");
     this.props.leaveGame();
+    this.props.navigation.navigate("HomePage");
   }
 
   raiseView(callAmount, maxChips) {
@@ -678,7 +681,7 @@ export default class GameSetting extends Component {
           onPress={() => this.setState({ raiseVisible: true })}
         >
           {this.props.game.raisedVal == 0 ? (
-            <Text style={{color: "white"}} >Raise</Text>
+            <Text style={{ color: "white" }}>Raise</Text>
           ) : (
             <Text>Re-Raise</Text>
           )}
@@ -704,7 +707,7 @@ export default class GameSetting extends Component {
             disabled={!myTurn}
             onPress={() => this.props.updateGame(callType, callAmount)}
           >
-            <Text style={{color: "white"}} >{callString}</Text>
+            <Text style={{ color: "white" }}>{callString}</Text>
           </TouchableOpacity>
         )}
 
@@ -719,7 +722,7 @@ export default class GameSetting extends Component {
             this.props.updateGame("fold");
           }}
         >
-          <Text style={{color: "white"}}>Fold</Text>
+          <Text style={{ color: "white" }}>Fold</Text>
         </TouchableOpacity>
       </View>
     );
@@ -943,18 +946,18 @@ export default class GameSetting extends Component {
   }
 
   defaultEmptyAvatar() {
-    return //(
-      // <View style={{ alignItems: "center" }}>
-      //   <Image
-      //     source={{
-      //       uri: "https://firebasestorage.googleapis.com/v0/b/pokerfriends-843ef.appspot.com/o/transparent.png?alt=media&token=30b3c6ed-592b-4802-a2ee-d9c846ab3a05",
-      //     }}
-      //     style={styles.avatarImage}
-      //   />
-      //   <View style={styles.textBackground}>
-      //     <Text style={styles.playerNames}>Empty</Text>
-      //   </View>
-      // </View>
+    return; //(
+    // <View style={{ alignItems: "center" }}>
+    //   <Image
+    //     source={{
+    //       uri: "https://firebasestorage.googleapis.com/v0/b/pokerfriends-843ef.appspot.com/o/transparent.png?alt=media&token=30b3c6ed-592b-4802-a2ee-d9c846ab3a05",
+    //     }}
+    //     style={styles.avatarImage}
+    //   />
+    //   <View style={styles.textBackground}>
+    //     <Text style={styles.playerNames}>Empty</Text>
+    //   </View>
+    // </View>
     //);
   }
 
@@ -1101,7 +1104,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     alignItems: "center",
   },
-  carddealingView:{
+  carddealingView: {
     position: "absolute",
     bottom: 0,
     right: 5,
@@ -1169,7 +1172,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
   },
-  Waiting:{},
+  Waiting: {},
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -1209,7 +1212,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     alignContent: "center",
     paddingBottom: 15,
-    zIndex: 1, 
+    zIndex: 1,
   },
   player2View: {
     borderRadius: 2,
@@ -1239,7 +1242,7 @@ const styles = StyleSheet.create({
   potView: {
     alignContent: "center",
     alignSelf: "center",
-    bottom: "20%"  
+    bottom: "20%",
   },
   pot: {
     paddingVertical: 10,
