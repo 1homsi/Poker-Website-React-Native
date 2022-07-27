@@ -17,18 +17,25 @@ const VALUE = [
 const CARDIMG = [];
 
 export default class Deck {
+  setCards(arr) {
+    this.cards = arr;
+  }
+
   get numberOfCards() {
     return this.cards.length;
   }
 
   shuffle() {
-    this.cards = freshDeck();
     for (let i = this.numberOfCards - 1; i > 0; i--) {
       const newIndex = Math.floor(Math.random() * (i + 1));
       const oldIndex = this.cards[newIndex];
       this.cards[newIndex] = this.cards[i];
       this.cards[i] = oldIndex;
     }
+  }
+
+  freshdeck() {
+    this.cards = freshDeck();
   }
 }
 

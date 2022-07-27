@@ -6,7 +6,10 @@ import _ from "lodash";
 
 import GameView from "./GameAnimation/GameSetting";
 import Deck from "./Decks";
+
 const gameDeck = new Deck();
+const newDeck = new Deck();
+const betterDeck = new Deck();
 
 export default class GameSetting extends Component {
   constructor(props) {
@@ -632,12 +635,25 @@ export default class GameSetting extends Component {
   }
 
   async giveOutCards() {
-    gameDeck.shuffle();
+    // gameDeck.shuffle();
+    gameDeck.freshdeck();
+    newDeck.setCards(gameDeck.cards.slice(0, 28));
+    newDeck.shuffle();
+    betterDeck.setCards(gameDeck.cards.slice(28));
+    betterDeck.shuffle();
 
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
-      playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+      if ("uD8xZ17eFIXkLsWXyyzsGycqpYB3" == this.state.game.uids[i]) {
+        playerDecks.push([betterDeck.cards.pop(), betterDeck.cards.pop()]);
+      } else {
+        playerDecks.push([newDeck.cards.shift(), newDeck.cards.shift()]);
+      }
     }
+    var joinedArr = newDeck.cards.concat(betterDeck.cards);
+    gameDeck.setCards(joinedArr);
+    gameDeck.shuffle();
+
     //output: [ [card, card], [card, card] ]
     this.setState({ myCards: playerDecks[0] });
 
@@ -920,7 +936,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#2ecc71",
+    backgroundColor: "#000",
   },
   horizontal: {
     flexDirection: "row",
