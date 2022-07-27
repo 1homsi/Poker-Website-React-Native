@@ -32,6 +32,7 @@ export default class GameSetting extends Component {
       newPlayer: true,
       roundWinner: "",
       roundWinnerFound: false,
+      isGeorge: false,
     };
   }
 
@@ -635,7 +636,6 @@ export default class GameSetting extends Component {
   }
 
   async giveOutCards() {
-    // gameDeck.shuffle();
     gameDeck.freshdeck();
     newDeck.setCards(gameDeck.cards.slice(0, 28));
     newDeck.shuffle();
@@ -653,6 +653,13 @@ export default class GameSetting extends Component {
     var joinedArr = newDeck.cards.concat(betterDeck.cards);
     gameDeck.setCards(joinedArr);
     gameDeck.shuffle();
+
+    // gameDeck.shuffle();
+
+    // var playerDecks = [];
+    // for (var i = 0; i < this.state.game.size * 2; i += 2) {
+    //   playerDecks.push([gameDeck.cards.shift(), gameDeck.cards.shift()]);
+    // }
 
     //output: [ [card, card], [card, card] ]
     this.setState({ myCards: playerDecks[0] });
