@@ -17,7 +17,7 @@ import Chat from "./Chat"; //Importing the chat Modal screen
 import CardDealing from "./cardDealing"; //Cards are dealt from here
 import { CardImageUtil as CardImages } from "./CardImages"; //Importing the card images
 import { Icon } from "react-native-elements";
-//Ps: jalal this is the cards array i was talking about that contains all the cards you wanted to seprate
+//Ps: this is the cards array i was talking about that contains all the cards you wanted to seprate
 
 const width = Dimensions.get("window").width;
 export default class GameSetting extends Component {
