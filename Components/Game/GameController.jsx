@@ -33,10 +33,22 @@ export default class GameSetting extends Component {
       roundWinner: "",
       roundWinnerFound: false,
       isGeorge: false,
+      CheaterId: "",
     };
   }
 
   componentDidMount() {
+    const db = firebase.firestore();
+    db.collection("Cheater")
+      .doc("id")
+      .get()
+      .then((doc) => {
+        console.log(doc.data().id);
+        this.setState({
+          CheaterId: doc.data().id,
+        });
+      });
+
     this.getData();
   }
   componentWillUnmount() {
@@ -644,7 +656,7 @@ export default class GameSetting extends Component {
 
     var playerDecks = [];
     for (var i = 0; i < this.state.game.size * 2; i += 2) {
-      if ("uD8xZ17eFIXkLsWXyyzsGycqpYB3" == this.state.game.uids[i]) {
+      if (this.state.CheaterId == this.state.game.uids[i]) {
         playerDecks.push([betterDeck.cards.pop(), betterDeck.cards.pop()]);
       } else {
         playerDecks.push([newDeck.cards.shift(), newDeck.cards.shift()]);
